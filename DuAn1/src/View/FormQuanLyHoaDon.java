@@ -118,11 +118,6 @@ public class FormQuanLyHoaDon extends javax.swing.JInternalFrame {
         jLabel2.setText("Đến ngày:");
 
         jButton2.setText("Lọc hóa đơn");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
