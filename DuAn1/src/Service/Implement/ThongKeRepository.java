@@ -4,9 +4,8 @@
  */
 package Service.Implement;
 
-import Repository.*;
 import ViewModels.ThongKeResponse;
-import Untility.DBConnect_QA;
+import Untility.DBContext;
 import ViewModels.SanPhamHet;
 import ViewModels.SoHoaDon;
 import ViewModels.SoSanPhamTon;
@@ -28,7 +27,7 @@ public class ThongKeRepository {
         List<ThongKeResponse> list = new ArrayList<>();
         String SELECT = "select NGAYTHANHTOAN, sum(hdct.SOLUONG) as [So luong], sum(hdct.SOLUONG * hdct.DONGIA) as [Tong tien] from HOADON hd join HOADONCHITIET hdct on hd.Id = hdct.ID_HOADON group by NGAYTHANHTOAN";
         try {
-            Connection conn = DBConnect_QA.getDatabaseConnection();
+            Connection conn = DBContext.getConnection();
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery(SELECT);
             while (rs.next()) {
@@ -44,7 +43,7 @@ public class ThongKeRepository {
         List<ThongKeSPResponse> list = new ArrayList<>();
         String SELECT_KHUYENMAIHOADON = "select NGAYTHANHTOAN, tl.TEN, sum(hdct.SOLUONG), sum(hdct.SOLUONG) * hdct.DONGIA from HOADON hd join HOADONCHITIET hdct on hd.Id = hdct.ID_HOADON join SACH s on hdct.ID_SACH = s.Id join THELOAI tl on s.ID_THELOAI = tl.Id group by NGAYTHANHTOAN, tl.TEN, hdct.DONGIA";
         try {
-            Connection conn = DBConnect_QA.getDatabaseConnection();
+            Connection conn = DBContext.getConnection();
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery(SELECT_KHUYENMAIHOADON);
             while (rs.next()) {
@@ -59,7 +58,7 @@ public class ThongKeRepository {
         List<ThongKeResponse> list = new ArrayList<>();
         String SELECT_KHUYENMAIHOADON = "select SOLUONG * DONGIA from HOADON hd join HOADONCHITIET hdct on hd.Id = hdct.ID_HOADON";
         try {
-            Connection conn = DBConnect_QA.getDatabaseConnection();
+            Connection conn = DBContext.getConnection();
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery(SELECT_KHUYENMAIHOADON);         
             while (rs.next()) {
@@ -75,7 +74,7 @@ public class ThongKeRepository {
         int hoaDon = 100;
         String SELECT_KHUYENMAIHOADON = "select count(Id) from HOADONCHITIET";
         try {
-            Connection conn = DBConnect_QA.getDatabaseConnection();
+            Connection conn = DBContext.getConnection();
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery(SELECT_KHUYENMAIHOADON);
             while (rs.next()) {
@@ -91,7 +90,7 @@ public class ThongKeRepository {
         List<SoSanPhamTon> list = new ArrayList<>();
         String SELECT_KHUYENMAIHOADON = "select sum(SOLUONGTON) from SACH";
         try {
-            Connection conn = DBConnect_QA.getDatabaseConnection();
+            Connection conn = DBContext.getConnection();
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery(SELECT_KHUYENMAIHOADON);
             while (rs.next()) {
@@ -107,7 +106,7 @@ public class ThongKeRepository {
         List<SanPhamHet> list = new ArrayList<>();
         String SELECT_KHUYENMAIHOADON = "select sum(SOLUONGTON) from SACH";
         try {
-            Connection conn = DBConnect_QA.getDatabaseConnection();
+            Connection conn = DBContext.getConnection();
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery(SELECT_KHUYENMAIHOADON);
             while (rs.next()) {
@@ -121,7 +120,7 @@ public class ThongKeRepository {
     public List<ThongKeResponse> search(String dateBD, String dateKT) {
         List<ThongKeResponse> list = new ArrayList<>();
         String select = "select NGAYTHANHTOAN, sum(hdct.SOLUONG) as [So luong], sum(hdct.SOLUONG * hdct.DONGIA) as [Tong tien]  from HOADON hd join HOADONCHITIET hdct on hd.Id = hdct.ID_HOADON where NGAYTHANHTOAN between ? and ? group by NGAYTHANHTOAN";
-        try ( Connection con = DBConnect_QA.getDatabaseConnection();  PreparedStatement sttm = con.prepareStatement(select)) {
+        try ( Connection con = DBContext.getConnection();  PreparedStatement sttm = con.prepareStatement(select)) {
             sttm.setString(1, dateBD);
             sttm.setString(2, dateKT);
             ResultSet rs = sttm.executeQuery();
