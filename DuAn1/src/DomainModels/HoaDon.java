@@ -1,22 +1,25 @@
-
 package DomainModels;
 
 public class HoaDon {
-    private String id ,idKH ,idNV ,ma ,ngayTao ,ngayThanhToan ,tinhTrang ,sodiem,idKM;
+
+    private String id, idKH, idNV, idVi, ma, ngayTao, ngayThanhToan, tienKhachDua, tongTien, sodiemKH;
+    private int tinhTrang;
 
     public HoaDon() {
     }
 
-    public HoaDon(String id, String idKH, String idNV, String ma, String ngayTao, String ngayThanhToan, String tinhTrang, String sodiem, String idKM) {
+    public HoaDon(String id, String idKH, String idNV, String idVi, String ma, String ngayTao, String ngayThanhToan, String tienKhachDua, String tongTien, String sodiemKH, int tinhTrang) {
         this.id = id;
         this.idKH = idKH;
         this.idNV = idNV;
+        this.idVi = idVi;
         this.ma = ma;
         this.ngayTao = ngayTao;
         this.ngayThanhToan = ngayThanhToan;
+        this.tienKhachDua = tienKhachDua;
+        this.tongTien = tongTien;
+        this.sodiemKH = sodiemKH;
         this.tinhTrang = tinhTrang;
-        this.sodiem = sodiem;
-        this.idKM = idKM;
     }
 
     public String getId() {
@@ -43,6 +46,14 @@ public class HoaDon {
         this.idNV = idNV;
     }
 
+    public String getIdVi() {
+        return idVi;
+    }
+
+    public void setIdVi(String idVi) {
+        this.idVi = idVi;
+    }
+
     public String getMa() {
         return ma;
     }
@@ -67,33 +78,36 @@ public class HoaDon {
         this.ngayThanhToan = ngayThanhToan;
     }
 
-    public String getTinhTrang() {
+    public String getTienKhachDua() {
+        return tienKhachDua;
+    }
+
+    public void setTienKhachDua(String tienKhachDua) {
+        this.tienKhachDua = tienKhachDua;
+    }
+
+    public String getTongTien() {
+        return tongTien;
+    }
+
+    public void setTongTien(String tongTien) {
+        this.tongTien = tongTien;
+    }
+
+    public String getSodiemKH() {
+        return sodiemKH;
+    }
+
+    public void setSodiemKH(String sodiemKH) {
+        this.sodiemKH = sodiemKH;
+    }
+
+    public int getTinhTrang() {
         return tinhTrang;
     }
 
-    public void setTinhTrang(String tinhTrang) {
+    public void setTinhTrang(int tinhTrang) {
         this.tinhTrang = tinhTrang;
     }
 
-    public String getSodiem() {
-        return sodiem;
-    }
-
-    public void setSodiem(String sodiem) {
-        this.sodiem = sodiem;
-    }
-
-    public String getIdKM() {
-        return idKM;
-    }
-
-    public void setIdKM(String idKM) {
-        this.idKM = idKM;
-    }
-
-    @Override
-    public String toString() {
-        return "HoaDonModel{" + "id=" + id + ", idKH=" + idKH + ", idNV=" + idNV + ", ma=" + ma + ", ngayTao=" + ngayTao + ", ngayThanhToan=" + ngayThanhToan + ", tinhTrang=" + tinhTrang + ", sodiem=" + sodiem + ", idKM=" + idKM + '}';
-    }
-    
 }
