@@ -1,0 +1,24 @@
+diff a/DuAn1/nbproject/private/private.xml b/DuAn1/nbproject/private/private.xml	(rejected hunks)
+@@ -3,17 +3,11 @@
+     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+         <group>
+-            <file>file:/C:/Users/sangh/Documents/DuAn1/DuAn1/src/Untility/MailSender.java</file>
+-            <file>file:/C:/Users/sangh/Documents/DuAn1/DuAn1/src/View/TrangChu.java</file>
+-            <file>file:/C:/Users/sangh/Documents/DuAn1/DuAn1/src/Repository/HoaDonRepository.java</file>
+-            <file>file:/C:/Users/sangh/Documents/DuAn1/DuAn1/src/Repository/KhuyenMaiHDRepository.java</file>
+-            <file>file:/C:/Users/sangh/Documents/DuAn1/DuAn1/src/View/ThongKe.java</file>
+-            <file>file:/C:/Users/sangh/Documents/DuAn1/DuAn1/src/Repository/TheLoaiRepository.java</file>
+-            <file>file:/C:/Users/sangh/Documents/DuAn1/DuAn1/src/Repository/NXBRepository.java</file>
+-            <file>file:/C:/Users/sangh/Documents/DuAn1/DuAn1/src/Repository/KhachHangRepository.java</file>
+-            <file>file:/C:/Users/sangh/Documents/DuAn1/DuAn1/src/View/FormKhachHang.java</file>
+-            <file>file:/C:/Users/sangh/Documents/DuAn1/DuAn1/src/View/FormBanHang.java</file>
+-            <file>file:/C:/Users/sangh/Documents/DuAn1/DuAn1/src/Untility/DBContext.java</file>
++            <file>file:/C:/Users/acer/Documents/GitHub/New%20folder/Nhom1/DuAn1_Real/DuAn1/src/View/FormQuanLyHoaDon.java</file>
++            <file>file:/C:/Users/acer/Documents/GitHub/New%20folder/Nhom1/DuAn1_Real/DuAn1/src/View/TrangChu.java</file>
++            <file>file:/C:/Users/acer/Documents/GitHub/New%20folder/Nhom1/DuAn1_Real/DuAn1/src/Service/Implement/HoaDonServiceImpl.java</file>
++            <file>file:/C:/Users/acer/Documents/GitHub/New%20folder/Nhom1/DuAn1_Real/DuAn1/src/Repository/HoaDonRepository.java</file>
++            <file>file:/C:/Users/acer/Documents/GitHub/New%20folder/Nhom1/DuAn1_Real/DuAn1/src/View/FormThongKe.java</file>
+         </group>
+     </open-files>
+ </project-private>

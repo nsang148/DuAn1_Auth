@@ -1,0 +1,32 @@
+diff a/DuAn1/nbproject/project.properties b/DuAn1/nbproject/project.properties	(rejected hunks)
+@@ -36,18 +36,18 @@
+ endorsed.classpath=
+ excludes=
+ <<<<<<< HEAD
+-file.reference.activation.jar-1=C:\\Users\\sangh\\Downloads\\activation.jar\\activation.jar
+-file.reference.jcalendar-1.4.jar=C:\\Users\\sangh\\Documents\\jcalendar-1.4.jar (1)\\jcalendar-1.4.jar
+-file.reference.mail.jar-1=C:\\Users\\sangh\\Downloads\\mail.jar\\mail.jar
+-file.reference.poi-5.2.3.jar-1=C:\\Users\\sangh\\Downloads\\poi-bin-5.2.3-20220909\\poi-bin-5.2.3\\poi-5.2.3.jar
+-file.reference.poi-examples-5.2.3.jar-1=C:\\Users\\sangh\\Downloads\\poi-bin-5.2.3-20220909\\poi-bin-5.2.3\\poi-examples-5.2.3.jar
+-file.reference.poi-excelant-5.2.3.jar-1=C:\\Users\\sangh\\Downloads\\poi-bin-5.2.3-20220909\\poi-bin-5.2.3\\poi-excelant-5.2.3.jar
+-file.reference.poi-javadoc-5.2.3.jar-1=C:\\Users\\sangh\\Downloads\\poi-bin-5.2.3-20220909\\poi-bin-5.2.3\\poi-javadoc-5.2.3.jar
+-file.reference.poi-ooxml-5.2.3.jar-1=C:\\Users\\sangh\\Downloads\\poi-bin-5.2.3-20220909\\poi-bin-5.2.3\\poi-ooxml-5.2.3.jar
+-file.reference.poi-ooxml-full-5.2.3.jar-1=C:\\Users\\sangh\\Downloads\\poi-bin-5.2.3-20220909\\poi-bin-5.2.3\\poi-ooxml-full-5.2.3.jar
+-file.reference.poi-ooxml-lite-5.2.3.jar-1=C:\\Users\\sangh\\Downloads\\poi-bin-5.2.3-20220909\\poi-bin-5.2.3\\poi-ooxml-lite-5.2.3.jar
+-file.reference.poi-scratchpad-5.2.3.jar-1=C:\\Users\\sangh\\Downloads\\poi-bin-5.2.3-20220909\\poi-bin-5.2.3\\poi-scratchpad-5.2.3.jar
+-file.reference.smtp-1.4.4.jar=C:\\Users\\sangh\\Downloads\\smtp-1.4.4.jar\\smtp-1.4.4.jar
++file.reference.AbsoluteLayout-RELEASE150.jar=D:\\Libary\\AbsoluteLayout-RELEASE150.jar
++file.reference.activation.jar=D:\\Nhom1\\activation.jar\\activation.jar
++file.reference.mail.jar=D:\\Nhom1\\mail.jar\\mail.jar
++file.reference.mssql-jdbc-7.2.2.jre8.jar=C:\\Users\\acer\\Downloads\\mssql-jdbc-7.2.2.jre8.jar
++file.reference.poi-5.2.3.jar=D:\\Nhom1\\poi-bin-5.2.3-20220909\\poi-bin-5.2.3\\poi-5.2.3.jar
++file.reference.poi-examples-5.2.3.jar=D:\\Nhom1\\poi-bin-5.2.3-20220909\\poi-bin-5.2.3\\poi-examples-5.2.3.jar
++file.reference.poi-excelant-5.2.3.jar=D:\\Nhom1\\poi-bin-5.2.3-20220909\\poi-bin-5.2.3\\poi-excelant-5.2.3.jar
++file.reference.poi-javadoc-5.2.3.jar=D:\\Nhom1\\poi-bin-5.2.3-20220909\\poi-bin-5.2.3\\poi-javadoc-5.2.3.jar
++file.reference.poi-ooxml-5.2.3.jar=D:\\Nhom1\\poi-bin-5.2.3-20220909\\poi-bin-5.2.3\\poi-ooxml-5.2.3.jar
++file.reference.poi-ooxml-full-5.2.3.jar=D:\\Nhom1\\poi-bin-5.2.3-20220909\\poi-bin-5.2.3\\poi-ooxml-full-5.2.3.jar
++file.reference.poi-ooxml-lite-5.2.3.jar=D:\\Nhom1\\poi-bin-5.2.3-20220909\\poi-bin-5.2.3\\poi-ooxml-lite-5.2.3.jar
++file.reference.poi-scratchpad-5.2.3.jar=D:\\Nhom1\\poi-bin-5.2.3-20220909\\poi-bin-5.2.3\\poi-scratchpad-5.2.3.jar
+ includes=**
+ jar.compress=false
+ javac.classpath=\
