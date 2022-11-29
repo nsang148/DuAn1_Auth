@@ -2,11 +2,13 @@
 package Service;
 
 import DomainModels.HoaDon;
-import DomainModels.HoaDonCT;
+import ViewModels.HoaDonChiTietReponse;
+import ViewModels.HoaDonReponse;
+//import DomainModels.HoaDonCT;
 import java.util.List;
 
 
 public interface HoaDonService {
-    public List<HoaDon> layHoaDons();
-    public List<HoaDonCT> layHoaDonCT(String id);
+    public List<HoaDonReponse> layHoaDons();
+    public List<HoaDonChiTietReponse> layHoaDonCT(String id);
 }
