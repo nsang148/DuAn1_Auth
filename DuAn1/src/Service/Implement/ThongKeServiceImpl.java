@@ -54,4 +54,24 @@ public class ThongKeServiceImpl implements ThongKeService{
     public List<ThongKeResponse> search(String dateBD, String dateKT) {
         return repo.search(dateBD, dateKT);
     }
+
+    @Override
+    public List<ThongKeResponse> getAllThang() {
+        return repo.getAllThang();
+    }
+
+    @Override
+    public List<ThongKeResponse> getAllNam() {
+        return repo.getAllNam();
+    }
+
+    @Override
+    public List<ThongKeSPResponse> getAllSPThang() {
+        return repo.getAllThongKeSPThang();
+    }
+
+    @Override
+    public List<ThongKeSPResponse> getAllSPNam() {
+        return repo.getAllThongKeSPNam();
+    }
 }

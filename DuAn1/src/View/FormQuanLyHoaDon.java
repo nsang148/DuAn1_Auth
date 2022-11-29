@@ -1,11 +1,13 @@
 package View;
 
 import DomainModels.HoaDon;
+import DomainModels.HoaDonCT;
 import Service.HoaDonService;
 import Service.Implement.HoaDonServiceImpl;
+import ViewModels.HoaDonChiTietReponse;
+import ViewModels.HoaDonReponse;
 import java.util.List;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
-import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -22,7 +24,7 @@ public class FormQuanLyHoaDon extends javax.swing.JInternalFrame {
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI ui = (BasicInternalFrameUI) this.getUI();
         ui.setNorthPane(null);
-        model=(DefaultTableModel) tableHoaDon.getModel();
+
         loadTable();
     }
 
@@ -46,7 +48,7 @@ public class FormQuanLyHoaDon extends javax.swing.JInternalFrame {
         jButton2 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        tblHoaDonCT = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
@@ -78,15 +80,27 @@ public class FormQuanLyHoaDon extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Mã", "Ngày Tạo", "Ngày Thanh Toán", "Tổng Tiền", "Tình Trạng"
+                "Ngày Tạo", "Ma HD", "Tong tien", "Ten nhan vien", "Tinh trang"
             }
         ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.String.class, java.lang.Integer.class
+            };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false
             };
 
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tableHoaDon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableHoaDonMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(tableHoaDon);
@@ -121,7 +135,7 @@ public class FormQuanLyHoaDon extends javax.swing.JInternalFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        tblHoaDonCT.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -129,10 +143,31 @@ public class FormQuanLyHoaDon extends javax.swing.JInternalFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Ten Sach", "Gia", "So luong", "Thanh tien"
             }
-        ));
-        jScrollPane3.setViewportView(jTable3);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Double.class, java.lang.Integer.class, java.lang.Double.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(tblHoaDonCT);
+        if (tblHoaDonCT.getColumnModel().getColumnCount() > 0) {
+            tblHoaDonCT.getColumnModel().getColumn(0).setResizable(false);
+            tblHoaDonCT.getColumnModel().getColumn(1).setResizable(false);
+            tblHoaDonCT.getColumnModel().getColumn(2).setResizable(false);
+            tblHoaDonCT.getColumnModel().getColumn(3).setResizable(false);
+        }
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -229,14 +264,31 @@ public class FormQuanLyHoaDon extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-public void loadTable() {
+
+    private void tableHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableHoaDonMouseClicked
+        int luaChon = tableHoaDon.getSelectedRow();
+        if (luaChon > -1) {
+            HoaDonReponse hd =this.hoaDonService.layHoaDons().get(luaChon);
+            String ma = hd.getMaHD();
+            List<HoaDonChiTietReponse> list = hoaDonService.layHoaDonCT(ma);
+            for (HoaDonChiTietReponse h : list) {
+                model = (DefaultTableModel) tblHoaDonCT.getModel();
+                model.setNumRows(0);
+                for (HoaDonChiTietReponse hdct : list) {
+                    model.addRow(new Object[]{hdct.getTenSach(), hdct.getGia(), hdct.getSoLuong(), hdct.getThanhTien()
+                    });
+                }
+            }
+        }
+    }//GEN-LAST:event_tableHoaDonMouseClicked
+    public void loadTable() {
+        model = (DefaultTableModel) tableHoaDon.getModel();
         model.setNumRows(0);
-        List<HoaDon> list =hoaDonService.layHoaDons();
-        for (HoaDon hd : list) {
-        model.addRow(new Object[]{
-            hd.getMa(),hd.getNgayTao(),hd.getNgayThanhToan(),hd.getTongTien(),hd.getTinhTrang()
-        });
-    }
+        List<HoaDonReponse> list = hoaDonService.layHoaDons();
+        for (HoaDonReponse hd : list) {
+            model.addRow(new Object[]{ hd.getNgayTao(), hd.getMaHD(), hd.getTongTien(), hd.getTenNV(), hd.getTinhTrang()
+            });
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -254,7 +306,7 @@ public void loadTable() {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
     private javax.swing.JTable tableHoaDon;
+    private javax.swing.JTable tblHoaDonCT;
     // End of variables declaration//GEN-END:variables
 }

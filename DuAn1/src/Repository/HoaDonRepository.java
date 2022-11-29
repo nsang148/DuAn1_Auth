@@ -1,7 +1,11 @@
 package Repository;
 
 import DomainModels.HoaDon;
+import DomainModels.HoaDonCT;
+//import DomainModels.HoaDonCT;
 import Untility.DBContext;
+import ViewModels.HoaDonChiTietReponse;
+import ViewModels.HoaDonReponse;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
@@ -18,33 +22,36 @@ public class HoaDonRepository {
         conn = new DBContext();
     }
 
-    public List<HoaDon> layHoaDon() {
-        List<HoaDon> listHD = new ArrayList<>();
-        String sql = "SELECT * FROM HOADON";
+    public List<HoaDonReponse> layHoaDon() {
+        List<HoaDonReponse> listHD = new ArrayList<>();
+        String sql = "select NGAYTAO, hd.MA, hdct.SOLUONG * hdct.DONGIA as [Tong tien], nv.TEN, hd.TINHTRANG from HOADON hd join HOADONCHITIET hdct on hd.id = hdct.ID_HOADON join NHANVIEN nv on hd.ID_NHANVIEN = nv.Id";
 
         try {
             Connection con = DBContext.getConnection();
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
-                String id = rs.getString("Id");
-                String idKH = rs.getString("ID_KHACHHANG");
-                String idNV = rs.getString("ID_NHANVIEN");
-                String idVi = rs.getString("ID_VIDIEM");
-                String ma = rs.getString("MA");
-                String ngayTao = rs.getString("NGAYTAO");
-                String ngayThanhToan = rs.getString("NGAYTHANHTOAN");
-                String tienKhachDua = rs.getString("TIENKHACHDUA");
-                String tongTien = rs.getString("TONGTIEN");
-                int tt = rs.getInt("TINHTRANG");
-                String diemKH = rs.getString("SODIEMKHACHHANG");
-                HoaDon hd = new HoaDon(id, idKH, idNV, idVi, ma, ngayTao, ngayThanhToan, tienKhachDua, tongTien, diemKH, tt);
-                listHD.add(hd);
-
+                listHD.add(new HoaDonReponse(rs.getString(1), rs.getString(2), rs.getDouble(3), rs.getString(4), rs.getInt(5)));
             }
         } catch (Exception e) {
             System.out.println("Loi khi lay danh sach hoa don");
         }
         return listHD;
     }
+
+    public List<HoaDonChiTietReponse> layHoaDonCT(String ma) {
+        List<HoaDonChiTietReponse> list = new ArrayList<>();
+        String select = "select s.TEN, s.Gia, hdct.SOLUONG, hdct.SOLUONG * s.GIA from SACH s join HOADONCHITIET hdct on s.Id = hdct.ID_SACH join HOADON hd on hd.Id = hdct.ID_HOADON where hd.MA = ?";
+        try ( Connection con = DBContext.getConnection();  PreparedStatement sttm = con.prepareStatement(select)) {
+            sttm.setString(1, ma);
+            ResultSet rs = sttm.executeQuery();
+            while (rs.next()) {
+                list.add(new HoaDonChiTietReponse(rs.getString(1), rs.getDouble(2), rs.getInt(3), rs.getDouble(4)));
+            }
+            return list;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+}
 }
