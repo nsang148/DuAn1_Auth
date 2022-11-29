@@ -23,8 +23,8 @@ public class HoaDonServiceImpl implements HoaDonService {
     }
 
     @Override
-    public List<HoaDonChiTietReponse> layHoaDonCT(String id) {
-        return hoaDonRepository.layHoaDonCT(id);
+    public List<HoaDonChiTietReponse> layHoaDonCT(String ma) {
+        return hoaDonRepository.layHoaDonCT(ma);
     }
 
 }

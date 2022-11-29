@@ -10,19 +10,19 @@ package ViewModels;
  */
 public class HoaDonReponse {
     private String ngayTao;
-    private String ma;
-    private Double tongTien;
-    private String ten;
+    private String maHD;
+    private double tongTien;
+    private String tenNV;
     private int tinhTrang;
 
     public HoaDonReponse() {
     }
 
-    public HoaDonReponse(String ngayTao, String ma, Double tongTien, String ten, int tinhTrang) {
+    public HoaDonReponse(String ngayTao, String maHD, double tongTien, String tenNV, int tinhTrang) {
         this.ngayTao = ngayTao;
-        this.ma = ma;
+        this.maHD = maHD;
         this.tongTien = tongTien;
-        this.ten = ten;
+        this.tenNV = tenNV;
         this.tinhTrang = tinhTrang;
     }
 
@@ -34,28 +34,28 @@ public class HoaDonReponse {
         this.ngayTao = ngayTao;
     }
 
-    public String getMa() {
-        return ma;
+    public String getMaHD() {
+        return maHD;
     }
 
-    public void setMa(String ma) {
-        this.ma = ma;
+    public void setMaHD(String maHD) {
+        this.maHD = maHD;
     }
 
-    public Double getTongTien() {
+    public double getTongTien() {
         return tongTien;
     }
 
-    public void setTongTien(Double tongTien) {
+    public void setTongTien(double tongTien) {
         this.tongTien = tongTien;
     }
 
-    public String getTen() {
-        return ten;
+    public String getTenNV() {
+        return tenNV;
     }
 
-    public void setTen(String ten) {
-        this.ten = ten;
+    public void setTenNV(String tenNV) {
+        this.tenNV = tenNV;
     }
 
     public int getTinhTrang() {
