@@ -15,39 +15,26 @@ import java.util.List;
  */
 public class QLSachServviceImpl implements QLSachSevice{
     private QLSachRepository hh = new QLSachRepository();
+
     @Override
     public List<QLSach> getAll() {
-        return hh.getAll();
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public String add(QLSach qls) {
-        boolean add = hh.add(qls);
-        if (add) {
-            return "Thành công";
-        } else {
-            return "Thất bại";
-        }
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public String delete(String ma) {
-        boolean add = hh.delete(ma);
-        if (add) {
-            return "Thành công";
-        } else {
-            return "Thất bại";
-        }
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public String update(QLSach qls, String ma) {
-        boolean add = hh.update(qls, ma);
-        if (add) {
-            return "Thành công";
-        } else {
-            return "Thất bại";
-        }
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+   
     
 }
