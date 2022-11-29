@@ -94,7 +94,7 @@ public class FormKhuyenMai extends javax.swing.JInternalFrame {
         btnXoa = new javax.swing.JButton();
         txtTK = new javax.swing.JTextField();
 
-        setPreferredSize(new java.awt.Dimension(930, 640));
+        setPreferredSize(new java.awt.Dimension(1020, 640));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(51, 102, 255));

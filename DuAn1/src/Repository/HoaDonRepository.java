@@ -1,6 +1,7 @@
 package Repository;
 
 import DomainModels.HoaDon;
+import DomainModels.HoaDonCT;
 import Untility.DBContext;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,7 @@ public class HoaDonRepository {
 
     public List<HoaDon> layHoaDon() {
         List<HoaDon> listHD = new ArrayList<>();
-        String sql = "SELECT * FROM HOADON";
+        String sql = "SELECT * FROM HOADON order by MA";
 
         try {
             Connection con = DBContext.getConnection();
@@ -46,5 +47,33 @@ public class HoaDonRepository {
             System.out.println("Loi khi lay danh sach hoa don");
         }
         return listHD;
+    }
+
+    public List<HoaDonCT> layHoaDonCT(String id) {
+        List<HoaDonCT> listHDCT = new ArrayList<>();
+        String sql = "select HDCT.Id,HDCT.ID_SACH,HDCT.ID_HOADON,HDCT.SOLUONG,HDCT.DONGIA,HDCT.TIENTHUA,HDCT.TIENGIAMGIA,HDCT.TINHTRANG from HOADONCHITIET HDCT join HOADON HD "
+                + "on HDCT.ID_HOADON=HD.Id where HD.Id=?";
+
+        try {
+            Connection conn = DBContext.getConnection();
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                String idHDCT = rs.getString("Id");
+                String idSach = rs.getString("ID_SACH");
+                String idHD = rs.getString("ID_HOADON");
+                int soLuong = rs.getInt("SOLUONG");
+                String donGia = rs.getString("DONGIA");
+                String tienThua = rs.getString("TIENTHUA");
+                String tienGiamGia = rs.getString("TIENGIAMGIA");
+                int tt = rs.getInt("TINHTRANG");
+                HoaDonCT hdct = new HoaDonCT(idHDCT, idSach, idHD, donGia, tienThua, tienGiamGia, soLuong, tt);
+                listHDCT.add(hdct);
+
+            }
+        } catch (Exception e) {
+            System.out.println("Loi khi lay danh sach hoa don ct");
+        }
+        return listHDCT;
     }
 }

@@ -188,7 +188,7 @@ public class FormKhachHang extends javax.swing.JInternalFrame {
         jLabel10 = new javax.swing.JLabel();
         txtTt = new javax.swing.JTextField();
 
-        setPreferredSize(new java.awt.Dimension(930, 640));
+        setPreferredSize(new java.awt.Dimension(1020, 640));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
