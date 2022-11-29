@@ -2,7 +2,6 @@ package Repository;
 
 import DomainModels.HoaDon;
 import DomainModels.HoaDonCT;
-//import DomainModels.HoaDonCT;
 import Untility.DBContext;
 import ViewModels.HoaDonChiTietReponse;
 import ViewModels.HoaDonReponse;
@@ -22,7 +21,7 @@ public class HoaDonRepository {
         conn = new DBContext();
     }
 
-    public List<HoaDonReponse> layHoaDon() {
+       public List<HoaDonReponse> layHoaDon() {
         List<HoaDonReponse> listHD = new ArrayList<>();
         String sql = "select NGAYTAO, hd.MA, hdct.SOLUONG * hdct.DONGIA as [Tong tien], nv.TEN, hd.TINHTRANG from HOADON hd join HOADONCHITIET hdct on hd.id = hdct.ID_HOADON join NHANVIEN nv on hd.ID_NHANVIEN = nv.Id";
 
