@@ -18,9 +18,13 @@ import java.util.List;
 public interface ThongKeService {
     List<ThongKeResponse> getAll();
     List<ThongKeSPResponse> getAllSP();
+    List<ThongKeSPResponse> getAllSPThang();
+    List<ThongKeSPResponse> getAllSPNam();
     List<ThongKeResponse> HienThiDoanhThu();
     List<SoHoaDon> HienThiSoHoaDon();
     List<SoSanPhamTon> HienThiSoLuongTon();
     List<SanPhamHet> HienThiSanPhamHet();
     List<ThongKeResponse> search(String dateBD, String dateKT);
+    List<ThongKeResponse> getAllThang();
+    List<ThongKeResponse> getAllNam();
 }
