@@ -11,35 +11,9 @@ import java.util.Date;
  * @author Tran Tuan Cuong
  */
 public class NhanVien {
-    private String ID;
-    private String maNV;
-    private String ten;
-    private String tenDem;
-    private String ho;
-    private String gioiTinh;
-    private String ngaySinh;
-    private String sdt;
-    private String diaChi;
-    private String matKhau;
+
+    private String ID, maNV, ten, tenDem, ho, gioiTinh, ngaySinh, sdt, diaChi, matKhau, vaiTro, anh;
     private Integer tinhTrang;
-    private String vaiTro;
-    private String anh;
-
-    public String getHo() {
-        return ho;
-    }
-
-    public void setHo(String ho) {
-        this.ho = ho;
-    }
-
-    public String getAnh() {
-        return anh;
-    }
-
-    public void setAnh(String anh) {
-        this.anh = anh;
-    }
 
     public String getID() {
         return ID;
@@ -71,6 +45,14 @@ public class NhanVien {
 
     public void setTenDem(String tenDem) {
         this.tenDem = tenDem;
+    }
+
+    public String getHo() {
+        return ho;
+    }
+
+    public void setHo(String ho) {
+        this.ho = ho;
     }
 
     public String getGioiTinh() {
@@ -113,20 +95,28 @@ public class NhanVien {
         this.matKhau = matKhau;
     }
 
-    public Integer getTinhTrang() {
-        return tinhTrang;
-    }
-
-    public void setTinhTrang(Integer tinhTrang) {
-        this.tinhTrang = tinhTrang;
-    }
-
     public String getVaiTro() {
         return vaiTro;
     }
 
     public void setVaiTro(String vaiTro) {
         this.vaiTro = vaiTro;
+    }
+
+    public String getAnh() {
+        return anh;
+    }
+
+    public void setAnh(String anh) {
+        this.anh = anh;
+    }
+
+    public Integer getTinhTrang() {
+        return tinhTrang;
+    }
+
+    public void setTinhTrang(Integer tinhTrang) {
+        this.tinhTrang = tinhTrang;
     }
 
     public NhanVien() {
@@ -143,16 +133,8 @@ public class NhanVien {
         this.sdt = sdt;
         this.diaChi = diaChi;
         this.matKhau = matKhau;
-        this.tinhTrang = tinhTrang;
+        this.tinhTrang = tinhTrang; 
         this.vaiTro = vaiTro;
         this.anh = anh;
-    }
-    
-    public String getTrangThai() {
-        if (this.tinhTrang == 0) {
-            return "Đang làm việc";
-        } else {
-            return "Đã nghỉ việc";
-        }
     }
 }
