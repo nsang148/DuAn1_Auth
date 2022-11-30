@@ -1,7 +1,5 @@
 package Service.Implement;
 
-import DomainModels.HoaDon;
-import DomainModels.HoaDonCT;
 import Repository.HoaDonRepository;
 import Service.HoaDonService;
 import ViewModels.HoaDonChiTietReponse;
@@ -25,6 +23,11 @@ public class HoaDonServiceImpl implements HoaDonService {
     @Override
     public List<HoaDonChiTietReponse> layHoaDonCT(String ma) {
         return hoaDonRepository.layHoaDonCT(ma);
+    }
+
+    @Override
+    public List<HoaDonReponse> layHoaDontuNgay(String dateBD, String dateKT) {
+        return hoaDonRepository.layHoaDontuNgay(dateBD, dateKT);
     }
 
 }

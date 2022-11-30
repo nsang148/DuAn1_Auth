@@ -23,7 +23,7 @@ public class HoaDonRepository {
 
        public List<HoaDonReponse> layHoaDon() {
         List<HoaDonReponse> listHD = new ArrayList<>();
-        String sql = "select NGAYTAO, hd.MA, hdct.SOLUONG * hdct.DONGIA as [Tong tien], nv.TEN, hd.TINHTRANG from HOADON hd join HOADONCHITIET hdct on hd.id = hdct.ID_HOADON join NHANVIEN nv on hd.ID_NHANVIEN = nv.Id";
+        String sql = "select NGAYTAO, hd.MA, hdct.SOLUONG * hdct.DONGIA as [Tong tien], nv.TEN, hd.TINHTRANG from HOADON hd join HOADONCHITIET hdct on hd.id = hdct.ID_HOADON join NHANVIEN nv on hd.ID_NHANVIEN = nv.Id order by hd.MA asc";
 
         try {
             Connection con = DBContext.getConnection();
@@ -53,4 +53,24 @@ public class HoaDonRepository {
         }
         return null;
 }
+    public List<HoaDonReponse> layHoaDontuNgay(String dateBD, String dateKT) {
+        List<HoaDonReponse> listHD = new ArrayList<>();
+        String sql = "select NGAYTAO, hd.MA, hdct.SOLUONG * hdct.DONGIA as [Tong tien], nv.TEN, hd.TINHTRANG from HOADON hd join HOADONCHITIET hdct on hd.id = hdct.ID_HOADON join NHANVIEN nv on hd.ID_NHANVIEN = nv.Id"
+                + "where NGAYTAO >= ? and NGAYTAO <= ? order by NGAYTAO";
+
+        try ( Connection con = DBContext.getConnection();  PreparedStatement sttm = con.prepareStatement(sql)) {
+            sttm.setString(1, dateBD);
+            sttm.setString(2, dateKT);
+            ResultSet rs = sttm.executeQuery();
+            while (rs.next()) {
+                listHD.add(new HoaDonReponse(rs.getString(1), rs.getString(2), rs.getDouble(3), rs.getString(4), rs.getInt(5)));
+            }
+            return listHD;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+       return null;
+    }
+  
+        
 }
