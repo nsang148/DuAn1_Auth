@@ -32,7 +32,7 @@ public class KhachHangRepository {
     }
 
     public List<KhachHangReponse> getKH() {
-        String query = "SELECT Id, MAKH, HO +' '+TenDem+' '+Ten,GioiTinh,NgaySinh,Sdt,Email,ViDiem.TongDiem,ViDiem.SoDiemDaDung,ViDiem.SoDiemDaCong,TinhTrang FROM KhachHang join ViDiem on KhachHang.IdViDiem = ViDiem.Id";
+        String query = "SELECT Id, MAKH, HO +' '+TenDem+' '+Ten,GioiTinh,NgaySinh,Sdt,Email,TinhTrang FROM KhachHang";
         List<KhachHangReponse> kvr = new ArrayList<>();
         try {
             Connection con = DBContext.getConnection();
@@ -47,10 +47,7 @@ public class KhachHangRepository {
                 kh.setNgaySinh(rs.getString(5));
                 kh.setSdt(rs.getString(6));
                 kh.setEmail(rs.getString(7));
-                kh.setTongDiem(rs.getInt(8));
-                kh.setSoDiemDaDung(rs.getInt(9));
-                kh.setSoDiemDaCong(rs.getInt(10));
-                kh.setTinhTrang(rs.getBoolean(11));
+                kh.setTinhTrang(rs.getInt(8));
                 kvr.add(kh);
             }
         } catch (Exception ex) {
