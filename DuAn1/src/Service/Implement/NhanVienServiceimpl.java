@@ -8,7 +8,6 @@ import DomainModels.NhanVien;
 import Repository.NhanVienRepository;
 import Service.NhanVienService;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -52,8 +51,28 @@ public class NhanVienServiceimpl implements NhanVienService {
     }
 
     @Override
-    public NhanVien search(String id) {
-        return this.NVR.search(id);
+    public List<NhanVien> search(String timKiem) {
+        List<NhanVien> temp = new ArrayList<>();
+        for (NhanVien item : this.NVR.all()) {
+            if ((item.getHo() + " " + item.getTenDem() + " " + item.getTen()).contains(timKiem)) {
+                temp.add(item);
+            } else if (item.getSdt().contains(timKiem)) {
+                temp.add(item);
+            } else if (item.getDiaChi().equalsIgnoreCase(timKiem)) {
+                temp.add(item);
+            } else if (item.getGioiTinh().equalsIgnoreCase(timKiem)) {
+                temp.add(item);
+            } else if (item.getVaiTro().equalsIgnoreCase(timKiem)) {
+                temp.add(item);
+            } else if ((item.getTinhTrang() == 0 ? "Đang làm việc" : "Đã nghỉ việc").equalsIgnoreCase(timKiem)) {
+                temp.add(item);
+            } else if (item.getID().contains(timKiem)) {
+                temp.add(item);
+            } else if (item.getNgaySinh().contains(timKiem)) {
+                temp.add(item);
+            }
+        }
+        return temp;
     }
 
     @Override
