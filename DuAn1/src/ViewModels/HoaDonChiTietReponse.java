@@ -9,34 +9,36 @@ package ViewModels;
  * @author acer
  */
 public class HoaDonChiTietReponse {
-    private String ten;
-    private double gia;
+    private String tenSach;
+    private Double gia;
     private int soLuong;
-    private double thanhTien;
+    private Double thanhTien;
 
     public HoaDonChiTietReponse() {
     }
+    
+    
 
-    public HoaDonChiTietReponse(String ten, double gia, int soLuong, double thanhTien) {
-        this.ten = ten;
+    public HoaDonChiTietReponse(String tenSach, Double gia, int soLuong, Double thanhTien) {
+        this.tenSach = tenSach;
         this.gia = gia;
         this.soLuong = soLuong;
         this.thanhTien = thanhTien;
     }
 
-    public String getTen() {
-        return ten;
+    public String getTenSach() {
+        return tenSach;
     }
 
-    public void setTen(String ten) {
-        this.ten = ten;
+    public void setTenSach(String tenSach) {
+        this.tenSach = tenSach;
     }
 
-    public double getGia() {
+    public Double getGia() {
         return gia;
     }
 
-    public void setGia(double gia) {
+    public void setGia(Double gia) {
         this.gia = gia;
     }
 
@@ -48,11 +50,11 @@ public class HoaDonChiTietReponse {
         this.soLuong = soLuong;
     }
 
-    public double getThanhTien() {
+    public Double getThanhTien() {
         return thanhTien;
     }
 
-    public void setThanhTien(double thanhTien) {
+    public void setThanhTien(Double thanhTien) {
         this.thanhTien = thanhTien;
     }
     
