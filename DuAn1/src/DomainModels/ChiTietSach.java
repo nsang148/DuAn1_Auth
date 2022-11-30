@@ -17,13 +17,13 @@ public class ChiTietSach {
     private String id_TheLoai;
     private String id_NXB;
     private String id_TacGia;
-    private String tt;
+    private int tt;
     private String anh;
 
     public ChiTietSach() {
     }
 
-    public ChiTietSach(String id, String ma, String ten, int soLuongTon, String moTa, String id_TheLoai, String id_NXB, String id_TacGia, String tt, String anh) {
+    public ChiTietSach(String id, String ma, String ten, int soLuongTon, String moTa, String id_TheLoai, String id_NXB, String id_TacGia, int tt, String anh) {
         this.id = id;
         this.ma = ma;
         this.ten = ten;
@@ -36,7 +36,7 @@ public class ChiTietSach {
         this.anh = anh;
     }
 
-    public ChiTietSach(String id, String ma, String ten, int soLuongTon, String moTa, String tt, String anh) {
+    public ChiTietSach(String id, String ma, String ten, int soLuongTon, String moTa, int tt, String anh) {
         this.id = id;
         this.ma = ma;
         this.ten = ten;
@@ -110,11 +110,11 @@ public class ChiTietSach {
         this.id_TacGia = id_TacGia;
     }
 
-    public String getTt() {
+    public int getTt() {
         return tt;
     }
 
-    public void setTt(String tt) {
+    public void setTt(int tt) {
         this.tt = tt;
     }
 
@@ -126,12 +126,21 @@ public class ChiTietSach {
         this.anh = anh;
     }
 
+    public String getTrangThai(){
+        if (tt == 0) {
+            return "Còn";
+        } else {
+            return "Hết";
+        }
+    }
 
-    
-    public Object[] toRowdata(){
-        return new Object[]{id,ma,ten,soLuongTon,moTa,tt,anh};
+    @Override
+    public String toString() {
+        return "ChiTietSach{" + "id=" + id + ", ma=" + ma + ", ten=" + ten + ", soLuongTon=" + soLuongTon + ", moTa=" + moTa + ", id_TheLoai=" + id_TheLoai + ", id_NXB=" + id_NXB + ", id_TacGia=" + id_TacGia + ", tt=" + tt + ", anh=" + anh + '}';
     }
     
-    
-    
+    public Object[] toRowdata(){
+        return new Object[]{id,ma,ten,soLuongTon,moTa,getTrangThai(),anh};
+    }
+
 }
