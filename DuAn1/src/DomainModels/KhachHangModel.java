@@ -19,12 +19,13 @@ public class KhachHangModel {
     private String ngaySinh;
     private String sdt;
     private String email;
-    private int tinhTrang;
+    private Boolean tinhTrang;
+    private String idViDiem;
 
     public KhachHangModel() {
     }
 
-    public KhachHangModel(String idKH, String maKH, String tenKH, String tenDem, String Ho, String gioiTinh, String ngaySinh, String sdt, String email, int tinhTrang) {
+    public KhachHangModel(String idKH, String maKH, String tenKH, String tenDem, String Ho, String gioiTinh, String ngaySinh, String sdt, String email, Boolean tinhTrang, String idViDiem) {
         this.idKH = idKH;
         this.maKH = maKH;
         this.tenKH = tenKH;
@@ -35,6 +36,7 @@ public class KhachHangModel {
         this.sdt = sdt;
         this.email = email;
         this.tinhTrang = tinhTrang;
+        this.idViDiem = idViDiem;
     }
 
     public String getIdKH() {
@@ -109,13 +111,23 @@ public class KhachHangModel {
         this.email = email;
     }
 
-    public int getTinhTrang() {
+    public Boolean getTinhTrang() {
         return tinhTrang;
     }
 
-    public void setTinhTrang(int tinhTrang) {
+    public void setTinhTrang(Boolean tinhTrang) {
         this.tinhTrang = tinhTrang;
     }
+
+    public String getIdViDiem() {
+        return idViDiem;
+    }
+
+    public void setIdViDiem(String idViDiem) {
+        this.idViDiem = idViDiem;
+    }
+
+    
     
     
 }

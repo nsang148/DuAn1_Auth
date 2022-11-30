@@ -48,7 +48,7 @@ public class FormKhachHang extends javax.swing.JInternalFrame {
         BasicInternalFrameUI ui = (BasicInternalFrameUI) this.getUI();
         ui.setNorthPane(null);
         defaultTableModel = (DefaultTableModel) tbKh.getModel();
-        String[] header = {"ID", "Mã KH", "Họ và tên", "Giới tính", "Ngày sinh", "SDT", "Email", "Tính trạng"};
+        String[] header = {"ID", "Mã KH", "Họ và tên", "Giới tính", "Ngày sinh", "SDT", "Email", "Tổng điểm", "Số điểm đã dùng", "Số điểm được cộng", "Tình trạng"};
         defaultTableModel.setColumnIdentifiers(header);
         khachHangService = new KhachHangIplement();
         fillToTable();
@@ -68,7 +68,7 @@ public class FormKhachHang extends javax.swing.JInternalFrame {
         System.out.println(list);
         if (!list.isEmpty()) {
             for (int i = 0; i < list.size(); i++) {
-                String[] data = new String[8];
+                Object[] data = new Object[11];
                 data[0] = list.get(i).getId();
                 data[1] = list.get(i).getMa();
                 data[2] = list.get(i).getHoTen();
@@ -76,10 +76,13 @@ public class FormKhachHang extends javax.swing.JInternalFrame {
                 data[4] = list.get(i).getNgaySinh();
                 data[5] = list.get(i).getSdt();
                 data[6] = list.get(i).getEmail();
-                if (list.get(i).getTinhTrang() == 1) {
-                    data[7] = "KHTT";
+                data[7] = list.get(i).getTongDiem();
+                data[8] = list.get(i).getSoDiemDaDung();
+                data[9] = list.get(i).getSoDiemDaCong();
+                if (list.get(i).getTinhTrang().equals(Boolean.TRUE)) {
+                    data[10] = "KHTT";
                 } else {
-                    data[7] = "Không thân thiết";
+                    data[10] = "Không thân thiết";
                 }
 
                 defaultTableModel.addRow(data);
@@ -105,7 +108,11 @@ public class FormKhachHang extends javax.swing.JInternalFrame {
         kh.setNgaySinh(txtNgaySinh.getText());
         kh.setSdt(txtSoDienThoai.getText());
         kh.setEmail(txtEmail.getText());
-        kh.setTinhTrang(Integer.parseInt(txtTt.getText()));
+        if (txtTt.getText().equals("KHTT")) {
+            kh.setTinhTrang(true);
+        } else {
+            kh.setTinhTrang(false);
+        }
         return kh;
     }
 
@@ -188,7 +195,7 @@ public class FormKhachHang extends javax.swing.JInternalFrame {
         jLabel10 = new javax.swing.JLabel();
         txtTt = new javax.swing.JTextField();
 
-        setPreferredSize(new java.awt.Dimension(1020, 640));
+        setPreferredSize(new java.awt.Dimension(930, 640));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -279,6 +286,11 @@ public class FormKhachHang extends javax.swing.JInternalFrame {
         });
 
         btnGuiMail.setText("Gui Mail");
+        btnGuiMail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuiMailActionPerformed(evt);
+            }
+        });
 
         btnImportExcel.setText("Import Excel");
         btnImportExcel.addActionListener(new java.awt.event.ActionListener() {
@@ -301,8 +313,8 @@ public class FormKhachHang extends javax.swing.JInternalFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(9, 9, 9)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -354,20 +366,20 @@ public class FormKhachHang extends javax.swing.JInternalFrame {
                                             .addComponent(txtHo, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
                                             .addComponent(txtTenDem))))
                                 .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                        .addGap(71, 71, 71)
-                        .addComponent(btnImportExcel)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(btnThem)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnSua)
+                        .addGap(42, 42, 42))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(btnXoa)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnGuiMail)
-                        .addGap(40, 40, 40))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(btnThem)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnSua)
-                        .addGap(42, 42, 42))))
+                        .addGap(40, 40, 40))))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(68, 68, 68)
+                .addComponent(btnImportExcel)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -424,7 +436,7 @@ public class FormKhachHang extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnXoa)
                     .addComponent(btnGuiMail))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(btnImportExcel)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -454,35 +466,35 @@ public class FormKhachHang extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnImportExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportExcelActionPerformed
-        File excelFile;
-        FileInputStream excelFis = null;
-        BufferedInputStream excelBis = null;
-        String defaultCurrentDirectoryPath = "C:\\Users\\sangh\\Documents";
-        JFileChooser excelFileChooser = new JFileChooser(defaultCurrentDirectoryPath);
-        int excelChooser = excelFileChooser.showOpenDialog(null);
-        if (excelChooser == JFileChooser.APPROVE_OPTION) {
-            try {
-                excelFile = excelFileChooser.getSelectedFile();
-                excelFis = new FileInputStream(excelFile);
-                excelBis = new BufferedInputStream(excelFis);
-
-                XSSFWorkbook excelJtableImport = new XSSFWorkbook(excelBis);
-                XSSFSheet excelSheet = excelJtableImport.getSheetAt(0);
-
-                for (int row = 0; row < 10; row++) {
-                    XSSFRow excelRow = excelSheet.getRow(row);
-                    for (int column = 0; column < 10; column++) {
-
-                        XSSFCell excelCell = excelRow.getCell(column);
-                        System.out.println(excelCell.getStringCellValue());
-                    }
-                }
-            } catch (FileNotFoundException ex) {
-                JOptionPane.showMessageDialog(null, ex.getMessage());
-            } catch (IOException ex) {
-                JOptionPane.showMessageDialog(null, ex.getMessage());
-            }
-        }
+//        File excelFile;
+//        FileInputStream excelFis = null;
+//        BufferedInputStream excelBis = null;
+//        String defaultCurrentDirectoryPath = "C:\\Users\\sangh\\Documents";
+//        JFileChooser excelFileChooser = new JFileChooser(defaultCurrentDirectoryPath);
+//        int excelChooser = excelFileChooser.showOpenDialog(null);
+//        if (excelChooser == JFileChooser.APPROVE_OPTION) {
+//            try {
+//                excelFile = excelFileChooser.getSelectedFile();
+//                excelFis = new FileInputStream(excelFile);
+//                excelBis = new BufferedInputStream(excelFis);
+//
+//                XSSFWorkbook excelJtableImport = new XSSFWorkbook(excelBis);
+//                XSSFSheet excelSheet = excelJtableImport.getSheetAt(0);
+//
+//                for (int row = 0; row < 10; row++) {
+//                    XSSFRow excelRow = excelSheet.getRow(row);
+//                    for (int column = 0; column < 10; column++) {
+//
+//                        XSSFCell excelCell = excelRow.getCell(column);
+//                        System.out.println(excelCell.getStringCellValue());
+//                    }
+//                }
+//            } catch (FileNotFoundException ex) {
+//                JOptionPane.showMessageDialog(null, ex.getMessage());
+//            } catch (IOException ex) {
+//                JOptionPane.showMessageDialog(null, ex.getMessage());
+//            }
+//        }
     }//GEN-LAST:event_btnImportExcelActionPerformed
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
@@ -521,6 +533,12 @@ public class FormKhachHang extends javax.swing.JInternalFrame {
             fillToTable();
         }
     }//GEN-LAST:event_btnSuaActionPerformed
+
+    private void btnGuiMailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuiMailActionPerformed
+        // TODO add your handling code here:
+        SendMail sendMail = new SendMail();
+        sendMail.setVisible(true);
+    }//GEN-LAST:event_btnGuiMailActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -16,12 +16,15 @@ public class KhachHangReponse {
     private String NgaySinh;
     private String Sdt;
     private String Email;
-    private int TinhTrang;
+    private int tongDiem;
+    private int soDiemDaDung;
+    private int soDiemDaCong;
+    private Boolean TinhTrang;
 
     public KhachHangReponse() {
     }
 
-    public KhachHangReponse(String Id, String Ma, String HoTen, String GioiTinh, String NgaySinh, String Sdt, String Email, int TinhTrang) {
+    public KhachHangReponse(String Id, String Ma, String HoTen, String GioiTinh, String NgaySinh, String Sdt, String Email, int tongDiem, int soDiemDaDung, int soDiemDaCong, Boolean TinhTrang) {
         this.Id = Id;
         this.Ma = Ma;
         this.HoTen = HoTen;
@@ -29,6 +32,9 @@ public class KhachHangReponse {
         this.NgaySinh = NgaySinh;
         this.Sdt = Sdt;
         this.Email = Email;
+        this.tongDiem = tongDiem;
+        this.soDiemDaDung = soDiemDaDung;
+        this.soDiemDaCong = soDiemDaCong;
         this.TinhTrang = TinhTrang;
     }
 
@@ -88,13 +94,37 @@ public class KhachHangReponse {
         this.Email = Email;
     }
 
-    public int getTinhTrang() {
+    public int getTongDiem() {
+        return tongDiem;
+    }
+
+    public void setTongDiem(int tongDiem) {
+        this.tongDiem = tongDiem;
+    }
+
+    public int getSoDiemDaDung() {
+        return soDiemDaDung;
+    }
+
+    public void setSoDiemDaDung(int soDiemDaDung) {
+        this.soDiemDaDung = soDiemDaDung;
+    }
+
+    public int getSoDiemDaCong() {
+        return soDiemDaCong;
+    }
+
+    public void setSoDiemDaCong(int soDiemDaCong) {
+        this.soDiemDaCong = soDiemDaCong;
+    }
+
+    public Boolean getTinhTrang() {
         return TinhTrang;
     }
 
-    public void setTinhTrang(int TinhTrang) {
+    public void setTinhTrang(Boolean TinhTrang) {
         this.TinhTrang = TinhTrang;
     }
-    
+
     
 }
