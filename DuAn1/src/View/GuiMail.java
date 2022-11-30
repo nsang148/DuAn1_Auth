@@ -13,6 +13,7 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -25,6 +26,7 @@ public class GuiMail extends javax.swing.JFrame {
      */
     public GuiMail() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -45,6 +47,7 @@ public class GuiMail extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         txtMessage = new javax.swing.JTextArea();
         btnSend = new javax.swing.JButton();
+        btnQuit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -67,6 +70,13 @@ public class GuiMail extends javax.swing.JFrame {
             }
         });
 
+        btnQuit.setText("Quit");
+        btnQuit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnQuitActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -78,18 +88,20 @@ public class GuiMail extends javax.swing.JFrame {
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(21, 21, 21)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnSend)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtTo)
+                            .addComponent(txtSubject)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel3))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtTo)
-                                    .addComponent(txtSubject)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE))))))
+                                .addComponent(btnSend)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnQuit)
+                                .addGap(11, 11, 11)))))
                 .addContainerGap(61, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -110,7 +122,9 @@ public class GuiMail extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(btnSend)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnSend)
+                    .addComponent(btnQuit))
                 .addContainerGap(35, Short.MAX_VALUE))
         );
 
@@ -118,12 +132,12 @@ public class GuiMail extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendActionPerformed
-        final String username = "anhnqph27413@fpt.edu.vn";
-        final String password = "slwajnaduyggyjyi";
-        String to = txtTo.getText();
+        final String username = "sangntph25623@fpt.edu.vn";
+        final String password = "baxnmjyahsdpxmok";
+        String toEmail = txtTo.getText();
         String subJect = txtSubject.getText();
         String mess = txtMessage.getText();
-        
+
         Properties prop = new Properties();
         prop.put("mail.smtp.auth", true);
         prop.put("mail.smtp.starttls.enable", "true");
@@ -131,34 +145,43 @@ public class GuiMail extends javax.swing.JFrame {
         prop.put("mail.smtp.port", "587");
         prop.put("mail.smtp.ssl.protocols", "TLSv1.2");
         prop.put("mail.smtp.ssl.trust", "smtp.gmail.com");
-        
+
         Session session = Session.getInstance(prop,
                 new Authenticator() {
-                    protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(username, password);
-                    }
-                });
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(username, password);
+            }
+        });
 
         try {
 
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("anhnqph27413@fpt.edu.vn"));
+            message.setFrom(new InternetAddress("sangntph25623@fpt.edu.vn"));
             message.setRecipients(
                     Message.RecipientType.TO,
-                    InternetAddress.parse(to)
+                    InternetAddress.parse(toEmail)
             );
             message.setSubject(subJect);
             message.setText(mess);
 
             Transport.send(message);
-
+            JOptionPane.showMessageDialog(this, "Sent Email!");
             System.out.println("Done");
 
         } catch (MessagingException e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Unsent Email!");
         }
-    
+
     }//GEN-LAST:event_btnSendActionPerformed
+
+    private void btnQuitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitActionPerformed
+        // TODO add your handling code here:
+        int click = JOptionPane.showConfirmDialog(null, "Bạn muốn thoát ?", "Thoát", JOptionPane.YES_NO_OPTION);
+        if (click == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        }
+    }//GEN-LAST:event_btnQuitActionPerformed
 
     /**
      * @param args the command line arguments
@@ -196,6 +219,7 @@ public class GuiMail extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnQuit;
     private javax.swing.JButton btnSend;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
