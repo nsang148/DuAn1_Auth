@@ -4,7 +4,7 @@
  */
 package Service.Implement;
 
-import DomainModels.QLSach;
+import DomainModels.ChiTietSach;
 import Repository.QLSachRepository;
 import Service.QLSachSevice;
 import java.util.List;
@@ -17,24 +17,45 @@ public class QLSachServviceImpl implements QLSachSevice{
     private QLSachRepository hh = new QLSachRepository();
 
     @Override
-    public List<QLSach> getAll() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public List<ChiTietSach> getAll() {
+        return hh.getAll();
     }
 
     @Override
-    public String add(QLSach qls) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public String add(ChiTietSach qls) {
+        boolean add= hh.add(qls);
+        if (add) {
+            return "Thành Công";
+        } else {
+            return "Thất Bại";
+        } 
     }
 
     @Override
     public String delete(String ma) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        boolean delete= hh.delete(ma);
+        if (delete) {
+            return "Thành Công";
+        } else {
+            return "Thất Bại";
+        }
     }
 
     @Override
-    public String update(QLSach qls, String ma) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public String update(ChiTietSach qls, String ma) {
+        boolean update= hh.update(qls, ma);
+        if (update) {
+            return "Thành Công";
+        } else {
+            return "Thất Bại";
+        }
     }
+
+    @Override
+    public List<ChiTietSach> search(String ten) {
+        return hh.search(ten);
+    }
+
    
-    
+   
 }
