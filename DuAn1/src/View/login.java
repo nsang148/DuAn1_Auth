@@ -5,6 +5,12 @@
  */
 package View;
 
+import DomainModels.NhanVien;
+import Service.Implement.NhanVienServiceimpl;
+import Service.NhanVienService;
+import java.util.List;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author ME1
@@ -14,6 +20,7 @@ public class login extends javax.swing.JFrame {
     /**
      * Creates new form login
      */
+    private NhanVienService service = new NhanVienServiceimpl();
     public login() {
         initComponents();
         txtusername.setBackground(new java.awt.Color(0,0,0,1));
@@ -47,7 +54,7 @@ public class login extends javax.swing.JFrame {
         show = new javax.swing.JLabel();
         jCheckBox1 = new javax.swing.JCheckBox();
         jLabel11 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnLogin = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
 
@@ -166,16 +173,16 @@ public class login extends javax.swing.JFrame {
         jLabel11.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(254, 261, 121, 27));
 
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(54, 33, 89));
-        jButton1.setText("LOGIN");
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnLogin.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnLogin.setForeground(new java.awt.Color(54, 33, 89));
+        btnLogin.setText("LOGIN");
+        btnLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnLoginActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 306, 341, 40));
+        jPanel2.add(btnLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 306, 341, 40));
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
@@ -227,10 +234,30 @@ public class login extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_formWindowOpened
+    public boolean checkLogin(String user, String pass) {
+        List<NhanVien> list = service.getList();
+        for(NhanVien nv: list){
+            if(nv.getMaNV().equals(user)&& nv.getMatKhau().equals(pass)){
+                return true;
+            }
+        }
+        return false;
+    
+    }
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        List<NhanVien> list = service.getList();
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
+        if (checkLogin(txtusername.getText(), txtpassword.getText())) {
+            new TrangChu().setVisible(true);
+            this.dispose();
+            JOptionPane.showMessageDialog(this, "Dang nhap thanh cong");
+            return;
+        } else {
+            JOptionPane.showMessageDialog(this, "Dang nhap that bai. Tai khoan hoac mat khau sai");
+            return;
+        }
+
+    }//GEN-LAST:event_btnLoginActionPerformed
 
     /**
      * @param args the command line arguments
@@ -269,8 +296,8 @@ public class login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnLogin;
     private javax.swing.JLabel disable;
-    private javax.swing.JButton jButton1;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
