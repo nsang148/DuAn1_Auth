@@ -4,7 +4,7 @@
  */
 package View;
 
-import DomainModels.KhuyenMaiHD;
+import DomainModels.KhuyenMai;
 import Service.Implement.KhuyenMaiHDImpl;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
@@ -36,7 +36,7 @@ public class FormKhuyenMai extends javax.swing.JInternalFrame {
     public void loadTable() {
         model = (DefaultTableModel) tblKMHD.getModel();
         model.setRowCount(0);
-        for (KhuyenMaiHD item : service.getList()) {
+        for (KhuyenMai item : service.getList()) {
             model.addRow(new Object[]{
                 item.getId(), item.getMa(), item.getTen(), item.getPhanTramGiam() + "%", item.getNgayApDung(), item.getNgayKetThuc(), service.getTrangThai(item.getTinhTrang())
             });
@@ -46,21 +46,21 @@ public class FormKhuyenMai extends javax.swing.JInternalFrame {
     public void loadTableTK() {
         model = (DefaultTableModel) tblKMHD.getModel();
         model.setRowCount(0);
-        for (KhuyenMaiHD item : service.searchKM(txtTK.getText())) {
+        for (KhuyenMai item : service.searchKM(txtTK.getText())) {
             model.addRow(new Object[]{
                 item.getId(), item.getMa(), item.getTen(), item.getPhanTramGiam() + "%", item.getNgayApDung(), item.getNgayKetThuc(), service.getTrangThai(item.getTinhTrang())
             });
         }
     }
 
-    public KhuyenMaiHD getAllFromGUI() {
-        int tt;
+    public KhuyenMai getAllFromGUI() {
+        String tt;
         if (rdoHetHan.isSelected()) {
-            tt = 0;
+            tt = "0";
         } else {
-            tt = 1;
+            tt = "1";
         }
-        return new KhuyenMaiHD(null, txtMa.getText(), txtTen.getText(), Float.parseFloat(txtMucGiam.getText()), txtNgayApDung.getText(), txtNgayKetThuc.getText(), tt);
+        return new KhuyenMai(null, txtMa.getText(), txtTen.getText(), txtMucGiam.getText(), txtNgayApDung.getText(), txtNgayKetThuc.getText(), tt);
     }
 
     /**
@@ -359,10 +359,10 @@ public class FormKhuyenMai extends javax.swing.JInternalFrame {
         var temp = service.getKMHDByID(isClicked);
         txtMa.setText(temp.getMa());
         txtTen.setText(temp.getTen());
-        txtMucGiam.setText(temp.getPhanTramGiam().toString());
+        txtMucGiam.setText(temp.getPhanTramGiam());
         txtNgayApDung.setText(temp.getNgayApDung());
         txtNgayKetThuc.setText(temp.getNgayKetThuc());
-        if (temp.getTinhTrang() == 0) {
+        if (temp.getTinhTrang().equals("0")) {
             rdoHetHan.setSelected(true);
         } else {
             rdoConHan.setSelected(true);
@@ -403,7 +403,7 @@ public class FormKhuyenMai extends javax.swing.JInternalFrame {
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
         // TODO add your handling code here:
-        KhuyenMaiHD temp = new KhuyenMaiHD();
+        KhuyenMai temp = new KhuyenMai();
         temp.setId(isClicked);
         int confirm = JOptionPane.showConfirmDialog(this, "Xac Nhan");
         if (confirm == 0) {

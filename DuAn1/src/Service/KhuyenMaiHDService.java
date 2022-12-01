@@ -4,7 +4,7 @@
  */
 package Service;
 
-import DomainModels.KhuyenMaiHD;
+import DomainModels.KhuyenMai;
 import java.util.ArrayList;
 
 /**
@@ -12,11 +12,11 @@ import java.util.ArrayList;
  * @author Duc
  */
 public interface KhuyenMaiHDService {
-    ArrayList<KhuyenMaiHD> getList();
-    String them(KhuyenMaiHD obj);
-    String xoa(KhuyenMaiHD obj);
-    String sua(KhuyenMaiHD obj);
-    KhuyenMaiHD getKMHDByID(String id);
-    String getTrangThai(int tt);
-    ArrayList<KhuyenMaiHD> searchKM(String tk);
+    ArrayList<KhuyenMai> getList();
+    String them(KhuyenMai obj);
+    String xoa(KhuyenMai obj);
+    String sua(KhuyenMai obj);
+    KhuyenMai getKMHDByID(String id);
+    String getTrangThai(String tt);
+    ArrayList<KhuyenMai> searchKM(String tk);
 }
