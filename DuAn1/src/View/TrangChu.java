@@ -4,6 +4,9 @@
  */
 package View;
 
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author This PC
@@ -17,6 +20,7 @@ public class TrangChu extends javax.swing.JFrame {
         initComponents();
         // setExtendedState(MAXIMIZED_BOTH); 
         setLocationRelativeTo(this);
+        setTitle("Phần mềm quản lý bán sách");
 
     }
 
@@ -59,7 +63,7 @@ public class TrangChu extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(54, 33, 89));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel3.setBackground(new java.awt.Color(54, 33, 89));
+        jPanel3.setBackground(new java.awt.Color(96, 69, 143));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -294,6 +298,11 @@ public class TrangChu extends javax.swing.JFrame {
         jPanel4.setBackground(new java.awt.Color(54, 33, 89));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icon-exit1.png"))); // NOI18N
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -307,11 +316,11 @@ public class TrangChu extends javax.swing.JFrame {
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addGap(0, 16, Short.MAX_VALUE)
+                .addGap(0, 6, Short.MAX_VALUE)
                 .addComponent(jLabel2))
         );
 
-        jPanel2.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 590, 40, 40));
+        jPanel2.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(234, 600, -1, 30));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 270, 640));
 
@@ -319,20 +328,20 @@ public class TrangChu extends javax.swing.JFrame {
         jDesktopPane1.setLayout(jDesktopPane1Layout);
         jDesktopPane1Layout.setHorizontalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 930, Short.MAX_VALUE)
+            .addGap(0, 1010, Short.MAX_VALUE)
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 640, Short.MAX_VALUE)
         );
 
-        jPanel1.add(jDesktopPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 0, 930, 640));
+        jPanel1.add(jDesktopPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 0, 1010, 640));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1285, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -355,7 +364,7 @@ public class TrangChu extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel6MouseClicked
 
     private void jPanel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel7MouseClicked
-        FrmNhanVien formQLNV = new FrmNhanVien();
+        FormNhanVien formQLNV = new FormNhanVien();
         jDesktopPane1.removeAll();
         jDesktopPane1.add(formQLNV).setVisible(true);
     }//GEN-LAST:event_jPanel7MouseClicked
@@ -383,6 +392,16 @@ public class TrangChu extends javax.swing.JFrame {
         jDesktopPane1.removeAll();
         jDesktopPane1.add(formKH).setVisible(true);
     }//GEN-LAST:event_jPanel12MouseClicked
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+   
+        javax.swing.ImageIcon icon =new javax.swing.ImageIcon("src\\icon\\icon_sad.png");
+        int click = JOptionPane.showConfirmDialog(this, "Mày muốn thoát à?", "Cút khỏi đây", JOptionPane.YES_NO_OPTION,JOptionPane.PLAIN_MESSAGE,icon);
+        if (click == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        }
+       
+    }//GEN-LAST:event_jLabel2MouseClicked
 
     /**
      * @param args the command line arguments

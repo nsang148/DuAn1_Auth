@@ -4,7 +4,7 @@
  */
 package Service.Implement;
 
-import DomainModels.QLSach;
+import DomainModels.ChiTietSach;
 import Repository.QLSachRepository;
 import Service.QLSachSevice;
 import java.util.List;
@@ -15,39 +15,47 @@ import java.util.List;
  */
 public class QLSachServviceImpl implements QLSachSevice{
     private QLSachRepository hh = new QLSachRepository();
+
     @Override
-    public List<QLSach> getAll() {
+    public List<ChiTietSach> getAll() {
         return hh.getAll();
     }
 
     @Override
-    public String add(QLSach qls) {
-        boolean add = hh.add(qls);
+    public String add(ChiTietSach qls) {
+        boolean add= hh.add(qls);
         if (add) {
-            return "Thành công";
+            return "Thành Công";
         } else {
-            return "Thất bại";
-        }
+            return "Thất Bại";
+        } 
     }
 
     @Override
     public String delete(String ma) {
-        boolean add = hh.delete(ma);
-        if (add) {
-            return "Thành công";
+        boolean delete= hh.delete(ma);
+        if (delete) {
+            return "Thành Công";
         } else {
-            return "Thất bại";
+            return "Thất Bại";
         }
     }
 
     @Override
-    public String update(QLSach qls, String ma) {
-        boolean add = hh.update(qls, ma);
-        if (add) {
-            return "Thành công";
+    public String update(ChiTietSach qls, String ma) {
+        boolean update= hh.update(qls, ma);
+        if (update) {
+            return "Thành Công";
         } else {
-            return "Thất bại";
+            return "Thất Bại";
         }
     }
-    
+
+    @Override
+    public List<ChiTietSach> search(String ten) {
+        return hh.search(ten);
+    }
+
+   
+   
 }
