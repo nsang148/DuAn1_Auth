@@ -11,9 +11,17 @@ import ViewModels.SoHoaDon;
 import ViewModels.SoSanPhamTon;
 import ViewModels.ThongKeResponse;
 import ViewModels.ThongKeSPResponse;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  *
@@ -372,6 +380,11 @@ public class FormThongKe extends javax.swing.JInternalFrame {
         });
 
         jButton2.setText("Xuat Excel");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Bao cao");
 
@@ -481,6 +494,45 @@ public class FormThongKe extends javax.swing.JInternalFrame {
             loadTableSPNam();
         }
     }//GEN-LAST:event_cboThoiGianActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        List<ThongKeResponse> list = service.getAll();
+        XSSFWorkbook workbook = new XSSFWorkbook();
+        XSSFSheet sheet = workbook.createSheet("danhSach");
+        XSSFRow row = null;
+        Cell cell = null;
+        row = sheet.createRow(3);
+        cell = row.createCell(0, CellType.STRING);
+        cell.setCellValue("Thoi gian");
+        
+        cell = row.createCell(1, CellType.STRING);
+        cell.setCellValue("So luong");
+        
+        cell = row.createCell(2, CellType.STRING);
+        cell.setCellValue("Tong tien");
+
+        for(int i = 0;  i < list.size(); i++ ){
+            row = sheet.createRow(4+i);
+            
+            cell= row.createCell(0, CellType.STRING);
+            cell.setCellValue(list.get(i).getNgayThanhToan());
+            
+            cell= row.createCell(1, CellType.STRING);
+            cell.setCellValue(list.get(i).getSoLuong());
+            
+            cell= row.createCell(2, CellType.STRING);
+            cell.setCellValue(list.get(i).getTongTien());
+    }
+        File file = new File("D://Nhom1//ThongKe.xlsx");
+        try {
+            FileOutputStream fis =  new FileOutputStream(file);
+            workbook.write(fis);
+            fis.close();
+            JOptionPane.showMessageDialog(this, "Xuat file excel thành công");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
     private void loadTableTG() {
         model = (DefaultTableModel) tblThongKeTG.getModel();
         List<ThongKeResponse> list = service.getAll();
