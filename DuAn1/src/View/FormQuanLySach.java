@@ -4,7 +4,14 @@
  */
 package View;
 
+import DomainModels.ChiTietSach;
+import Service.Implement.QLSachServviceImpl;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -12,16 +19,39 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
  */
 public class FormQuanLySach extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form FormThongKe
-     */
+    private DefaultTableModel dtm = new DefaultTableModel();
+    private List<ChiTietSach> lists = new ArrayList<>();
+    private QLSachServviceImpl service = new QLSachServviceImpl();
+    private DefaultComboBoxModel cbb = new DefaultComboBoxModel();
     public FormQuanLySach() {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
         BasicInternalFrameUI ui = (BasicInternalFrameUI) this.getUI();
         ui.setNorthPane(null);
+        String heard[] = {"ID","Mã","Tên","SLT","MôTả","TrạngThái","Ảnh"};
+        
+        
+        dtm.setColumnIdentifiers(heard);
+        lists=service.getAll();
+        jTable1.setModel(dtm);
+        showeData(lists);
     }
-
+    public void showeData(List<ChiTietSach> lists){
+    dtm.setRowCount(0);
+        for (ChiTietSach list : lists) {
+            dtm.addRow(list.toRowdata());
+        }
+    }
+    public void fillData(int index){
+    ChiTietSach sts = lists.get(index);
+    txtID.setText(sts.getId());
+    txtMa.setText(sts.getMa());
+    txtSLT.setText(String.valueOf(sts.getSoLuongTon()));
+    txtTen.setText(sts.getTen());
+    txtMoTa.setText(sts.getMoTa());
+    txtAnh.setText(sts.getAnh());
+    txtTT.setText(String.valueOf(sts.getTt()));
+    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -66,6 +96,11 @@ public class FormQuanLySach extends javax.swing.JInternalFrame {
         });
 
         btnThem.setText("Thêm");
+        btnThem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemActionPerformed(evt);
+            }
+        });
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -76,6 +111,11 @@ public class FormQuanLySach extends javax.swing.JInternalFrame {
         jLabel5.setText("ID");
 
         btnTimKiem.setText("Tìm Kiếm");
+        btnTimKiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTimKiemActionPerformed(evt);
+            }
+        });
 
         btnSapXep.setText("Sắp xếp");
         btnSapXep.addActionListener(new java.awt.event.ActionListener() {
@@ -144,6 +184,11 @@ public class FormQuanLySach extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -287,7 +332,16 @@ public class FormQuanLySach extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnSapXepActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
-        // TODO add your handling code here:
+         String ma = txtMa.getText();
+        String ten = txtTen.getText();
+        String slt = txtSLT.getText();
+        String tt = txtTT.getText();
+        String moTa =txtMoTa.getText();
+        String anh =txtAnh.getText();
+        ChiTietSach cts =new ChiTietSach(ma, ten, Integer.valueOf(slt), moTa, Integer.valueOf(tt), anh);
+        JOptionPane.showMessageDialog(this, service.update(cts, txtID.getText()));
+        lists=service.getAll();
+        showeData(lists);
     }//GEN-LAST:event_btnSuaActionPerformed
 
     private void txtMoTaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMoTaActionPerformed
@@ -295,12 +349,39 @@ public class FormQuanLySach extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtMoTaActionPerformed
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
-        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(this, service.delete(txtMa.getText()));
+        lists=service.getAll();
+        showeData(lists);
     }//GEN-LAST:event_btnXoaActionPerformed
 
     private void txtTTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTTActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTTActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        int row = jTable1.getSelectedRow();
+        fillData(row);
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
+        String ma = txtMa.getText();
+        String ten = txtTen.getText();
+        String slt = txtSLT.getText();
+        String tt = txtTT.getText();
+        String moTa =txtMoTa.getText();
+        String anh =txtAnh.getText();
+        ChiTietSach cts =new ChiTietSach(ma, ten, Integer.valueOf(slt), moTa, Integer.valueOf(tt), anh);
+        JOptionPane.showMessageDialog(this, service.add(cts));
+        lists=service.getAll();
+        showeData(lists);
+    }//GEN-LAST:event_btnThemActionPerformed
+
+    private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
+        List<ChiTietSach> seaech = service.search(txtTimKiem1.getText());
+        
+        showeData(seaech);
+        showeData(lists);
+    }//GEN-LAST:event_btnTimKiemActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
