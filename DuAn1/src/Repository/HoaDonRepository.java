@@ -21,7 +21,7 @@ public class HoaDonRepository {
         conn = new DBContext();
     }
 
-       public List<HoaDonReponse> layHoaDon() {
+    public List<HoaDonReponse> layHoaDon() {
         List<HoaDonReponse> listHD = new ArrayList<>();
         String sql = "select NGAYTAO, hd.MA, hdct.SOLUONG * hdct.DONGIA as [Tong tien], nv.TEN, hd.TINHTRANG from HOADON hd join HOADONCHITIET hdct on hd.id = hdct.ID_HOADON join NHANVIEN nv on hd.ID_NHANVIEN = nv.Id order by hd.MA asc";
 
@@ -52,11 +52,11 @@ public class HoaDonRepository {
             e.printStackTrace();
         }
         return null;
-}
+    }
+
     public List<HoaDonReponse> layHoaDontuNgay(String dateBD, String dateKT) {
         List<HoaDonReponse> listHD = new ArrayList<>();
-        String sql = "select NGAYTAO, hd.MA, hdct.SOLUONG * hdct.DONGIA as [Tong tien], nv.TEN, hd.TINHTRANG from HOADON hd join HOADONCHITIET hdct on hd.id = hdct.ID_HOADON join NHANVIEN nv on hd.ID_NHANVIEN = nv.Id"
-                + "where NGAYTAO >= ? and NGAYTAO <= ? order by NGAYTAO";
+        String sql = "select NGAYTAO, hd.MA, hdct.SOLUONG * hdct.DONGIA as [Tong tien], nv.TEN, hd.TINHTRANG from HOADON hd join HOADONCHITIET hdct on hd.id = hdct.ID_HOADON join NHANVIEN nv on hd.ID_NHANVIEN = nv.Id where NGAYTAO between ? and  ? order by NGAYTAO";
 
         try ( Connection con = DBContext.getConnection();  PreparedStatement sttm = con.prepareStatement(sql)) {
             sttm.setString(1, dateBD);
@@ -69,8 +69,7 @@ public class HoaDonRepository {
         } catch (Exception e) {
             e.printStackTrace();
         }
-       return null;
+        return null;
     }
-  
-        
+
 }

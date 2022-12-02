@@ -8,14 +8,28 @@ package DomainModels;
  *
  * @author Duc
  */
-public class KhuyenMaiHD {
+public class KhuyenMai {
+
     private String id;
     private String ma;
     private String ten;
-    private Float phanTramGiam;
+    private String phanTramGiam;
     private String ngayApDung;
     private String ngayKetThuc;
-    private int tinhTrang;
+    private String tinhTrang;
+
+    public KhuyenMai(String id, String ma, String ten, String phanTramGiam, String ngayApDung, String ngayKetThuc, String tinhTrang) {
+        this.id = id;
+        this.ma = ma;
+        this.ten = ten;
+        this.phanTramGiam = phanTramGiam;
+        this.ngayApDung = ngayApDung;
+        this.ngayKetThuc = ngayKetThuc;
+        this.tinhTrang = tinhTrang;
+    }
+
+    public KhuyenMai() {
+    }
 
     public String getId() {
         return id;
@@ -41,11 +55,11 @@ public class KhuyenMaiHD {
         this.ten = ten;
     }
 
-    public Float getPhanTramGiam() {
+    public String getPhanTramGiam() {
         return phanTramGiam;
     }
 
-    public void setPhanTramGiam(Float phanTramGiam) {
+    public void setPhanTramGiam(String phanTramGiam) {
         this.phanTramGiam = phanTramGiam;
     }
 
@@ -65,24 +79,12 @@ public class KhuyenMaiHD {
         this.ngayKetThuc = ngayKetThuc;
     }
 
-    public int getTinhTrang() {
+    public String getTinhTrang() {
         return tinhTrang;
     }
 
-    public void setTinhTrang(int tinhTrang) {
+    public void setTinhTrang(String tinhTrang) {
         this.tinhTrang = tinhTrang;
     }
 
-    public KhuyenMaiHD() {
-    }
-
-    public KhuyenMaiHD(String id, String ma, String ten, Float phanTramGiam, String ngayApDung, String ngayKetThuc, int tinhTrang) {
-        this.id = id;
-        this.ma = ma;
-        this.ten = ten;
-        this.phanTramGiam = phanTramGiam;
-        this.ngayApDung = ngayApDung;
-        this.ngayKetThuc = ngayKetThuc;
-        this.tinhTrang = tinhTrang;
-    }
 }

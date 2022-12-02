@@ -4,8 +4,8 @@
  */
 package Service.Implement;
 
-import DomainModels.KhuyenMaiHD;
-import Repository.KhuyenMaiHDRepository;
+import DomainModels.KhuyenMai;
+import Repository.KhuyenMaiRepository;
 import Service.KhuyenMaiHDService;
 import java.util.ArrayList;
 
@@ -15,15 +15,15 @@ import java.util.ArrayList;
  */
 public class KhuyenMaiHDImpl implements KhuyenMaiHDService {
 
-    private KhuyenMaiHDRepository KMHDR = new KhuyenMaiHDRepository();
+    private KhuyenMaiRepository KMHDR = new KhuyenMaiRepository();
 
     @Override
-    public ArrayList<KhuyenMaiHD> getList() {
-        return (ArrayList<KhuyenMaiHD>) KMHDR.getAll();
+    public ArrayList<KhuyenMai> getList() {
+        return (ArrayList<KhuyenMai>) KMHDR.getAll();
     }
 
     @Override
-    public String them(KhuyenMaiHD obj) {
+    public String them(KhuyenMai obj) {
         if (KMHDR.add(obj)) {
             KMHDR.getAll();
             return "Them thanh cong";
@@ -32,7 +32,7 @@ public class KhuyenMaiHDImpl implements KhuyenMaiHDService {
     }
 
     @Override
-    public String xoa(KhuyenMaiHD obj) {
+    public String xoa(KhuyenMai obj) {
         if (KMHDR.remove(obj)) {
             KMHDR.getAll();
             return "Xoa thanh cong";
@@ -41,7 +41,7 @@ public class KhuyenMaiHDImpl implements KhuyenMaiHDService {
     }
 
     @Override
-    public String sua(KhuyenMaiHD obj) {
+    public String sua(KhuyenMai obj) {
         if (KMHDR.update(obj)) {
             KMHDR.getAll();
             return "Sua thanh cong";
@@ -50,8 +50,8 @@ public class KhuyenMaiHDImpl implements KhuyenMaiHDService {
     }
 
     @Override
-    public KhuyenMaiHD getKMHDByID(String id) {
-        for (KhuyenMaiHD item : KMHDR.getAll()) {
+    public KhuyenMai getKMHDByID(String id) {
+        for (KhuyenMai item : KMHDR.getAll()) {
             if (item.getId().equals(id)) {
                 return item;
             }
@@ -60,23 +60,23 @@ public class KhuyenMaiHDImpl implements KhuyenMaiHDService {
     }
 
     @Override
-    public String getTrangThai(int tt) {
-        if (tt == 0) {
-            return "Het Han";
-        } else {
-            return "Con Han";
-        }
-    }
-
-    @Override
-    public ArrayList<KhuyenMaiHD> searchKM(String tk) {
-        ArrayList<KhuyenMaiHD> temp = new ArrayList<>();
-        for (KhuyenMaiHD item : KMHDR.getAll()) {
+    public ArrayList<KhuyenMai> searchKM(String tk) {
+        ArrayList<KhuyenMai> temp = new ArrayList<>();
+        for (KhuyenMai item : KMHDR.getAll()) {
             if (item.getMa().equals(tk)) {
                 temp.add(item);
             }
         }
         return temp;
+    }
+
+    @Override
+    public String getTrangThai(String tt) {
+        if (tt.equals(tt)) {
+            return "Het Han";
+        } else {
+            return "Con Han";
+        }
     }
 
 }

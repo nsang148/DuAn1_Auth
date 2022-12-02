@@ -21,7 +21,9 @@ public class TrangChu extends javax.swing.JFrame {
         // setExtendedState(MAXIMIZED_BOTH); 
         setLocationRelativeTo(this);
         setTitle("Phần mềm quản lý bán sách");
-
+        FormBanHang formBH = new FormBanHang();
+        jDesktopPane1.removeAll();
+        jDesktopPane1.add(formBH).setVisible(true);
     }
 
     /**
@@ -394,13 +396,13 @@ public class TrangChu extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel12MouseClicked
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
-   
-        javax.swing.ImageIcon icon =new javax.swing.ImageIcon("src\\icon\\icon_sad.png");
-        int click = JOptionPane.showConfirmDialog(this, "Mày muốn thoát à?", "Cút khỏi đây", JOptionPane.YES_NO_OPTION,JOptionPane.PLAIN_MESSAGE,icon);
+
+        javax.swing.ImageIcon icon = new javax.swing.ImageIcon("src\\icon\\icon_sad.png");
+        int click = JOptionPane.showConfirmDialog(this, "Bạn muốn thoát à?", "Thoát khỏi đây", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, icon);
         if (click == JOptionPane.YES_OPTION) {
             System.exit(0);
         }
-       
+
     }//GEN-LAST:event_jLabel2MouseClicked
 
     /**

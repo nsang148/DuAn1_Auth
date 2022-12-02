@@ -12,13 +12,6 @@ public class ThanhToan {
     private String NXB;
     private int soLuongTon ;
     private int donGia;
-    private String idSach;
-    private String idTheLoai;
-    private String idNXB;
-
-
-    private String idTacGia;
-
 
     public String getTenSach() {
         return tenSach;
