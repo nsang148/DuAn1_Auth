@@ -7,6 +7,7 @@ package Service.Implement;
 import ViewModels.ThongKeResponse;
 import Repository.ThongKeRepository;
 import Service.ThongKeService;
+import ViewModels.DoanhThuThongKe;
 import ViewModels.SanPhamHet;
 import ViewModels.SoHoaDon;
 import ViewModels.SoSanPhamTon;
@@ -30,10 +31,7 @@ public class ThongKeServiceImpl implements ThongKeService{
         return repo.getAllThongKeSP();
     }
 
-    @Override
-    public List<ThongKeResponse> HienThiDoanhThu() {
-        return repo.HienThiDoanhThu();
-    }
+
 
     @Override
     public List<SoHoaDon> HienThiSoHoaDon() {
@@ -73,5 +71,10 @@ public class ThongKeServiceImpl implements ThongKeService{
     @Override
     public List<ThongKeSPResponse> getAllSPNam() {
         return repo.getAllThongKeSPNam();
+    }
+
+    @Override
+    public List<DoanhThuThongKe> HienThiDoanhThu() {
+        return repo.getDoanhThu();
     }
 }

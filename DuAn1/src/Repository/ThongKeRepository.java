@@ -6,6 +6,7 @@ package Repository;
 
 import ViewModels.ThongKeResponse;
 import Untility.DBContext;
+import ViewModels.DoanhThuThongKe;
 import ViewModels.SanPhamHet;
 import ViewModels.SoHoaDon;
 import ViewModels.SoSanPhamTon;
@@ -63,6 +64,22 @@ public class ThongKeRepository {
             ResultSet rs = st.executeQuery(SELECT);
             while (rs.next()) {
                 list.add(new ThongKeResponse(rs.getString(1), rs.getInt(2), rs.getDouble(3)));
+            }
+        } catch (Exception ex) {
+            System.out.println("Loi tai getAll()");
+        }
+        return list;
+    }
+    
+    public List<DoanhThuThongKe> getDoanhThu() {
+        List<DoanhThuThongKe> list = new ArrayList<>();
+        String SELECT = "select sum(hdct.SOLUONG * hdct.DONGIA) as [Tong tien] from HOADON hd join HOADONCHITIET hdct on hd.Id = hdct.ID_HOADON WHERE DATEDIFF(DAY,getdate(), NGAYTHANHTOAN) = 0 group by NGAYTHANHTOAN";
+        try {
+            Connection conn = DBContext.getConnection();
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery(SELECT);
+            while (rs.next()) {
+                list.add(new DoanhThuThongKe(rs.getDouble(1)));
             }
         } catch (Exception ex) {
             System.out.println("Loi tai getAll()");
@@ -137,7 +154,7 @@ public class ThongKeRepository {
     public List<SoHoaDon> hienThiTongHoaDon() {
         List<SoHoaDon> list = new ArrayList<>();
         int hoaDon = 100;
-        String SELECT_KHUYENMAIHOADON = "select count(Id) from HOADONCHITIET";
+        String SELECT_KHUYENMAIHOADON = "select count(hdct.Id) from HOADON hd join HOADONCHITIET hdct on hd.Id = hdct.ID_HOADON where DATEDIFF(DAY,getdate(), NGAYTHANHTOAN) = 0";
         try {
             Connection conn = DBContext.getConnection();
             Statement st = conn.createStatement();
@@ -169,7 +186,7 @@ public class ThongKeRepository {
     
     public List<SanPhamHet> hienThiSoPhamHet() {
         List<SanPhamHet> list = new ArrayList<>();
-        String SELECT_KHUYENMAIHOADON = "select sum(SOLUONGTON) from SACH";
+        String SELECT_KHUYENMAIHOADON = "select count(Id) from SACH where SOLUONGTON = 0";
         try {
             Connection conn = DBContext.getConnection();
             Statement st = conn.createStatement();
