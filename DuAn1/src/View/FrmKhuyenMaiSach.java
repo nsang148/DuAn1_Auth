@@ -7,9 +7,12 @@ package View;
 import DomainModels.ChiTietSach;
 import DomainModels.KhuyenMai;
 import DomainModels.KhuyenMaiSach;
+import Repository.KhuyenMaiRepository;
+import Repository.QLSachRepository;
 import Service.Implement.KhuyenMaiSachImpl;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -23,27 +26,35 @@ public class FrmKhuyenMaiSach extends javax.swing.JInternalFrame {
      */
     private DefaultTableModel model;
     private KhuyenMaiSachImpl service;
+    private QLSachRepository serviceS;
+    private KhuyenMaiRepository serviceKM;
     private String isClicked;
-    ArrayList<ChiTietSach> listAllSach = service.getALLSach();
-    ArrayList<KhuyenMai> listAllKM = service.getALLKM();
+
     public FrmKhuyenMaiSach() {
         initComponents();
+        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        BasicInternalFrameUI ui = (BasicInternalFrameUI) this.getUI();
+        ui.setNorthPane(null);
         rdoHetHan.setSelected(true);
         service = new KhuyenMaiSachImpl();
+        serviceS = new QLSachRepository();
+        serviceKM = new KhuyenMaiRepository();
+
         loadTable();
-        for (ChiTietSach item : listAllSach) {
+        for (ChiTietSach item : serviceS.getAll()) {
             cboSach.addItem(item.getMa());
         }
-        for (KhuyenMai item : listAllKM) {
+        for (KhuyenMai item : serviceKM.getAll()) {
             cboKM.addItem(item.getMa());
         }
     }
+
     public void loadTable() {
         model = (DefaultTableModel) tblKMHD.getModel();
         model.setRowCount(0);
         for (KhuyenMaiSach item : service.getList()) {
             model.addRow(new Object[]{
-                item.getId(), item.getIdSach(), item.getIdKM(), item.getDonGia(), item.getSoTienConLai(), service.getTrangThai(item.getTinhTrang())
+                item.getId(), service.getMaSachByID(item.getIdSach()), service.getMaKMByID(item.getIdKM()), item.getDonGia(), item.getSoTienConLai(), service.getTrangThai(item.getTinhTrang())
             });
         }
     }
@@ -53,17 +64,17 @@ public class FrmKhuyenMaiSach extends javax.swing.JInternalFrame {
         model.setRowCount(0);
         for (KhuyenMaiSach item : service.searchKM(Float.parseFloat(txtTK.getText()))) {
             model.addRow(new Object[]{
-                item.getId(), item.getIdSach(), item.getIdKM(), item.getDonGia(), item.getSoTienConLai(), service.getTrangThai(item.getTinhTrang())
+                item.getId(), service.getMaSachByID(item.getIdSach()), service.getMaKMByID(item.getIdKM()), item.getDonGia(), item.getSoTienConLai(), service.getTrangThai(item.getTinhTrang())
             });
         }
     }
 
     public KhuyenMaiSach getAllFromGUI() {
-        String tt;
+        int tt;
         if (rdoHetHan.isSelected()) {
-            tt = "0";
+            tt = 0;
         } else {
-            tt = "1";
+            tt = 1;
         }
         return new KhuyenMaiSach(null, service.getIdSachByMa(cboSach.getSelectedItem().toString()), service.getIdKhuyenMaiByMa(cboKM.getSelectedItem().toString()), Float.parseFloat(txtDonGia.getText()), Float.parseFloat(txtSTCL.getText()), tt);
     }
@@ -108,7 +119,7 @@ public class FrmKhuyenMaiSach extends javax.swing.JInternalFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(51, 102, 255));
-        jLabel1.setText("Khuyen Mai Hoa Don");
+        jLabel1.setText("Khuyen Mai Sach");
 
         btnXoa.setText("Xoa");
         btnXoa.addActionListener(new java.awt.event.ActionListener() {
@@ -154,7 +165,7 @@ public class FrmKhuyenMaiSach extends javax.swing.JInternalFrame {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "ID Sach", "Ma Khuyen Mai", "Don Gia", "So Tien Con Lai", "Trang Thai"
+                "ID", "Ma Sach", "Ma Khuyen Mai", "Don Gia", "So Tien Con Lai", "Trang Thai"
             }
         ));
         tblKMHD.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -225,7 +236,6 @@ public class FrmKhuyenMaiSach extends javax.swing.JInternalFrame {
                                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jLabel5))
                                         .addGap(20, 20, 20)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(rdoHetHan)
                                     .addGroup(jDesktopPane1Layout.createSequentialGroup()
@@ -234,24 +244,23 @@ public class FrmKhuyenMaiSach extends javax.swing.JInternalFrame {
                                     .addComponent(txtSTCL, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtDonGia, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addContainerGap(55, Short.MAX_VALUE))))
-            .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                .addGap(224, 224, 224)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(276, 276, 276))
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 50, Short.MAX_VALUE)
                         .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(cboSach, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel1)
+                        .addGap(12, 12, 12)
                         .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtDonGia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -287,16 +296,15 @@ public class FrmKhuyenMaiSach extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(27, Short.MAX_VALUE)
                 .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45))
+                .addGap(24, 24, 24))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addGap(0, 37, Short.MAX_VALUE))
         );
 
         pack();
@@ -368,7 +376,7 @@ public class FrmKhuyenMaiSach extends javax.swing.JInternalFrame {
         cboKM.setSelectedItem(service.getMaKMByID(temp.getIdKM()));
         txtDonGia.setText(temp.getDonGia().toString());
         txtSTCL.setText(temp.getSoTienConLai().toString());
-        if (temp.getTinhTrang().equals("0")) {
+        if (temp.getTinhTrang() == 0) {
             rdoHetHan.setSelected(true);
         } else {
             rdoConHan.setSelected(true);
