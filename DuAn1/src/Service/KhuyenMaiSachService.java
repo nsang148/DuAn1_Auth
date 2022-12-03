@@ -19,11 +19,9 @@ public interface KhuyenMaiSachService {
     String xoa(KhuyenMaiSach obj);
     String sua(KhuyenMaiSach obj);
     KhuyenMaiSach getKMSachByID(String id);
-    String getTrangThai(String tt);
+    String getTrangThai(int tt);
     String getIdSachByMa(String ma);
     String getIdKhuyenMaiByMa(String ma);
-    ArrayList<KhuyenMai> getALLKM();
-    ArrayList<ChiTietSach> getALLSach();
     String getMaSachByID(String id);
     String getMaKMByID(String id);
     ArrayList<KhuyenMaiSach> searchKM(Float donGia);

@@ -56,8 +56,8 @@ public class KhuyenMaiSachImpl implements KhuyenMaiSachService {
     }
 
     @Override
-    public String getTrangThai(String tt) {
-        if (tt.equals(tt)) {
+    public String getTrangThai(int tt) {
+        if (tt == 0) {
             return "Het Han";
         } else {
             return "Con Han";
@@ -68,7 +68,7 @@ public class KhuyenMaiSachImpl implements KhuyenMaiSachService {
     public ArrayList<KhuyenMaiSach> searchKM(Float donGia) {
         ArrayList<KhuyenMaiSach> temp = new ArrayList<>();
         for (KhuyenMaiSach item : KMSR.getAll()) {
-            if (item.getDonGia().equals(donGia)) {
+            if (item.getDonGia() == donGia) {
                 temp.add(item);
             }
         }
@@ -106,23 +106,13 @@ public class KhuyenMaiSachImpl implements KhuyenMaiSachService {
     }
 
     @Override
-    public ArrayList<KhuyenMai> getALLKM() {
-        return (ArrayList<KhuyenMai>) KMR.getAll();
-    }
-
-    @Override
-    public ArrayList<ChiTietSach> getALLSach() {
-        return (ArrayList<ChiTietSach>) SR.getAll();
-    }
-
-    @Override
     public String getMaSachByID(String id) {
         for (ChiTietSach item : SR.getAll()) {
             if (item.getId().equals(id)) {
                 return item.getMa();
             }
         }
-        return  null;
+        return null;
     }
 
     @Override
@@ -132,7 +122,7 @@ public class KhuyenMaiSachImpl implements KhuyenMaiSachService {
                 return item.getMa();
             }
         }
-        return  null;
+        return null;
     }
 
 }

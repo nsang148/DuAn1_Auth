@@ -384,9 +384,9 @@ public class TrangChu extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel9MouseClicked
 
     private void jPanel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel11MouseClicked
-        FormKhuyenMai formKM = new FormKhuyenMai();
+        FrmKhuyenMaiSach formKMS = new FrmKhuyenMaiSach();
         jDesktopPane1.removeAll();
-        jDesktopPane1.add(formKM).setVisible(true);
+        jDesktopPane1.add(formKMS).setVisible(true);
     }//GEN-LAST:event_jPanel11MouseClicked
 
     private void jPanel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel12MouseClicked
