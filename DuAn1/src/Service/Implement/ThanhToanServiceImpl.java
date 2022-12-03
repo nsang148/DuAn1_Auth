@@ -14,5 +14,20 @@ public class ThanhToanServiceImpl implements ThanhToanService{
         
         return this.ttRepo.all();
     }
+
+    @Override
+    public void insert(ThanhToan tt) {
+    this.ttRepo.insert(tt);
+    }
+
+    @Override
+    public void update(ThanhToan tt, String tenKH) {
+    this.ttRepo.update(tt, tenKH);
+    }
+
+    @Override
+    public void delete(String tenKH) {
+    this.ttRepo.delete(tenKH);
+    }
     
 }

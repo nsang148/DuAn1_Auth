@@ -12,6 +12,10 @@ public class ThanhToan {
     private String NXB;
     private int soLuongTon ;
     private int donGia;
+    private String tenKH;
+    private int soLuong;
+    private String ngayMua;
+    private int thanhTien;
 
     public String getTenSach() {
         return tenSach;
@@ -64,7 +68,7 @@ public class ThanhToan {
     public ThanhToan() {
     }
 
-    public ThanhToan(String tenSach, String tacGia, String theLoai, String NXB, int soLuongTon, int donGia) {
+    public ThanhToan(String tenSach, String tacGia, String theLoai, int soLuongTon, int donGia) {
         this.tenSach = tenSach;
         this.tacGia = tacGia;
         this.theLoai = theLoai;
@@ -72,6 +76,40 @@ public class ThanhToan {
         this.soLuongTon = soLuongTon;
         this.donGia = donGia;
     }
+
+    public String getTenKH() {
+        return tenKH;
+    }
+
+    public void setTenKH(String tenKH) {
+        this.tenKH = tenKH;
+    }
+
+    public int getSoLuong() {
+        return soLuong;
+    }
+
+    public void setSoLuong(int soLuong) {
+        this.soLuong = soLuong;
+    }
+
+    public String getNgayMua() {
+        return ngayMua;
+    }
+
+    public void setNgayMua(String ngayMua) {
+        this.ngayMua = ngayMua;
+    }
+
+    public int getThanhTien() {
+        return thanhTien;
+    }
+
+    public void setThanhTien(int thanhTien) {
+        this.thanhTien = thanhTien;
+    }
+
+
 
 
 
