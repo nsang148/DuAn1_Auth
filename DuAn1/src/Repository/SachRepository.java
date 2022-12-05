@@ -6,6 +6,7 @@ package Repository;
 
 import DomainModels.Sach;
 import Untility.DBContext;
+import ViewModels.LayIDSach;
 import ViewModels.QLSach;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,7 @@ public class SachRepository {
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery(SELECT);
             while (rs.next()) {
-                list.add(new QLSach(SELECT, SELECT, SELECT, SELECT, SELECT, SELECT, 0, Double.NaN, 0, SELECT));
+                list.add(new QLSach(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getDouble(8), rs.getInt(9), rs.getString(10)));
             }
         } catch (Exception ex) {
             System.out.println("Loi tai getAll()");
@@ -46,7 +47,7 @@ public class SachRepository {
             sttm.setInt(5, s.getTinhTrang());
             sttm.setString(6, s.getId_theLoai());
             sttm.setString(7, s.getId_NXB());
-            sttm.setString(8, s.getId_theLoai());
+            sttm.setString(8, s.getId_tacGia());
             sttm.setDouble(9, s.getGia());
             sttm.setString(10, s.getAnh());
             ketQuaTruyVan = sttm.executeUpdate();
@@ -57,19 +58,20 @@ public class SachRepository {
         return ketQuaTruyVan;
     }
     
-    public int updateSachRepository(Sach s) {
-        String update = "update SACH set TEN = ?, MOTA = ?, SOLUONGTON = ?, ID_THELOAI = ?, ID_TACGIA = ?, ID_NXB = ?, TINHTRANG = ?, Gia = ?, ANH = ?";
+    public int updateSachRepository(Sach s, String ma) {
+        String update = "update SACH set TEN = ?, MOTA = ?, SOLUONGTON = ?, ID_THELOAI = ?, ID_TACGIA = ?, ID_NXB = ?, TINHTRANG = ?, Gia = ?, ANH = ? where MA = ?";
         int ketQuaTruyVan = -1;
         try ( Connection con = DBContext.getConnection();  PreparedStatement sttm = con.prepareStatement(update)) {
             sttm.setString(1, s.getTen());
             sttm.setString(2, s.getMoTa());
             sttm.setInt(3, s.getSoLuongTon());
             sttm.setString(4, s.getId_theLoai());
-            sttm.setString(5, s.getId_NXB());
-            sttm.setString(6, s.getId_tacGia());
+            sttm.setString(5, s.getId_tacGia());
+            sttm.setString(6, s.getId_NXB());
             sttm.setInt(7, s.getTinhTrang());
             sttm.setDouble(8, s.getGia());
             sttm.setString(9, s.getAnh());
+            sttm.setString(10, ma);
             ketQuaTruyVan = sttm.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -101,6 +103,20 @@ public class SachRepository {
                 list.add(new QLSach(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getDouble(8), rs.getInt(9), rs.getString(10)));
             }
             return list;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public List<LayIDSach> getIDHD() {
+        List<LayIDSach> listID = new ArrayList<>();
+        String sql = "select ID, MA from SACH";
+        try ( Connection con = DBContext.getConnection();  PreparedStatement sttm = con.prepareStatement(sql)) {
+            ResultSet rs = sttm.executeQuery();
+            while (rs.next()) {
+                listID.add(new LayIDSach(rs.getString(1), rs.getString(2)));
+            }
+            return listID;
         } catch (Exception e) {
             e.printStackTrace();
         }

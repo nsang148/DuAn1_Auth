@@ -7,6 +7,7 @@ package Service.Implement;
 import Repository.SachRepository;
 import DomainModels.Sach;
 import Service.SachService;
+import ViewModels.LayIDSach;
 import ViewModels.QLSach;
 import java.util.List;
 
@@ -29,8 +30,8 @@ public class SachServiceImpl implements SachService{
     }
 
     @Override
-    public int updateSach(Sach s) {
-        return repo.updateSachRepository(s);
+    public int updateSach(Sach s, String ma) {
+        return repo.updateSachRepository(s, ma);
     }
 
     @Override
@@ -41,5 +42,10 @@ public class SachServiceImpl implements SachService{
     @Override
     public List<QLSach> search(String ma) {
         return repo.search(ma);
+    }
+
+    @Override
+    public List<LayIDSach> getIDSach() {
+        return repo.getIDHD();
     }
 }
