@@ -45,6 +45,8 @@ public class FormNhanVien extends javax.swing.JInternalFrame {
         btnXoa = new javax.swing.JButton();
         btnSapXep = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
@@ -246,9 +248,11 @@ public class FormNhanVien extends javax.swing.JInternalFrame {
         jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel11.setText("Giới tính :");
 
+        buttonGroup1.add(rbNam);
         rbNam.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         rbNam.setText("Nam");
 
+        buttonGroup1.add(rbNu);
         rbNu.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         rbNu.setText("Nữ");
 
@@ -291,9 +295,11 @@ public class FormNhanVien extends javax.swing.JInternalFrame {
         jLabel16.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel16.setText("Tình trạng :");
 
+        buttonGroup2.add(rbDLV);
         rbDLV.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         rbDLV.setText("Đang làm việc");
 
+        buttonGroup2.add(rbDNV);
         rbDNV.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         rbDNV.setText("Đã nghỉ việc");
 
@@ -358,14 +364,13 @@ public class FormNhanVien extends javax.swing.JInternalFrame {
                         .addGap(17, 17, 17)))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(cbbVaiTro, 0, 180, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(txtSDT, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-                        .addComponent(txtDiaChi, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(txtMatKhau, javax.swing.GroupLayout.Alignment.LEADING)))
+                    .addComponent(txtSDT, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                    .addComponent(txtDiaChi)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel8)
+                    .addComponent(txtMatKhau))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -926,6 +931,8 @@ public class FormNhanVien extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnThem1;
     private javax.swing.JButton btnXoa;
     private javax.swing.JButton btnXoa1;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JComboBox<String> cbbVaiTro;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
