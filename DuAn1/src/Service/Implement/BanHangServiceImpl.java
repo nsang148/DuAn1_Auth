@@ -11,6 +11,7 @@ import Service.BanHangService;
 import ViewModels.HoaDonThanhToan;
 import ViewModels.LayIDHD;
 import ViewModels.SanPhamThanhToan;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -49,5 +50,18 @@ public class BanHangServiceImpl implements BanHangService{
     public int updateHD(HoaDon hd) {
         return repo.updateHDRepository(hd);
     }
-    
+    @Override
+    public int updateSLSach(int i, String ma){
+        return repo.updateSLSach(i, ma);
+    }
+    @Override
+    public List<SanPhamThanhToan> search(String ma) {
+        List<SanPhamThanhToan> list = new ArrayList<>();
+        for (SanPhamThanhToan sp : repo.getALLSP()) {
+            if(sp.getMa().equals(ma)) {
+                list.add(sp);
+            }
+        }
+        return list;
+    }
 }

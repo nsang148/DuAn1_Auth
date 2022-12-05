@@ -6,7 +6,7 @@ package ViewModels;
 
 /**
  *
- * @author acer
+ * @author This PC
  */
 public class SanPhamThanhToan {
     private String ten;
@@ -85,6 +85,5 @@ public class SanPhamThanhToan {
     public void setDonGia(Double donGia) {
         this.donGia = donGia;
     }
-
-   
+    
 }
