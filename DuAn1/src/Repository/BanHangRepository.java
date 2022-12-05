@@ -120,4 +120,34 @@ public class BanHangRepository {
         }
         return ketQuaTruyVan;
     }
+     
+      public int updateSLSach(int i, String ma){
+         String update = "update SACH set SOLUONGTON -= ? where MA = ?";
+        int ketQuaTruyVan = -1;
+        try (Connection con = DBContext.getConnection(); PreparedStatement sttm = con.prepareStatement(update)){
+            sttm.setInt(1, i);
+            sttm.setString(2, ma);
+            ketQuaTruyVan = sttm.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ketQuaTruyVan;
+    }
+     
+     public boolean isExists(String maHD) {
+        Connection con = DBContext.getConnection();
+        boolean isExists = false;
+        String query = "SELECT * FROM HOADON WHERE MA = '" + maHD + "'";
+        Statement st;
+        try {
+            st = con.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            if (rs.next()) {
+                isExists = true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return isExists;
+    }
 }

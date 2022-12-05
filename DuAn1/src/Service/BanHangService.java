@@ -18,7 +18,10 @@ import java.util.List;
 public interface BanHangService {
     List<SanPhamThanhToan> getAll();
     List<HoaDonThanhToan> getAllHD();
+    boolean isExists(String maHD);
+    public int updateSLSach(int i, String ma);
     List<LayIDHD> getIDHD();
+    List<SanPhamThanhToan> search(String ma);
     public int createHDCho(HoaDon hd);
     public int updateHD(HoaDon hd);
     public int createHDCT(HoaDonCT hd);
