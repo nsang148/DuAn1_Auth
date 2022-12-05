@@ -4,8 +4,6 @@
  */
 package Service;
 
-import DomainModels.ChiTietSach;
-import DomainModels.KhuyenMai;
 import DomainModels.KhuyenMaiSach;
 import java.util.ArrayList;
 
@@ -24,5 +22,6 @@ public interface KhuyenMaiSachService {
     String getIdKhuyenMaiByMa(String ma);
     String getMaSachByID(String id);
     String getMaKMByID(String id);
-    ArrayList<KhuyenMaiSach> searchKM(Float donGia);
+    ArrayList<KhuyenMaiSach> searchKM(String maKM);
+    String getPhanTramByIdKM(String id);
 }

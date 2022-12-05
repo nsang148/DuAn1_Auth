@@ -65,10 +65,10 @@ public class KhuyenMaiSachImpl implements KhuyenMaiSachService {
     }
 
     @Override
-    public ArrayList<KhuyenMaiSach> searchKM(Float donGia) {
+    public ArrayList<KhuyenMaiSach> searchKM(String maKM) {
         ArrayList<KhuyenMaiSach> temp = new ArrayList<>();
         for (KhuyenMaiSach item : KMSR.getAll()) {
-            if (item.getDonGia() == donGia) {
+            if (this.getMaKMByID(item.getIdKM()).equals(maKM)) {
                 temp.add(item);
             }
         }
@@ -120,6 +120,16 @@ public class KhuyenMaiSachImpl implements KhuyenMaiSachService {
         for (KhuyenMai item : KMR.getAll()) {
             if (item.getId().equals(id)) {
                 return item.getMa();
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public String getPhanTramByIdKM(String id) {
+         for (KhuyenMai item : KMR.getAll()) {
+            if (item.getId().equals(id)) {
+                return item.getPhanTramGiam();
             }
         }
         return null;
