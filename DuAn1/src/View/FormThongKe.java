@@ -6,6 +6,7 @@ package View;
 
 import Service.Implement.ThongKeServiceImpl;
 import Service.ThongKeService;
+import ViewModels.DoanhThuThongKe;
 import ViewModels.SanPhamHet;
 import ViewModels.SoHoaDon;
 import ViewModels.SoSanPhamTon;
@@ -13,12 +14,16 @@ import ViewModels.ThongKeResponse;
 import ViewModels.ThongKeSPResponse;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -44,7 +49,7 @@ public class FormThongKe extends javax.swing.JInternalFrame {
         hienThiDoanhThu();
         hienThiSoHoaDon();
         hienThiSoLuongTon();
-//        hienThiSoSanPhamHet();
+        hienThiSoSanPhamHet();
     }
 
     /**
@@ -71,8 +76,8 @@ public class FormThongKe extends javax.swing.JInternalFrame {
         jPanel5 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        txtDateBD = new javax.swing.JTextField();
-        txtDateKT = new javax.swing.JTextField();
+        txtBD = new com.toedter.calendar.JDateChooser();
+        txtKT = new com.toedter.calendar.JDateChooser();
         jPanel1 = new javax.swing.JPanel();
         lblHoaDon = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -83,12 +88,12 @@ public class FormThongKe extends javax.swing.JInternalFrame {
         jPanel8 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblThongKeSanPham = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        btnTimKiem = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(102, 255, 255));
-        setPreferredSize(new java.awt.Dimension(930, 640));
+        setPreferredSize(new java.awt.Dimension(1010, 640));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Doanh Thu - Bao Cao");
@@ -206,6 +211,10 @@ public class FormThongKe extends javax.swing.JInternalFrame {
 
         jLabel4.setText("Thoi gian ket thuc");
 
+        txtBD.setDateFormatString("dd-MM-yyyy");
+
+        txtKT.setDateFormatString("dd-MM-yyyy");
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -213,25 +222,31 @@ public class FormThongKe extends javax.swing.JInternalFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel3)
-                .addGap(8, 8, 8)
-                .addComponent(txtDateBD, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtBD, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(txtDateKT, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
+                .addComponent(txtKT, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(5, 5, 5)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel4)
-                        .addComponent(txtDateBD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtDateKT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(17, Short.MAX_VALUE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtBD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(jPanel5Layout.createSequentialGroup()
+                                    .addComponent(jLabel4)
+                                    .addGap(3, 3, 3)))))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addComponent(txtKT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -372,10 +387,10 @@ public class FormThongKe extends javax.swing.JInternalFrame {
 
         jTabbedPane1.addTab("San pham", jPanel8);
 
-        jButton1.setText("Tim kiem");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnTimKiem.setText("Tim kiem");
+        btnTimKiem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnTimKiemActionPerformed(evt);
             }
         });
 
@@ -387,6 +402,11 @@ public class FormThongKe extends javax.swing.JInternalFrame {
         });
 
         jButton3.setText("Bao cao");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -407,7 +427,7 @@ public class FormThongKe extends javax.swing.JInternalFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jButton1)
+                                        .addComponent(btnTimKiem)
                                         .addGap(18, 18, 18)
                                         .addComponent(jButton2)
                                         .addGap(18, 18, 18)
@@ -416,13 +436,13 @@ public class FormThongKe extends javax.swing.JInternalFrame {
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(35, 35, 35)
+                                .addGap(75, 75, 75)
                                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
                                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(40, 40, 40)
+                                .addGap(68, 68, 68)
                                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(41, 41, 41))))
+                                .addGap(32, 32, 32))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 832, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(45, 45, 45))))
@@ -450,7 +470,7 @@ public class FormThongKe extends javax.swing.JInternalFrame {
                             .addComponent(jLabel2))
                         .addGap(18, 18, 18)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(btnTimKiem)
                     .addComponent(jButton2)
                     .addComponent(jButton3))
                 .addGap(50, 50, 50)
@@ -461,9 +481,23 @@ public class FormThongKe extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
+        SimpleDateFormat dinhDang = new SimpleDateFormat("YYYY-MM-dd");
+        String ngaybd = dinhDang.format(txtBD.getDate());
+        String ngaykt = dinhDang.format(txtKT.getDate());
+        JOptionPane.showMessageDialog(this, "Lọc hóa đơn từ: " + ngaybd + " đến " + ngaykt);
+        List<ThongKeResponse> list = service.search(ngaybd, ngaykt);
+        if(service.search(ngaybd, ngaykt) == null) {
+            JOptionPane.showMessageDialog(this, "Tim kiem that bai");
+        }else {
+            JOptionPane.showMessageDialog(this, "Tim kiem thanh cong");
+        }
+        model = (DefaultTableModel) tblThongKeTG.getModel();
+        model.setRowCount(0);
+        for (ThongKeResponse tk : list) {
+            model.addRow(new Object[]{tk.getNgayThanhToan(), tk.getSoLuong(), tk.getTongTien()});
+        }
+    }//GEN-LAST:event_btnTimKiemActionPerformed
 
     private void cboThoiGianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboThoiGianActionPerformed
         if (cboThoiGian.getSelectedIndex() == 0) {
@@ -501,6 +535,14 @@ public class FormThongKe extends javax.swing.JInternalFrame {
         XSSFSheet sheet = workbook.createSheet("danhSach");
         XSSFRow row = null;
         Cell cell = null;
+        Font font = workbook.createFont();
+        font.setBold(true);
+        font.setFontHeightInPoints((short)17);
+        font.setColor(IndexedColors.RED.getIndex());
+        
+        CellStyle headCellStyle = workbook.createCellStyle();
+        headCellStyle.setFont(font);
+
         row = sheet.createRow(3);
         cell = row.createCell(0, CellType.STRING);
         cell.setCellValue("Thoi gian");
@@ -523,7 +565,7 @@ public class FormThongKe extends javax.swing.JInternalFrame {
             cell= row.createCell(2, CellType.STRING);
             cell.setCellValue(list.get(i).getTongTien());
     }
-        File file = new File("D://Nhom1//ThongKe.xlsx");
+        File file = new File("D://Nhom1//ThongKe2.xlsx");
         try {
             FileOutputStream fis =  new FileOutputStream(file);
             workbook.write(fis);
@@ -533,6 +575,11 @@ public class FormThongKe extends javax.swing.JInternalFrame {
             e.printStackTrace();
         }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        GuiMail mail = new GuiMail();
+        mail.setVisible(true);
+    }//GEN-LAST:event_jButton3ActionPerformed
     private void loadTableTG() {
         model = (DefaultTableModel) tblThongKeTG.getModel();
         List<ThongKeResponse> list = service.getAll();
@@ -568,8 +615,8 @@ public class FormThongKe extends javax.swing.JInternalFrame {
     }
     private void hienThiDoanhThu() {
 
-        List<ThongKeResponse> list = service.getAll();
-        lblDoanhThu.setText(String.valueOf(list.get(0).getTongTien()) + " VND");
+        List<DoanhThuThongKe> list = service.HienThiDoanhThu();
+        lblDoanhThu.setText(String.valueOf(list.get(0).getDoanhThu()) + " VND");
     }
     
     private void hienThiSoHoaDon() {
@@ -586,8 +633,8 @@ public class FormThongKe extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnTimKiem;
     private javax.swing.JComboBox<String> cboThoiGian;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
@@ -614,7 +661,7 @@ public class FormThongKe extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblSPTon;
     private javax.swing.JTable tblThongKeSanPham;
     private javax.swing.JTable tblThongKeTG;
-    private javax.swing.JTextField txtDateBD;
-    private javax.swing.JTextField txtDateKT;
+    private com.toedter.calendar.JDateChooser txtBD;
+    private com.toedter.calendar.JDateChooser txtKT;
     // End of variables declaration//GEN-END:variables
 }
