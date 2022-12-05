@@ -41,7 +41,7 @@ public class KhuyenMaiSachRepository {
         try {
             Connection conn = DBContext.getConnection();
             Statement st = conn.createStatement();
-            String INSERT_KHUYENMAISACH = "INSERT INTO SACHKHUYENMAI (IDSACH, IDKHUYENMAI, DONGIA, SOTIENCONLAI, TINHTRANG) VALUES('" + obj.getIdSach()+ "','" + obj.getIdKM()+ "', " + obj.getDonGia()+ " , " + obj.getSoTienConLai()+ " , '" + obj.getTinhTrang() + "')";
+            String INSERT_KHUYENMAISACH = "INSERT INTO SACHKHUYENMAI (ID_SACH, ID_KHUYENMAI, DONGIA, SOTIENCONLAI, TINHTRANG) VALUES('" + obj.getIdSach()+ "','" + obj.getIdKM()+ "', " + obj.getDonGia()+ " , " + obj.getSoTienConLai()+ " , " + obj.getTinhTrang() + ")";
             st.executeUpdate(INSERT_KHUYENMAISACH);
             System.out.println(INSERT_KHUYENMAISACH);
             st.close();

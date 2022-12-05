@@ -125,4 +125,14 @@ public class KhuyenMaiSachImpl implements KhuyenMaiSachService {
         return null;
     }
 
+    @Override
+    public String getPhanTramByIdKM(String id) {
+         for (KhuyenMai item : KMR.getAll()) {
+            if (item.getId().equals(id)) {
+                return item.getPhanTramGiam();
+            }
+        }
+        return null;
+    }
+
 }

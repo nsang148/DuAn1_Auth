@@ -25,4 +25,5 @@ public interface KhuyenMaiSachService {
     String getMaSachByID(String id);
     String getMaKMByID(String id);
     ArrayList<KhuyenMaiSach> searchKM(Float donGia);
+    String getPhanTramByIdKM(String id);
 }

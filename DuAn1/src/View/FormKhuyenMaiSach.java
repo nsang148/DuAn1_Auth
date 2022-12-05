@@ -7,6 +7,8 @@ package View;
 import DomainModels.ChiTietSach;
 import DomainModels.KhuyenMai;
 import DomainModels.KhuyenMaiSach;
+import Repository.KhuyenMaiRepository;
+import Repository.QLSachRepository;
 import Service.Implement.KhuyenMaiSachImpl;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -23,19 +25,19 @@ public class FormKhuyenMaiSach extends javax.swing.JPanel {
      */
     private DefaultTableModel model;
     private KhuyenMaiSachImpl service;
+    private KhuyenMaiRepository serviceKM;
+    private QLSachRepository serviceS;
     private String isClicked;
-    ArrayList<ChiTietSach> listAllSach = service.getALLSach();
-    ArrayList<KhuyenMai> listAllKM = service.getALLKM();
 
     public FormKhuyenMaiSach() {
         initComponents();
         rdoHetHan.setSelected(true);
         service = new KhuyenMaiSachImpl();
         loadTable();
-        for (ChiTietSach item : listAllSach) {
+        for (ChiTietSach item : serviceS.getAll()) {
             cboSach.addItem(item.getMa());
         }
-        for (KhuyenMai item : listAllKM) {
+        for (KhuyenMai item : serviceKM.getAll()) {
             cboKM.addItem(item.getMa());
         }
     }
@@ -61,11 +63,11 @@ public class FormKhuyenMaiSach extends javax.swing.JPanel {
     }
 
     public KhuyenMaiSach getAllFromGUI() {
-        String tt;
+        int tt;
         if (rdoHetHan.isSelected()) {
-            tt = "0";
+            tt = 0;
         } else {
-            tt = "1";
+            tt = 1;
         }
         return new KhuyenMaiSach(null, service.getIdSachByMa(cboSach.getSelectedItem().toString()), service.getIdKhuyenMaiByMa(cboKM.getSelectedItem().toString()), Float.parseFloat(txtDonGia.getText()), Float.parseFloat(txtSTCL.getText()), tt);
     }
@@ -348,7 +350,7 @@ public class FormKhuyenMaiSach extends javax.swing.JPanel {
         cboKM.setSelectedItem(service.getMaKMByID(temp.getIdKM()));
         txtDonGia.setText(temp.getDonGia().toString());
         txtSTCL.setText(temp.getSoTienConLai().toString());
-        if (temp.getTinhTrang().equals("0")) {
+        if (temp.getTinhTrang() == 0) {
             rdoHetHan.setSelected(true);
         } else {
             rdoConHan.setSelected(true);

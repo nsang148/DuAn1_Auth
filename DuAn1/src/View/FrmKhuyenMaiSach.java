@@ -29,6 +29,7 @@ public class FrmKhuyenMaiSach extends javax.swing.JInternalFrame {
     private QLSachRepository serviceS;
     private KhuyenMaiRepository serviceKM;
     private String isClicked;
+    private String idKM;
 
     public FrmKhuyenMaiSach() {
         initComponents();
@@ -39,7 +40,6 @@ public class FrmKhuyenMaiSach extends javax.swing.JInternalFrame {
         service = new KhuyenMaiSachImpl();
         serviceS = new QLSachRepository();
         serviceKM = new KhuyenMaiRepository();
-
         loadTable();
         for (ChiTietSach item : serviceS.getAll()) {
             cboSach.addItem(item.getMa());
@@ -47,6 +47,14 @@ public class FrmKhuyenMaiSach extends javax.swing.JInternalFrame {
         for (KhuyenMai item : serviceKM.getAll()) {
             cboKM.addItem(item.getMa());
         }
+    }
+
+    public boolean valid() {
+        if (txtDonGia.getText().equalsIgnoreCase("")) {
+            JOptionPane.showMessageDialog(this, "Don gia khong duoc trong!");
+            return false;
+        }
+        return true;
     }
 
     public void loadTable() {
@@ -147,6 +155,12 @@ public class FrmKhuyenMaiSach extends javax.swing.JInternalFrame {
         jLabel3.setText("Ma Khuyen Mai:");
 
         jLabel4.setText("Don Gia:");
+
+        txtDonGia.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                txtDonGiaMouseExited(evt);
+            }
+        });
 
         btnThem.setText("Them");
         btnThem.addActionListener(new java.awt.event.ActionListener() {
@@ -355,8 +369,10 @@ public class FrmKhuyenMaiSach extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         int confirm = JOptionPane.showConfirmDialog(this, "Xac Nhan");
         if (confirm == 0) {
-            JOptionPane.showMessageDialog(this, service.them(getAllFromGUI()));
-            loadTable();
+            if (valid()) {
+                JOptionPane.showMessageDialog(this, service.them(getAllFromGUI()));
+                loadTable();
+            }
         } else if (confirm == 1) {
             JOptionPane.showMessageDialog(this, "Da Huy");
         } else {
@@ -381,7 +397,13 @@ public class FrmKhuyenMaiSach extends javax.swing.JInternalFrame {
         } else {
             rdoConHan.setSelected(true);
         }
+        idKM = service.getIdKhuyenMaiByMa(tblKMHD.getModel().getValueAt(row, 2).toString());
     }//GEN-LAST:event_tblKMHDMouseClicked
+
+    private void txtDonGiaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtDonGiaMouseExited
+        // TODO add your handling code here:
+        txtSTCL.setText((Float.parseFloat(txtDonGia.getText()) * (100 - Float.parseFloat(service.getPhanTramByIdKM(idKM))) / 100) + "");
+    }//GEN-LAST:event_txtDonGiaMouseExited
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

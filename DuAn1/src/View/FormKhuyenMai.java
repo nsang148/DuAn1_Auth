@@ -53,6 +53,31 @@ public class FormKhuyenMai extends javax.swing.JInternalFrame {
         }
     }
 
+    public boolean valid() {
+        if (txtMa.getText().equalsIgnoreCase("")) {
+            JOptionPane.showMessageDialog(this, "Ma khong duoc trong!");
+            return false;
+        }
+        if (txtTen.getText().equalsIgnoreCase("")) {
+            JOptionPane.showMessageDialog(this, "Ten khong duoc trong!");
+            return false;
+        }
+        if (txtMucGiam.getText().equalsIgnoreCase("")) {
+            JOptionPane.showMessageDialog(this, "Muc giam khong duoc trong!");
+            return false;
+        }
+        if (txtNgayApDung.getText().equalsIgnoreCase("")) {
+            JOptionPane.showMessageDialog(this, "Ngay ap dung khong duoc trong!");
+            return false;
+        }
+        if (txtNgayKetThuc.getText().equalsIgnoreCase("")) {
+            JOptionPane.showMessageDialog(this, "Ngay ket thuc khong duoc trong!");
+            return false;
+        }
+
+        return true;
+    }
+
     public KhuyenMai getAllFromGUI() {
         String tt;
         if (rdoHetHan.isSelected()) {
@@ -377,8 +402,10 @@ public class FormKhuyenMai extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         int confirm = JOptionPane.showConfirmDialog(this, "Xac Nhan");
         if (confirm == 0) {
-            JOptionPane.showMessageDialog(this, service.them(getAllFromGUI()));
-            loadTable();
+            if (valid()) {
+                JOptionPane.showMessageDialog(this, service.them(getAllFromGUI()));
+                loadTable();
+            }
         } else if (confirm == 1) {
             JOptionPane.showMessageDialog(this, "Da Huy");
         } else {

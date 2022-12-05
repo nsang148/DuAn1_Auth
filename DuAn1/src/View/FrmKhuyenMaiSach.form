@@ -253,6 +253,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtDonGia">
+          <Events>
+            <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="txtDonGiaMouseExited"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnThem">
           <Properties>
