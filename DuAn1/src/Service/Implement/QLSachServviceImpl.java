@@ -13,7 +13,8 @@ import java.util.List;
  *
  * @author Nguyễn Hiếu
  */
-public class QLSachServviceImpl implements QLSachSevice{
+public class QLSachServviceImpl implements QLSachSevice {
+
     private QLSachRepository hh = new QLSachRepository();
 
     @Override
@@ -23,17 +24,17 @@ public class QLSachServviceImpl implements QLSachSevice{
 
     @Override
     public String add(ChiTietSach qls) {
-        boolean add= hh.add(qls);
+        boolean add = hh.add(qls);
         if (add) {
             return "Thành Công";
         } else {
             return "Thất Bại";
-        } 
+        }
     }
 
     @Override
     public String delete(String ma) {
-        boolean delete= hh.delete(ma);
+        boolean delete = hh.delete(ma);
         if (delete) {
             return "Thành Công";
         } else {
@@ -43,7 +44,7 @@ public class QLSachServviceImpl implements QLSachSevice{
 
     @Override
     public String update(ChiTietSach qls, String ma) {
-        boolean update= hh.update(qls, ma);
+        boolean update = hh.update(qls, ma);
         if (update) {
             return "Thành Công";
         } else {
@@ -56,6 +57,4 @@ public class QLSachServviceImpl implements QLSachSevice{
         return hh.search(ten);
     }
 
-   
-   
 }

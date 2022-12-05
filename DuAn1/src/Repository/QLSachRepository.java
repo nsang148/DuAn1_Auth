@@ -13,10 +13,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-/**
- *
- * @author Nguyễn Hiếu
- */
 public class QLSachRepository {
 
     public List<ChiTietSach> getAll() {
