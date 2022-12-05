@@ -70,7 +70,7 @@ public class FrmKhuyenMaiSach extends javax.swing.JInternalFrame {
     public void loadTableTK() {
         model = (DefaultTableModel) tblKMHD.getModel();
         model.setRowCount(0);
-        for (KhuyenMaiSach item : service.searchKM(Float.parseFloat(txtTK.getText()))) {
+        for (KhuyenMaiSach item : service.searchKM(txtTK.getText())) {
             model.addRow(new Object[]{
                 item.getId(), service.getMaSachByID(item.getIdSach()), service.getMaKMByID(item.getIdKM()), item.getDonGia(), item.getSoTienConLai(), service.getTrangThai(item.getTinhTrang())
             });
@@ -96,6 +96,7 @@ public class FrmKhuyenMaiSach extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jDesktopPane1 = new javax.swing.JDesktopPane();
         rdoConHan = new javax.swing.JRadioButton();
         btnSua = new javax.swing.JButton();
@@ -116,6 +117,7 @@ public class FrmKhuyenMaiSach extends javax.swing.JInternalFrame {
         tblKMHD = new javax.swing.JTable();
         rdoHetHan = new javax.swing.JRadioButton();
 
+        buttonGroup1.add(rdoConHan);
         rdoConHan.setText("Con Han");
 
         btnSua.setText("Sua");
@@ -189,6 +191,7 @@ public class FrmKhuyenMaiSach extends javax.swing.JInternalFrame {
         });
         jScrollPane3.setViewportView(tblKMHD);
 
+        buttonGroup1.add(rdoHetHan);
         rdoHetHan.setText("Het Han");
 
         jDesktopPane1.setLayer(rdoConHan, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -268,17 +271,16 @@ public class FrmKhuyenMaiSach extends javax.swing.JInternalFrame {
             .addGroup(jDesktopPane1Layout.createSequentialGroup()
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                        .addGap(0, 50, Short.MAX_VALUE)
+                        .addGap(0, 49, Short.MAX_VALUE)
                         .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(cboSach, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(cboSach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtDonGia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jDesktopPane1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(12, 12, 12)
-                        .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtDonGia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 11, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(txtTK, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -318,7 +320,7 @@ public class FrmKhuyenMaiSach extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 37, Short.MAX_VALUE))
+                .addGap(0, 36, Short.MAX_VALUE))
         );
 
         pack();
@@ -410,6 +412,7 @@ public class FrmKhuyenMaiSach extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnSua;
     private javax.swing.JButton btnThem;
     private javax.swing.JButton btnXoa;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cboKM;
     private javax.swing.JComboBox<String> cboSach;
     private javax.swing.JDesktopPane jDesktopPane1;
