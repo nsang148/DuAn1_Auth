@@ -18,9 +18,10 @@ import java.util.List;
  *
  * @author acer
  */
-public class ThongKeServiceImpl implements ThongKeService{
+public class ThongKeServiceImpl implements ThongKeService {
 
     private ThongKeRepository repo = new ThongKeRepository();
+
     @Override
     public List<ThongKeResponse> getAll() {
         return repo.getAll();
@@ -31,7 +32,10 @@ public class ThongKeServiceImpl implements ThongKeService{
         return repo.getAllThongKeSP();
     }
 
-
+    @Override
+    public List<DoanhThuThongKe> HienThiDoanhThu() {
+        return repo.getDoanhThu();
+    }
 
     @Override
     public List<SoHoaDon> HienThiSoHoaDon() {
@@ -74,7 +78,7 @@ public class ThongKeServiceImpl implements ThongKeService{
     }
 
     @Override
-    public List<DoanhThuThongKe> HienThiDoanhThu() {
+    public List<DoanhThuThongKe> getDoanhThu() {
         return repo.getDoanhThu();
     }
 }

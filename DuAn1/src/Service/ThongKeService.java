@@ -4,6 +4,7 @@
  */
 package Service;
 
+import ViewModels.DoanhThuThongKe;
 import ViewModels.SanPhamHet;
 import ViewModels.SoHoaDon;
 import ViewModels.SoSanPhamTon;
@@ -20,11 +21,12 @@ public interface ThongKeService {
     List<ThongKeSPResponse> getAllSP();
     List<ThongKeSPResponse> getAllSPThang();
     List<ThongKeSPResponse> getAllSPNam();
-    List<ThongKeResponse> HienThiDoanhThu();
+    List<DoanhThuThongKe> HienThiDoanhThu();
     List<SoHoaDon> HienThiSoHoaDon();
     List<SoSanPhamTon> HienThiSoLuongTon();
     List<SanPhamHet> HienThiSanPhamHet();
     List<ThongKeResponse> search(String dateBD, String dateKT);
     List<ThongKeResponse> getAllThang();
     List<ThongKeResponse> getAllNam();
+    public List<DoanhThuThongKe> getDoanhThu();
 }

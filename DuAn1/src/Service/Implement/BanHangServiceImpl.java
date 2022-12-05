@@ -60,7 +60,10 @@ public class BanHangServiceImpl implements BanHangService{
     public int updateSLSach(int i, String ma) {
         return repo.updateSLSach(i, ma);
     }
-
+    @Override
+    public int updateSLSach(int i, String ma){
+        return repo.updateSLSach(i, ma);
+    }
     @Override
     public List<SanPhamThanhToan> search(String ma) {
         List<SanPhamThanhToan> list = new ArrayList<>();
@@ -71,5 +74,5 @@ public class BanHangServiceImpl implements BanHangService{
         }
         return list;
     }
-    
+
 }

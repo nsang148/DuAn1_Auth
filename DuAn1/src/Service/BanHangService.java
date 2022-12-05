@@ -25,4 +25,6 @@ public interface BanHangService {
     public int createHDCho(HoaDon hd);
     public int updateHD(HoaDon hd);
     public int createHDCT(HoaDonCT hd);
+    public int updateSLSach(int i, String ma);
+    public List<SanPhamThanhToan> search(String ma);
 }
