@@ -2,21 +2,13 @@
 package DomainModels;
 
 public class HoaDonCT {
-//    Id UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
-//	ID_SACH UNIQUEIDENTIFIER,
-//	ID_HOADON UNIQUEIDENTIFIER,
-//	SOLUONG INT,
-//	DONGIA MONEY,
-//	TIENTHUA MONEY,
-//	TIENGIAMGIA MONEY,
-//	TINHTRANG BIT,
-    private String id,idSach,idHD,donGia,tienThua,TienGiamGia;
+private String id,idSach,idHD;
+    private double donGia,tienThua,TienGiamGia;
     private int soLuong ,tinhTrang;
-
     public HoaDonCT() {
     }
 
-    public HoaDonCT(String id, String idSach, String idHD, String donGia, String tienThua, String TienGiamGia, int soLuong, int tinhTrang) {
+    public HoaDonCT(String id, String idSach, String idHD, double donGia, double tienThua, double TienGiamGia, int soLuong, int tinhTrang) {
         this.id = id;
         this.idSach = idSach;
         this.idHD = idHD;
@@ -51,27 +43,27 @@ public class HoaDonCT {
         this.idHD = idHD;
     }
 
-    public String getDonGia() {
+    public double getDonGia() {
         return donGia;
     }
 
-    public void setDonGia(String donGia) {
+    public void setDonGia(double donGia) {
         this.donGia = donGia;
     }
 
-    public String getTienThua() {
+    public double getTienThua() {
         return tienThua;
     }
 
-    public void setTienThua(String tienThua) {
+    public void setTienThua(double tienThua) {
         this.tienThua = tienThua;
     }
 
-    public String getTienGiamGia() {
+    public double getTienGiamGia() {
         return TienGiamGia;
     }
 
-    public void setTienGiamGia(String TienGiamGia) {
+    public void setTienGiamGia(double TienGiamGia) {
         this.TienGiamGia = TienGiamGia;
     }
 
@@ -91,6 +83,7 @@ public class HoaDonCT {
         this.tinhTrang = tinhTrang;
     }
 
+   
  
     
 }

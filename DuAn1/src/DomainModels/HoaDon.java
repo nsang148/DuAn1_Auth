@@ -2,13 +2,16 @@ package DomainModels;
 
 public class HoaDon {
 
-    private String id, idKH, idNV, idVi, ma, ngayTao, ngayThanhToan, tienKhachDua, tongTien, sodiemKH;
+    private String id, idKH, idNV, idVi, ma, ngayTao, ngayThanhToan;
+    private double tienKhachDua;
     private int tinhTrang;
+    private double tongTien;
+    private int soDiemKhacHang;
 
     public HoaDon() {
     }
 
-    public HoaDon(String id, String idKH, String idNV, String idVi, String ma, String ngayTao, String ngayThanhToan, String tienKhachDua, String tongTien, String sodiemKH, int tinhTrang) {
+    public HoaDon(String id, String idKH, String idNV, String idVi, String ma, String ngayTao, String ngayThanhToan, double tienKhachDua, int tinhTrang, double tongTien, int soDiemKhacHang) {
         this.id = id;
         this.idKH = idKH;
         this.idNV = idNV;
@@ -17,9 +20,9 @@ public class HoaDon {
         this.ngayTao = ngayTao;
         this.ngayThanhToan = ngayThanhToan;
         this.tienKhachDua = tienKhachDua;
-        this.tongTien = tongTien;
-        this.sodiemKH = sodiemKH;
         this.tinhTrang = tinhTrang;
+        this.tongTien = tongTien;
+        this.soDiemKhacHang = soDiemKhacHang;
     }
 
     public String getId() {
@@ -78,28 +81,12 @@ public class HoaDon {
         this.ngayThanhToan = ngayThanhToan;
     }
 
-    public String getTienKhachDua() {
+    public double getTienKhachDua() {
         return tienKhachDua;
     }
 
-    public void setTienKhachDua(String tienKhachDua) {
+    public void setTienKhachDua(double tienKhachDua) {
         this.tienKhachDua = tienKhachDua;
-    }
-
-    public String getTongTien() {
-        return tongTien;
-    }
-
-    public void setTongTien(String tongTien) {
-        this.tongTien = tongTien;
-    }
-
-    public String getSodiemKH() {
-        return sodiemKH;
-    }
-
-    public void setSodiemKH(String sodiemKH) {
-        this.sodiemKH = sodiemKH;
     }
 
     public int getTinhTrang() {
@@ -108,6 +95,30 @@ public class HoaDon {
 
     public void setTinhTrang(int tinhTrang) {
         this.tinhTrang = tinhTrang;
+    }
+
+    public double getTongTien() {
+        return tongTien;
+    }
+
+    public void setTongTien(double tongTien) {
+        this.tongTien = tongTien;
+    }
+
+    public int getSoDiemKhacHang() {
+        return soDiemKhacHang;
+    }
+
+    public void setSoDiemKhacHang(int soDiemKhacHang) {
+        this.soDiemKhacHang = soDiemKhacHang;
+    }
+
+    public String tinhTrang(int tt){
+        if (tt==0) {
+            return "Chưa thanh toán";
+        }else{
+            return "Đã thanh toán";
+        }
     }
 
 }
