@@ -6,6 +6,11 @@ package View;
 
 import DomainModels.NhanVien;
 import Service.Implement.NhanVienServiceimpl;
+import java.awt.Image;
+import java.io.File;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
@@ -19,13 +24,13 @@ public class FormNhanVien extends javax.swing.JInternalFrame {
     private DefaultTableModel model;
     private NhanVienServiceimpl service;
     private String isClicked;
-    
+
     public FormNhanVien() {
         service = new NhanVienServiceimpl();
         initComponents();
-        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
+        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI ui = (BasicInternalFrameUI) this.getUI();
-        ui.setNorthPane(null); 
+        ui.setNorthPane(null);
         this.loadTable();
     }
 
@@ -80,7 +85,8 @@ public class FormNhanVien extends javax.swing.JInternalFrame {
         rbDNV = new javax.swing.JRadioButton();
         jLabel9 = new javax.swing.JLabel();
         txtDiaChi = new javax.swing.JTextField();
-        lbAnh = new javax.swing.JPanel();
+        panel = new javax.swing.JPanel();
+        lblAnh = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         txtTimKiemTen1 = new javax.swing.JTextField();
@@ -309,17 +315,28 @@ public class FormNhanVien extends javax.swing.JInternalFrame {
         txtDiaChi.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         txtDiaChi.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
-        lbAnh.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        panel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        panel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                panelMouseClicked(evt);
+            }
+        });
 
-        javax.swing.GroupLayout lbAnhLayout = new javax.swing.GroupLayout(lbAnh);
-        lbAnh.setLayout(lbAnhLayout);
-        lbAnhLayout.setHorizontalGroup(
-            lbAnhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 76, Short.MAX_VALUE)
+        lblAnh.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblAnhMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
+        panel.setLayout(panelLayout);
+        panelLayout.setHorizontalGroup(
+            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lblAnh, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)
         );
-        lbAnhLayout.setVerticalGroup(
-            lbAnhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 90, Short.MAX_VALUE)
+        panelLayout.setVerticalGroup(
+            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lblAnh, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
         );
 
         jLabel17.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -381,7 +398,7 @@ public class FormNhanVien extends javax.swing.JInternalFrame {
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel17)
-                                    .addComponent(lbAnh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addComponent(jLabel16))
                             .addGap(59, 59, 59)))
                     .addComponent(rbDLV, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -395,7 +412,7 @@ public class FormNhanVien extends javax.swing.JInternalFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel17)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lbAnh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -621,7 +638,7 @@ public class FormNhanVien extends javax.swing.JInternalFrame {
                 item.getTinhTrang() == 0 ? "Đang làm việc" : "Đã nghỉ việc"});
         }
     }
-    
+
     private boolean checkData() {
         String reg = "^(0|\\+84)(\\s|\\.)?((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))(\\d)(\\s|\\.)?(\\d{3})(\\s|\\.)?(\\d{3})$";
         if (this.txtMa.getText().isEmpty()) {
@@ -689,7 +706,7 @@ public class FormNhanVien extends javax.swing.JInternalFrame {
             }
         }
     }
-    
+
     private NhanVien getData() {
         return new NhanVien(null,
                 this.txtMa.getText().trim().toUpperCase(),
@@ -703,27 +720,27 @@ public class FormNhanVien extends javax.swing.JInternalFrame {
                 this.txtMatKhau.getText().trim(),
                 Integer.parseInt(this.rbDLV.isSelected() ? "0" : "1"),
                 this.cbbVaiTro.getSelectedItem().toString(),
-                null);
+                this.lblAnh.getName());
     }
-    
+
     private void loadTableTK() {
         model = (DefaultTableModel) this.tblNV.getModel();
         model.setRowCount(0);
         for (NhanVien item : this.service.search(txtTimKiemTen.getText())) {
             model.addRow(new Object[]{
                 item.getID(),
-                    item.getMaNV(),
-                    item.getHo() + " " + item.getTenDem() + " " + item.getTen(),
-                    item.getGioiTinh(),
-                    item.getNgaySinh(),
-                    item.getSdt(),
-                    item.getDiaChi(),
-                    item.getMatKhau(),
-                    item.getVaiTro(),
-                    item.getTinhTrang() == 0 ? "Đang làm việc" : "Đã nghỉ việc"});
+                item.getMaNV(),
+                item.getHo() + " " + item.getTenDem() + " " + item.getTen(),
+                item.getGioiTinh(),
+                item.getNgaySinh(),
+                item.getSdt(),
+                item.getDiaChi(),
+                item.getMatKhau(),
+                item.getVaiTro(),
+                item.getTinhTrang() == 0 ? "Đang làm việc" : "Đã nghỉ việc"});
         }
     }
-    
+
     private void txtTenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTenActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTenActionPerformed
@@ -795,7 +812,7 @@ public class FormNhanVien extends javax.swing.JInternalFrame {
                     item.getMatKhau(),
                     item.getVaiTro(),
                     item.getTinhTrang() == 0 ? "Đang làm việc" : "Đã nghỉ việc"});
-        }
+            }
         } else {
             JOptionPane.showMessageDialog(this, "Đã huỷ yêu cầu.");
         }
@@ -868,7 +885,7 @@ public class FormNhanVien extends javax.swing.JInternalFrame {
                     item.getMatKhau(),
                     item.getVaiTro(),
                     item.getTinhTrang() == 0 ? "Đang làm việc" : "Đã nghỉ việc"});
-        }
+            }
         } else {
             JOptionPane.showMessageDialog(this, "Đã huỷ yêu cầu.");
         }
@@ -918,8 +935,31 @@ public class FormNhanVien extends javax.swing.JInternalFrame {
             } else {
                 this.rbDNV.setSelected(true);
             }
+            ImageIcon anh = new ImageIcon(this.service.getNVByID(isClicked).getAnh());
+            int wid = this.lblAnh.getWidth();
+            int hei = this.lblAnh.getHeight();
+            this.lblAnh.setIcon(anh);
         }
     }//GEN-LAST:event_tblNVMouseClicked
+
+    private void panelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelMouseClicked
+        
+    }//GEN-LAST:event_panelMouseClicked
+
+    private void lblAnhMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAnhMouseClicked
+        JFileChooser fileChooser = new JFileChooser();
+        int result = fileChooser.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            int imgW = this.lblAnh.getWidth();
+            int imgH = this.lblAnh.getHeight();
+            ImageIcon icon = new ImageIcon(new ImageIcon(selectedFile.getAbsolutePath()).getImage().getScaledInstance(imgW, imgH, Image.SCALE_DEFAULT));
+            this.lblAnh.setName(selectedFile.getAbsolutePath());
+            this.lblAnh.setIcon(icon);
+            this.lblAnh.setHorizontalAlignment(JLabel.CENTER);
+            this.lblAnh.setVerticalAlignment(JLabel.CENTER);
+        }
+    }//GEN-LAST:event_lblAnhMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -958,7 +998,8 @@ public class FormNhanVien extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JPanel lbAnh;
+    private javax.swing.JLabel lblAnh;
+    private javax.swing.JPanel panel;
     private javax.swing.JRadioButton rbDLV;
     private javax.swing.JRadioButton rbDNV;
     private javax.swing.JRadioButton rbNam;
