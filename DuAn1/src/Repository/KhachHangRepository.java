@@ -88,6 +88,7 @@ public class KhachHangRepository {
                 + "   SET [Ten] = ?\n"
                 + "      ,[GioiTinh] = ?\n"
                 + "      ,[NgaySinh] = ?\n"
+                + "      ,[DiaChi] = ?\n"
                 + "      ,[Sdt] = ?\n"
                 + "      ,[Email] = ?\n"
                 + "      ,[TinhTrang] = ?\n"
@@ -95,11 +96,12 @@ public class KhachHangRepository {
         try ( Connection con = DBContext.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
             ps.setObject(1, kh.getTen());
             ps.setObject(2, kh.getGioiTinh());
-            ps.setString(3, kh.getNgaySinh());
-            ps.setString(4, kh.getSdt());
-            ps.setObject(5, kh.getEmail());
-            ps.setObject(6, kh.getTinhTrang());
-            ps.setObject(7, kh.getMaKH());
+            ps.setObject(3, kh.getNgaySinh());
+            ps.setObject(4, kh.getDiaChi());
+            ps.setString(5, kh.getSdt());
+            ps.setObject(6, kh.getEmail());
+            ps.setObject(7, kh.getTinhTrang());
+            ps.setObject(8, kh.getMaKH());
             ps.executeUpdate();
             return "Thành công";
         } catch (Exception e) {
