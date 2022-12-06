@@ -12,29 +12,29 @@ public class KhachHangModel {
 
     private String idKH;
     private String maKH;
-    private String tenKH;
-    private String tenDem;
-    private String Ho;
+    private String ten;
     private String gioiTinh;
     private String ngaySinh;
+    private String diaChi;
     private String sdt;
     private String email;
-    private int tinhTrang;
+    private Boolean tinhTrang;
+    private String idViDiem;
 
     public KhachHangModel() {
     }
 
-    public KhachHangModel(String idKH, String maKH, String tenKH, String tenDem, String Ho, String gioiTinh, String ngaySinh, String sdt, String email, int tinhTrang) {
+    public KhachHangModel(String idKH, String maKH, String ten, String gioiTinh, String ngaySinh, String diaChi, String sdt, String email, Boolean tinhTrang, String idViDiem) {
         this.idKH = idKH;
         this.maKH = maKH;
-        this.tenKH = tenKH;
-        this.tenDem = tenDem;
-        this.Ho = Ho;
+        this.ten = ten;
         this.gioiTinh = gioiTinh;
         this.ngaySinh = ngaySinh;
+        this.diaChi = diaChi;
         this.sdt = sdt;
         this.email = email;
         this.tinhTrang = tinhTrang;
+        this.idViDiem = idViDiem;
     }
 
     public String getIdKH() {
@@ -53,28 +53,12 @@ public class KhachHangModel {
         this.maKH = maKH;
     }
 
-    public String getTenKH() {
-        return tenKH;
+    public String getTen() {
+        return ten;
     }
 
-    public void setTenKH(String tenKH) {
-        this.tenKH = tenKH;
-    }
-
-    public String getTenDem() {
-        return tenDem;
-    }
-
-    public void setTenDem(String tenDem) {
-        this.tenDem = tenDem;
-    }
-
-    public String getHo() {
-        return Ho;
-    }
-
-    public void setHo(String Ho) {
-        this.Ho = Ho;
+    public void setTen(String ten) {
+        this.ten = ten;
     }
 
     public String getGioiTinh() {
@@ -93,6 +77,14 @@ public class KhachHangModel {
         this.ngaySinh = ngaySinh;
     }
 
+    public String getDiaChi() {
+        return diaChi;
+    }
+
+    public void setDiaChi(String diaChi) {
+        this.diaChi = diaChi;
+    }
+
     public String getSdt() {
         return sdt;
     }
@@ -109,13 +101,27 @@ public class KhachHangModel {
         this.email = email;
     }
 
-    public int getTinhTrang() {
+    public Boolean getTinhTrang() {
         return tinhTrang;
     }
 
-    public void setTinhTrang(int tinhTrang) {
+    public void setTinhTrang(Boolean tinhTrang) {
         this.tinhTrang = tinhTrang;
     }
+
+    public String getIdViDiem() {
+        return idViDiem;
+    }
+
+    public void setIdViDiem(String idViDiem) {
+        this.idViDiem = idViDiem;
+    }
+
+    
+
+    
+
+    
     
     
 }

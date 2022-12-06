@@ -17,7 +17,9 @@ public interface KhachHangService {
 
     String add(KhachHangModel khachHang);
 
-    String update(KhachHangModel khachHang);
+    String update(KhachHangModel khachHang, String MaKh);
 
     String delete(String id);
+    
+    List<KhachHangReponse> search(String MaKH);
 }
