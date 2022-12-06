@@ -55,6 +55,8 @@ public class KhachHangRepository {
                 kvr.add(kh);
             }
         } catch (SQLException ex) {
+        } catch (Exception ex) {
+            Logger.getLogger(KhachHangRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
         return kvr;
     }
@@ -100,7 +102,7 @@ public class KhachHangRepository {
             ps.setObject(7, kh.getMaKH());
             ps.executeUpdate();
             return "Thành công";
-        } catch (SQLException e) {
+        } catch (Exception e) {
             return "Thất bại";
         }
     }
@@ -119,17 +121,18 @@ public class KhachHangRepository {
     }
 
     public boolean isExists(String maKh) {
-        Connection con = DBContext.getConnection();
+        
         boolean isExists = false;
         String query = "SELECT * FROM [KhachHang] WHERE MAKH = '" + maKh + "'";
         Statement st;
         try {
+            Connection con = DBContext.getConnection();
             st = con.createStatement();
             ResultSet rs = st.executeQuery(query);
             if (rs.next()) {
                 isExists = true;
             }
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(KhachHangRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
         return isExists;
