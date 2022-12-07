@@ -625,12 +625,18 @@ public class FormNhanVien extends javax.swing.JInternalFrame {
         model = (DefaultTableModel) this.tblNV.getModel();
         model.setRowCount(0);
         for (NhanVien item : this.service.getList()) {
+            String ngaySinh = item.getNgaySinh();
+            String ngay = "", thang = "", nam = "";
+            String[] ngaySinhSplit = ngaySinh.split("-");
+            ngay = ngaySinhSplit[0];
+            thang = ngaySinhSplit[1];
+            nam = ngaySinhSplit[2];
             model.addRow(new Object[]{
                 item.getID(),
                 item.getMaNV(),
                 item.getHo() + " " + item.getTenDem() + " " + item.getTen(),
                 item.getGioiTinh(),
-                item.getNgaySinh(),
+                ngay + "-" + thang + "-" + nam,
                 item.getSdt(),
                 item.getDiaChi(),
                 item.getMatKhau(),
@@ -714,7 +720,7 @@ public class FormNhanVien extends javax.swing.JInternalFrame {
                 this.txtTenDem.getText().trim().toUpperCase(),
                 this.txtHo.getText().trim().toUpperCase(),
                 this.rbNam.isSelected() ? "Nam" : "Nữ",
-                this.txtNgay.getText().trim().toUpperCase() + "-" + this.txtThang.getText().trim().toUpperCase() + "-" + this.txtNam.getText().trim().toUpperCase(),
+                this.txtNam.getText().trim().toUpperCase() + "-" + this.txtThang.getText().trim().toUpperCase() + "-" + this.txtNgay.getText().trim().toUpperCase(),
                 this.txtSDT.getText().trim(),
                 this.txtDiaChi.getText().trim().toUpperCase(),
                 this.txtMatKhau.getText().trim(),
@@ -727,12 +733,18 @@ public class FormNhanVien extends javax.swing.JInternalFrame {
         model = (DefaultTableModel) this.tblNV.getModel();
         model.setRowCount(0);
         for (NhanVien item : this.service.search(txtTimKiemTen.getText())) {
+            String ngaySinh = item.getNgaySinh();
+            String ngay = "", thang = "", nam = "";
+            String[] ngaySinhSplit = ngaySinh.split("-");
+            ngay = ngaySinhSplit[0];
+            thang = ngaySinhSplit[1];
+            nam = ngaySinhSplit[2];
             model.addRow(new Object[]{
                 item.getID(),
                 item.getMaNV(),
                 item.getHo() + " " + item.getTenDem() + " " + item.getTen(),
                 item.getGioiTinh(),
-                item.getNgaySinh(),
+                ngay + "-" + thang + "-" + nam,
                 item.getSdt(),
                 item.getDiaChi(),
                 item.getMatKhau(),
@@ -801,12 +813,18 @@ public class FormNhanVien extends javax.swing.JInternalFrame {
             model = (DefaultTableModel) this.tblNV.getModel();
             model.setRowCount(0);
             for (NhanVien item : this.service.sortListNhanVien()) {
+                String ngaySinh = item.getNgaySinh();
+                String ngay = "", thang = "", nam = "";
+                String[] ngaySinhSplit = ngaySinh.split("-");
+                ngay = ngaySinhSplit[0];
+                thang = ngaySinhSplit[1];
+                nam = ngaySinhSplit[2];
                 model.addRow(new Object[]{
                     item.getID(),
                     item.getMaNV(),
                     item.getHo() + " " + item.getTenDem() + " " + item.getTen(),
                     item.getGioiTinh(),
-                    item.getNgaySinh(),
+                    ngay + "-" + thang + "-" + nam,
                     item.getSdt(),
                     item.getDiaChi(),
                     item.getMatKhau(),
@@ -943,7 +961,7 @@ public class FormNhanVien extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tblNVMouseClicked
 
     private void panelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelMouseClicked
-        
+
     }//GEN-LAST:event_panelMouseClicked
 
     private void lblAnhMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAnhMouseClicked
