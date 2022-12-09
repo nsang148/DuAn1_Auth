@@ -7,6 +7,7 @@ package Service.Implement;
 import ViewModels.ThongKeResponse;
 import Repository.ThongKeRepository;
 import Service.ThongKeService;
+import ViewModels.ChartThongKe;
 import ViewModels.DoanhThuThongKe;
 import ViewModels.SanPhamHet;
 import ViewModels.SoHoaDon;
@@ -80,5 +81,10 @@ public class ThongKeServiceImpl implements ThongKeService {
     @Override
     public List<DoanhThuThongKe> getDoanhThu() {
         return repo.getDoanhThu();
+    }
+
+    @Override
+    public List<ChartThongKe> chartThongKe() {
+        return repo.ChartThongKe();
     }
 }

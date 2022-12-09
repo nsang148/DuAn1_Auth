@@ -6,6 +6,7 @@ package Repository;
 
 import ViewModels.ThongKeResponse;
 import Untility.DBContext;
+import ViewModels.ChartThongKe;
 import ViewModels.DoanhThuThongKe;
 import ViewModels.SanPhamHet;
 import ViewModels.SoHoaDon;
@@ -138,7 +139,7 @@ public class ThongKeRepository {
     public List<SoHoaDon> hienThiTongHoaDon() {
         List<SoHoaDon> list = new ArrayList<>();
         int hoaDon = 100;
-        String SELECT_KHUYENMAIHOADON = "select count(Id) from HOADONCHITIET";
+        String SELECT_KHUYENMAIHOADON = "select count(Id) from HOADON where DATEDIFF(DAY,getdate(), NGAYTHANHTOAN) = 0  ";
         try {
             Connection conn = DBContext.getConnection();
             Statement st = conn.createStatement();
@@ -170,7 +171,7 @@ public class ThongKeRepository {
     
     public List<SanPhamHet> hienThiSoPhamHet() {
         List<SanPhamHet> list = new ArrayList<>();
-        String SELECT_KHUYENMAIHOADON = "select sum(SOLUONGTON) from SACH";
+        String SELECT_KHUYENMAIHOADON = "select count(ID) from SACH where SOLUONGTON = 0";
         try {
             Connection conn = DBContext.getConnection();
             Statement st = conn.createStatement();
@@ -208,6 +209,21 @@ public class ThongKeRepository {
             ResultSet rs = st.executeQuery(SELECT);
             while (rs.next()) {
                 list.add(new DoanhThuThongKe(rs.getDouble(1)));
+            }
+        } catch (Exception ex) {
+            System.out.println("Loi tai getAll()");
+        }
+        return list;
+    }
+    public List<ChartThongKe> ChartThongKe() {
+        List<ChartThongKe> list = new ArrayList<>();
+        String SELECT_KHUYENMAIHOADON = "select month(NGAYTHANHTOAN), sum(tongtien) from HOADON where ngaythanhtoan like '%%' group by month(NGAYTHANHTOAN) ";
+        try {
+            Connection conn = DBContext.getConnection();
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery(SELECT_KHUYENMAIHOADON);         
+            while (rs.next()) {
+                list.add(new ChartThongKe(rs.getDouble(1), rs.getDouble(2)));
             }
         } catch (Exception ex) {
             System.out.println("Loi tai getAll()");
