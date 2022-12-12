@@ -4,7 +4,10 @@
  */
 package View;
 
+import java.io.File;
 import java.util.Properties;
+import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
 import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -12,7 +15,10 @@ import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
@@ -24,6 +30,7 @@ public class GuiMail extends javax.swing.JFrame {
     /**
      * Creates new form GuiMail
      */
+    String link = "";
     public GuiMail() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -48,16 +55,19 @@ public class GuiMail extends javax.swing.JFrame {
         txtMessage = new javax.swing.JTextArea();
         btnSend = new javax.swing.JButton();
         btnQuit = new javax.swing.JButton();
+        btnDinhKem = new javax.swing.JButton();
+        txtLink = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Gui Mail");
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel1.setText("Gửi Mail");
 
-        jLabel2.setText("To");
+        jLabel2.setText("To:");
 
-        jLabel3.setText("Subject");
+        jLabel3.setText("Subject:");
 
-        jLabel4.setText("Message");
+        jLabel4.setText("Message:");
 
         txtMessage.setColumns(20);
         txtMessage.setRows(5);
@@ -77,39 +87,47 @@ public class GuiMail extends javax.swing.JFrame {
             }
         });
 
+        btnDinhKem.setText("Đính kèm");
+        btnDinhKem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDinhKemActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtTo)
+                    .addComponent(txtSubject)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(157, 157, 157)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtTo)
-                            .addComponent(txtSubject)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnSend)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnQuit)
-                                .addGap(11, 11, 11)))))
-                .addContainerGap(61, Short.MAX_VALUE))
+                        .addComponent(btnSend)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnQuit)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnDinhKem))
+                    .addComponent(txtLink))
+                .addContainerGap(39, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(129, 129, 129))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(12, 12, 12)
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -121,11 +139,14 @@ public class GuiMail extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtLink, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSend)
-                    .addComponent(btnQuit))
-                .addContainerGap(35, Short.MAX_VALUE))
+                    .addComponent(btnQuit)
+                    .addComponent(btnDinhKem))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -161,9 +182,24 @@ public class GuiMail extends javax.swing.JFrame {
                     Message.RecipientType.TO,
                     InternetAddress.parse(toEmail)
             );
+            MimeBodyPart contentPart = new MimeBodyPart();
+            contentPart.setContent(mess,"text/html; charset=utf-8");
             message.setSubject(subJect);
             message.setText(mess);
-
+            
+            MimeBodyPart filePart = new MimeBodyPart();
+            
+            File file = new File(link);
+            
+            FileDataSource fds = new FileDataSource(file);
+            filePart.setDataHandler(new DataHandler(fds));
+            filePart.setFileName(file.getName());
+            
+            MimeMultipart multipart = new MimeMultipart();
+            
+            multipart.addBodyPart(contentPart);
+            multipart.addBodyPart(filePart);
+            message.setContent(multipart);
             Transport.send(message);
             JOptionPane.showMessageDialog(this, "Sent Email!");
             System.out.println("Done");
@@ -179,9 +215,19 @@ public class GuiMail extends javax.swing.JFrame {
         // TODO add your handling code here:
         int click = JOptionPane.showConfirmDialog(null, "Bạn muốn thoát ?", "Thoát", JOptionPane.YES_NO_OPTION);
         if (click == JOptionPane.YES_OPTION) {
-            System.exit(0);
+            this.setVisible(false);
         }
     }//GEN-LAST:event_btnQuitActionPerformed
+
+    private void btnDinhKemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDinhKemActionPerformed
+        // TODO add your handling code here:
+        JFileChooser fChooser = new JFileChooser("D:\\Picture");
+        fChooser.setDialogTitle("Hí");
+        fChooser.showOpenDialog(null);
+        File ftenanh = fChooser.getSelectedFile();
+        link = ftenanh.getAbsolutePath();
+        txtLink.setText(link);
+    }//GEN-LAST:event_btnDinhKemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -219,6 +265,7 @@ public class GuiMail extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDinhKem;
     private javax.swing.JButton btnQuit;
     private javax.swing.JButton btnSend;
     private javax.swing.JLabel jLabel1;
@@ -226,6 +273,7 @@ public class GuiMail extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField txtLink;
     private javax.swing.JTextArea txtMessage;
     private javax.swing.JTextField txtSubject;
     private javax.swing.JTextField txtTo;
