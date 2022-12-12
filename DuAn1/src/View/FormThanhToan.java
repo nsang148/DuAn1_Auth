@@ -6,10 +6,13 @@ package View;
 
 import DomainModels.HoaDon;
 import DomainModels.HoaDonCT;
+import DomainModels.TheLoai;
 import Service.BanHangService;
 import Service.Implement.BanHangServiceImpl;
 import Service.Implement.SachServiceImpl;
+import Service.Implement.Theloaiimpl;
 import Service.SachService;
+import Service.TheLoaiService;
 import ViewModels.GioHangThanhToan;
 import ViewModels.HoaDonThanhToan;
 import ViewModels.LayIDHD;
@@ -44,6 +47,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import javax.print.SimpleDoc;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
@@ -55,12 +59,14 @@ import javax.swing.table.DefaultTableModel;
 public class FormThanhToan extends javax.swing.JInternalFrame {
 
     int i = 0;
+    private TheLoaiService tlService = new Theloaiimpl();
     List<GioHangThanhToan> listGH = new ArrayList<>();
     DefaultTableModel model;
     private BanHangService service = new BanHangServiceImpl();
     private SachService sachService = new SachServiceImpl();
     String hinhAnh = "";
     private String maQRTimKiem = "";
+    DefaultComboBoxModel modelCBTL;
 //    private WebcamPanel panel = null;
 //    private Webcam webcam = null;
 //    private Executor executor = Executors.newSingleThreadExecutor(this);
@@ -74,6 +80,7 @@ public class FormThanhToan extends javax.swing.JInternalFrame {
         ui.setNorthPane(null);
         loadTableSP();
         loadHD();
+        loadCBTL();
     }
 
     /**
@@ -99,6 +106,7 @@ public class FormThanhToan extends javax.swing.JInternalFrame {
         tblSanPhamBH = new javax.swing.JTable();
         txtTimKiem = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
+        cboLocTL = new javax.swing.JComboBox<>();
         panelHD = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         txtMaHD = new javax.swing.JTextField();
@@ -222,11 +230,23 @@ public class FormThanhToan extends javax.swing.JInternalFrame {
                 txtTimKiemActionPerformed(evt);
             }
         });
+        txtTimKiem.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTimKiemKeyReleased(evt);
+            }
+        });
 
         jButton2.setText("QR");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
+            }
+        });
+
+        cboLocTL.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "The loai" }));
+        cboLocTL.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboLocTLActionPerformed(evt);
             }
         });
 
@@ -239,6 +259,8 @@ public class FormThanhToan extends javax.swing.JInternalFrame {
                 .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton2)
+                .addGap(18, 18, 18)
+                .addComponent(cboLocTL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(jScrollPane3)
@@ -249,7 +271,8 @@ public class FormThanhToan extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
+                    .addComponent(jButton2)
+                    .addComponent(cboLocTL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26))
@@ -679,12 +702,33 @@ public class FormThanhToan extends javax.swing.JInternalFrame {
         qr.setLocationRelativeTo(this);
         maQRTimKiem = qr.getMaQR();
         txtTimKiem.setText(maQRTimKiem);
-
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void btnViDIemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViDIemActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnViDIemActionPerformed
+
+    private void cboLocTLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboLocTLActionPerformed
+        if(cboLocTL.getSelectedIndex() == 0) {
+        loadTableSP();
+        }
+                
+        model = (DefaultTableModel) tblSanPhamBH.getModel();
+        model.setRowCount(0);
+        int i = 0;
+        List<SanPhamThanhToan> list = service.TheLoai(cboLocTL.getSelectedItem().toString());
+        for (SanPhamThanhToan s : list) {
+            model.addRow(new Object[]{i++, s.getMa(), s.getTen(), s.getTheLoai(), s.getTacGia(), s.getNXB(), s.getSoLuongTon(), s.getDonGia()});
+        }
+        if(cboLocTL.getSelectedIndex() == 0) {
+        loadTableSP();
+        }
+    }//GEN-LAST:event_cboLocTLActionPerformed
+
+    private void txtTimKiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyReleased
+
+    }//GEN-LAST:event_txtTimKiemKeyReleased
     public String getTrangThai(int tt) {
         if (tt == 0) {
             return "Chưa thanh toán";
@@ -693,11 +737,19 @@ public class FormThanhToan extends javax.swing.JInternalFrame {
         }
     }
 
+    private void loadCBTL() {
+        modelCBTL = (DefaultComboBoxModel) cboLocTL.getModel();
+        List<TheLoai> list = tlService.getAll();
+        for (TheLoai tl : list) {
+            modelCBTL.addElement(tl.getTen());
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnTaoHoaDon;
     private javax.swing.JButton btnThanhToan;
     private javax.swing.JButton btnViDIem;
     private javax.swing.JButton btnXuatHD;
+    private javax.swing.JComboBox<String> cboLocTL;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

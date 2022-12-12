@@ -51,28 +51,26 @@ public class BanHangServiceImpl implements BanHangService{
         return repo.updateHDRepository(hd);
     }
 
-    @Override
-    public boolean isExists(String maHD) {
-        return repo.isExists(maHD);
-    }
+
 
     @Override
     public int updateSLSach(int i, String ma) {
         return repo.updateSLSach(i, ma);
     }
+
     @Override
-    public int updateSLSach(int i, String ma){
-        return repo.updateSLSach(i, ma);
+    public List<SanPhamThanhToan> search(String ten) {
+        return repo.search(ten);
     }
+
     @Override
-    public List<SanPhamThanhToan> search(String ma) {
-        List<SanPhamThanhToan> list = new ArrayList<>();
-        for (SanPhamThanhToan sp : repo.getALLSP()) {
-            if(sp.getMa().equals(ma)) {
-                list.add(sp);
-            }
-        }
-        return list;
+    public boolean isExists(String maHD) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<SanPhamThanhToan> TheLoai(String tl) {
+        return repo.getALLSPCB(tl);
     }
 
 }
