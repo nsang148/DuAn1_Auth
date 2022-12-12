@@ -4,6 +4,7 @@
  */
 package Service;
 
+import ViewModels.ChartThongKe;
 import ViewModels.DoanhThuThongKe;
 import ViewModels.SanPhamHet;
 import ViewModels.SoHoaDon;
@@ -29,4 +30,5 @@ public interface ThongKeService {
     List<ThongKeResponse> getAllThang();
     List<ThongKeResponse> getAllNam();
     public List<DoanhThuThongKe> getDoanhThu();
+    List<ChartThongKe> chartThongKe();
 }
