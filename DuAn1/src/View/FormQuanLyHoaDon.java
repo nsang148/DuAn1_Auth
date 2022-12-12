@@ -1,15 +1,30 @@
 package View;
 
+import DomainModels.HoaDon;
+import DomainModels.HoaDonCT;
 import Service.HoaDonService;
 import Service.Implement.HoaDonServiceImpl;
+import Untility.DBContext;
 import ViewModels.HoaDonChiTietReponse;
 import ViewModels.HoaDonReponse;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRStyle;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JRDesignStyle;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -52,11 +67,12 @@ public class FormQuanLyHoaDon extends javax.swing.JInternalFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        tuNgaytxt = new com.toedter.calendar.JDateChooser();
-        denNgaytxt = new com.toedter.calendar.JDateChooser();
         jSeparator2 = new javax.swing.JSeparator();
         jScrollPane3 = new javax.swing.JScrollPane();
         tableHoaDonChiTiet = new javax.swing.JTable();
+        tuNgaytxt = new com.toedter.calendar.JDateChooser();
+        denNgaytxt = new com.toedter.calendar.JDateChooser();
+        jButton3 = new javax.swing.JButton();
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -185,10 +201,6 @@ public class FormQuanLyHoaDon extends javax.swing.JInternalFrame {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        tuNgaytxt.setDateFormatString("dd-MM-yyyy");
-
-        denNgaytxt.setDateFormatString("dd-MM-yyyy");
-
         jSeparator2.setBackground(new java.awt.Color(255, 255, 255));
         jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
 
@@ -216,6 +228,17 @@ public class FormQuanLyHoaDon extends javax.swing.JInternalFrame {
             tableHoaDonChiTiet.getColumnModel().getColumn(3).setResizable(false);
         }
 
+        tuNgaytxt.setDateFormatString("dd-MM-yyyy");
+
+        denNgaytxt.setDateFormatString("dd-MM-yyyy");
+
+        jButton3.setText("Xuất hóa đơn");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -232,18 +255,19 @@ public class FormQuanLyHoaDon extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tuNgaytxt, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(34, 34, 34)
+                        .addComponent(tuNgaytxt, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(36, 36, 36)
                         .addComponent(Test)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(denNgaytxt, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(37, 37, 37)
-                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(denNgaytxt, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28)
+                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton3)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -257,15 +281,18 @@ public class FormQuanLyHoaDon extends javax.swing.JInternalFrame {
                             .addComponent(jButton1)
                             .addComponent(jLabel1))
                         .addComponent(jButton2))
-                    .addComponent(tuNgaytxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Test)
-                    .addComponent(denNgaytxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(denNgaytxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tuNgaytxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 4, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -314,6 +341,12 @@ public class FormQuanLyHoaDon extends javax.swing.JInternalFrame {
 
 
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        int luaChon = tableHoaDon.getSelectedRow();
+        String ma = tableHoaDon.getValueAt(luaChon, 1).toString();
+        XuatHoaDon(ma);
+    }//GEN-LAST:event_jButton3ActionPerformed
     public void loadTable() {
         model = (DefaultTableModel) tableHoaDon.getModel();
         model.setNumRows(0);
@@ -324,11 +357,46 @@ public class FormQuanLyHoaDon extends javax.swing.JInternalFrame {
         }
     }
 
+    public void XuatHoaDon(String ma) {
+        try {
+            Hashtable map = new Hashtable();
+            JasperReport report = JasperCompileManager.compileReport("src/View/xuatHD.jrxml");
+            
+            map.put("sMAHD", ma);
+                  
+            JasperPrint p = JasperFillManager.fillReport(report,  map, DBContext.getConnection() );
+            JasperViewer.viewReport(p, false);
+//
+//            Hashtable map = new Hashtable();
+//            JasperReport report = JasperCompileManager
+//                    .compileReport("src/View/xuatHD.jrxml");
+//
+//            map.put("sMAHD", ma);
+//
+//            JasperPrint p = JasperFillManager
+//                    .fillReport(report, map,
+//                            DBContext.getConnection());
+//            
+//            JRStyle style = new JRDesignStyle();
+////            style.setFontName("Times New Roman");
+//            style.setPdfFontName("C:\\Windows\\Fonts\\Arial.ttf");
+//            style.setPdfEncoding("UTF-8");
+//            p.addStyle(style);
+
+//            JasperViewer.viewReport(p, false);
+//            JasperExportManager
+//                    .exportReportToPdfFile(p, "test.pdf");
+//            System.out.println("XYZ");
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Test;
     private com.toedter.calendar.JDateChooser denNgaytxt;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
