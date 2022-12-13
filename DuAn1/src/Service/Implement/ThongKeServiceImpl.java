@@ -4,15 +4,12 @@
  */
 package Service.Implement;
 
-import ViewModels.ThongKeResponse;
 import Repository.ThongKeRepository;
 import Service.ThongKeService;
+import ViewModels.BaoCaoMail;
 import ViewModels.ChartThongKe;
-import ViewModels.DoanhThuThongKe;
-import ViewModels.SanPhamHet;
-import ViewModels.SoHoaDon;
-import ViewModels.SoSanPhamTon;
-import ViewModels.ThongKeSPResponse;
+import ViewModels.SPBanChayViewModel;
+import ViewModels.TheLoaiBanChay;
 import java.util.List;
 
 /**
@@ -23,68 +20,24 @@ public class ThongKeServiceImpl implements ThongKeService {
 
     private ThongKeRepository repo = new ThongKeRepository();
 
-    @Override
-    public List<ThongKeResponse> getAll() {
-        return repo.getAll();
-    }
-
-    @Override
-    public List<ThongKeSPResponse> getAllSP() {
-        return repo.getAllThongKeSP();
-    }
-
-    @Override
-    public List<DoanhThuThongKe> HienThiDoanhThu() {
-        return repo.getDoanhThu();
-    }
-
-    @Override
-    public List<SoHoaDon> HienThiSoHoaDon() {
-        return repo.hienThiTongHoaDon();
-    }
-
-    @Override
-    public List<SoSanPhamTon> HienThiSoLuongTon() {
-        return repo.hienThiSoLuongTon();
-    }
-
-    @Override
-    public List<SanPhamHet> HienThiSanPhamHet() {
-        return repo.hienThiSoPhamHet();
-    }
-
-    @Override
-    public List<ThongKeResponse> search(String dateBD, String dateKT) {
-        return repo.search(dateBD, dateKT);
-    }
-
-    @Override
-    public List<ThongKeResponse> getAllThang() {
-        return repo.getAllThang();
-    }
-
-    @Override
-    public List<ThongKeResponse> getAllNam() {
-        return repo.getAllNam();
-    }
-
-    @Override
-    public List<ThongKeSPResponse> getAllSPThang() {
-        return repo.getAllThongKeSPThang();
-    }
-
-    @Override
-    public List<ThongKeSPResponse> getAllSPNam() {
-        return repo.getAllThongKeSPNam();
-    }
-
-    @Override
-    public List<DoanhThuThongKe> getDoanhThu() {
-        return repo.getDoanhThu();
-    }
 
     @Override
     public List<ChartThongKe> chartThongKe() {
         return repo.ChartThongKe();
+    }
+
+    @Override
+    public List<SPBanChayViewModel> tblSPBanChay() {
+        return repo.TableSachBanChay();
+    }
+
+    @Override
+    public List<TheLoaiBanChay> tblSPTheLoai() {
+        return repo.TableTheLoaiBanChay();
+    }
+
+    @Override
+    public List<BaoCaoMail> BaoCao() {
+        return repo.GuiMail();
     }
 }

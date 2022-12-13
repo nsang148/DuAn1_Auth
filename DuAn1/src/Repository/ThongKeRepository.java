@@ -4,14 +4,12 @@
  */
 package Repository;
 
-import ViewModels.ThongKeResponse;
 import Untility.DBContext;
+import ViewModels.BaoCaoMail;
 import ViewModels.ChartThongKe;
 import ViewModels.DoanhThuThongKe;
-import ViewModels.SanPhamHet;
-import ViewModels.SoHoaDon;
-import ViewModels.SoSanPhamTon;
-import ViewModels.ThongKeSPResponse;
+import ViewModels.SPBanChayViewModel;
+import ViewModels.TheLoaiBanChay;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,196 +23,7 @@ import java.util.List;
  */
 public class ThongKeRepository {
 
-    public List<ThongKeResponse> getAll() {
-        List<ThongKeResponse> list = new ArrayList<>();
-        String SELECT = "select NGAYTHANHTOAN, sum(hdct.SOLUONG) as [So luong], sum(hdct.SOLUONG * hdct.DONGIA) as [Tong tien] from HOADON hd join HOADONCHITIET hdct on hd.Id = hdct.ID_HOADON group by NGAYTHANHTOAN";
-        try {
-            Connection conn = DBContext.getConnection();
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery(SELECT);
-            while (rs.next()) {
-                list.add(new ThongKeResponse(rs.getString(1), rs.getInt(2), rs.getDouble(3)));
-            }
-        } catch (Exception ex) {
-            System.out.println("Loi tai getAll()");
-        }
-        return list;
-    }
-    public List<ThongKeResponse> getAllThang() {
-        List<ThongKeResponse> list = new ArrayList<>();
-        String SELECT = "select month(NGAYTHANHTOAN) as [Thang], sum(hdct.SOLUONG) as [So luong], sum(hdct.SOLUONG * hdct.DONGIA) as [Tong tien] from HOADON hd join HOADONCHITIET hdct on hd.Id = hdct.ID_HOADON group by Month(NGAYTHANHTOAN)";
-        try {
-            Connection conn = DBContext.getConnection();
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery(SELECT);
-            while (rs.next()) {
-                list.add(new ThongKeResponse(rs.getString(1), rs.getInt(2), rs.getDouble(3)));
-            }
-        } catch (Exception ex) {
-            System.out.println("Loi tai getAll()");
-        }
-        return list;
-    }
     
-    public List<ThongKeResponse> getAllNam() {
-        List<ThongKeResponse> list = new ArrayList<>();
-        String SELECT = "select year(NGAYTHANHTOAN) as [Thang], sum(hdct.SOLUONG) as [So luong], sum(hdct.SOLUONG * hdct.DONGIA) as [Tong tien] from HOADON hd join HOADONCHITIET hdct on hd.Id = hdct.ID_HOADON group by year(NGAYTHANHTOAN)";
-        try {
-            Connection conn = DBContext.getConnection();
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery(SELECT);
-            while (rs.next()) {
-                list.add(new ThongKeResponse(rs.getString(1), rs.getInt(2), rs.getDouble(3)));
-            }
-        } catch (Exception ex) {
-            System.out.println("Loi tai getAll()");
-        }
-        return list;
-    }
-    
-    
-    public List<ThongKeSPResponse> getAllThongKeSP() {
-        List<ThongKeSPResponse> list = new ArrayList<>();
-        String SELECT_KHUYENMAIHOADON = "select NGAYTHANHTOAN, tl.TEN, sum(hdct.SOLUONG), sum(hdct.SOLUONG) * hdct.DONGIA from HOADON hd join HOADONCHITIET hdct on hd.Id = hdct.ID_HOADON join SACH s on hdct.ID_SACH = s.Id join THELOAI tl on s.ID_THELOAI = tl.Id group by NGAYTHANHTOAN, tl.TEN, hdct.DONGIA";
-        try {
-            Connection conn = DBContext.getConnection();
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery(SELECT_KHUYENMAIHOADON);
-            while (rs.next()) {
-                list.add(new ThongKeSPResponse(rs.getString(1), rs.getString(2) , rs.getInt(3), rs.getDouble(4)));
-            }
-        } catch (Exception ex) {
-            System.out.println("Loi tai getAllThongKeSP()");
-        }
-        return list;
-    }
-    
-    public List<ThongKeSPResponse> getAllThongKeSPThang() {
-        List<ThongKeSPResponse> list = new ArrayList<>();
-        String SELECT_KHUYENMAIHOADON = "select month(NGAYTHANHTOAN), tl.TEN, sum(hdct.SOLUONG), sum(hdct.SOLUONG) * hdct.DONGIA from HOADON hd join HOADONCHITIET hdct on hd.Id = hdct.ID_HOADON join SACH s on hdct.ID_SACH = s.Id join THELOAI tl on s.ID_THELOAI = tl.Id group by month(NGAYTHANHTOAN), tl.TEN, hdct.DONGIA";
-        try {
-            Connection conn = DBContext.getConnection();
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery(SELECT_KHUYENMAIHOADON);
-            while (rs.next()) {
-                list.add(new ThongKeSPResponse(rs.getString(1), rs.getString(2) , rs.getInt(3), rs.getDouble(4)));
-            }
-        } catch (Exception ex) {
-            System.out.println("Loi tai getAllThongKeSP()");
-        }
-        return list;
-    }
-    
-    public List<ThongKeSPResponse> getAllThongKeSPNam() {
-        List<ThongKeSPResponse> list = new ArrayList<>();
-        String SELECT_KHUYENMAIHOADON = "select year(NGAYTHANHTOAN), tl.TEN, sum(hdct.SOLUONG), sum(hdct.SOLUONG) * hdct.DONGIA from HOADON hd join HOADONCHITIET hdct on hd.Id = hdct.ID_HOADON join SACH s on hdct.ID_SACH = s.Id join THELOAI tl on s.ID_THELOAI = tl.Id group by year(NGAYTHANHTOAN), tl.TEN, hdct.DONGIA";
-        try {
-            Connection conn = DBContext.getConnection();
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery(SELECT_KHUYENMAIHOADON);
-            while (rs.next()) {
-                list.add(new ThongKeSPResponse(rs.getString(1), rs.getString(2) , rs.getInt(3), rs.getDouble(4)));
-            }
-        } catch (Exception ex) {
-            System.out.println("Loi tai getAllThongKeSP()");
-        }
-        return list;
-    }
-    
-    public List<ThongKeResponse> HienThiDoanhThu() {
-        List<ThongKeResponse> list = new ArrayList<>();
-        String SELECT_KHUYENMAIHOADON = "select SOLUONG * DONGIA from HOADON hd join HOADONCHITIET hdct on hd.Id = hdct.ID_HOADON";
-        try {
-            Connection conn = DBContext.getConnection();
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery(SELECT_KHUYENMAIHOADON);         
-            while (rs.next()) {
-                list.add(new ThongKeResponse(null, 0, rs.getDouble(1)));
-            }
-        } catch (Exception ex) {
-            System.out.println("Loi tai getAll()");
-        }
-        return list;
-    }
-    public List<SoHoaDon> hienThiTongHoaDon() {
-        List<SoHoaDon> list = new ArrayList<>();
-        int hoaDon = 100;
-        String SELECT_KHUYENMAIHOADON = "select count(Id) from HOADON where DATEDIFF(DAY,getdate(), NGAYTHANHTOAN) = 0  ";
-        try {
-            Connection conn = DBContext.getConnection();
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery(SELECT_KHUYENMAIHOADON);
-            while (rs.next()) {
-                list.add(new SoHoaDon(rs.getInt(1)));
-            }
-
-        } catch (Exception ex) {
-            System.out.println("Loi tai getAll()");
-        }
-        return list;
-    }
-    public List<SoSanPhamTon> hienThiSoLuongTon() {
-        List<SoSanPhamTon> list = new ArrayList<>();
-        String SELECT_KHUYENMAIHOADON = "select sum(SOLUONGTON) from SACH";
-        try {
-            Connection conn = DBContext.getConnection();
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery(SELECT_KHUYENMAIHOADON);
-            while (rs.next()) {
-                list.add(new SoSanPhamTon(rs.getInt(1)));
-            }
-        } catch (Exception ex) {
-            System.out.println("Loi tai getAll()");
-        }
-        return list;
-    }
-    
-    public List<SanPhamHet> hienThiSoPhamHet() {
-        List<SanPhamHet> list = new ArrayList<>();
-        String SELECT_KHUYENMAIHOADON = "select count(ID) from SACH where SOLUONGTON = 0";
-        try {
-            Connection conn = DBContext.getConnection();
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery(SELECT_KHUYENMAIHOADON);
-            while (rs.next()) {
-                list.add(new SanPhamHet(rs.getInt(1)));
-            }
-        } catch (Exception ex) {
-            System.out.println("Loi tai getAll()");
-        }
-        return list;
-    }
-    public List<ThongKeResponse> search(String dateBD, String dateKT) {
-        List<ThongKeResponse> list = new ArrayList<>();
-        String select = "select NGAYTHANHTOAN, sum(hdct.SOLUONG) as [So luong], sum(hdct.SOLUONG * hdct.DONGIA) as [Tong tien]  from HOADON hd join HOADONCHITIET hdct on hd.Id = hdct.ID_HOADON where NGAYTHANHTOAN between ? and ? group by NGAYTHANHTOAN";
-        try ( Connection con = DBContext.getConnection();  PreparedStatement sttm = con.prepareStatement(select)) {
-            sttm.setString(1, dateBD);
-            sttm.setString(2, dateKT);
-            ResultSet rs = sttm.executeQuery();
-            while (rs.next()) {
-                list.add(new ThongKeResponse(rs.getString(1),rs.getInt(2), rs.getDouble(3)));
-            }
-            return list;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-    public List<DoanhThuThongKe> getDoanhThu() {
-        List<DoanhThuThongKe> list = new ArrayList<>();
-        String SELECT = "select sum(hdct.SOLUONG * hdct.DONGIA) as [Tong tien] from HOADON hd join HOADONCHITIET hdct on hd.Id = hdct.ID_HOADON WHERE DATEDIFF(DAY,getdate(), NGAYTHANHTOAN) = 0 group by NGAYTHANHTOAN";
-        try {
-            Connection conn = DBContext.getConnection();
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery(SELECT);
-            while (rs.next()) {
-                list.add(new DoanhThuThongKe(rs.getDouble(1)));
-            }
-        } catch (Exception ex) {
-            System.out.println("Loi tai getAll()");
-        }
-        return list;
-    }
     public List<ChartThongKe> ChartThongKe() {
         List<ChartThongKe> list = new ArrayList<>();
         String SELECT_KHUYENMAIHOADON = "select month(NGAYTHANHTOAN), sum(tongtien) from HOADON where ngaythanhtoan like '%%' group by month(NGAYTHANHTOAN) ";
@@ -224,6 +33,54 @@ public class ThongKeRepository {
             ResultSet rs = st.executeQuery(SELECT_KHUYENMAIHOADON);         
             while (rs.next()) {
                 list.add(new ChartThongKe(rs.getDouble(1), rs.getDouble(2)));
+            }
+        } catch (Exception ex) {
+            System.out.println("Loi tai getAll()");
+        }
+        return list;
+    }
+    
+    public List<SPBanChayViewModel> TableSachBanChay() {
+        List<SPBanChayViewModel> list = new ArrayList<>();
+        String SELECT_KHUYENMAIHOADON = "select month(hd.NGAYTHANHTOAN) ,s.TEN, count(*) as [So luong], sum(hdct.DONGIA * hdct.SOLUONG) as[Tong tien] from HOADONCHITIET hdct join SACH s on s.id = hdct.ID_SACH join HOADON hd on hdct.ID_HOADON = hd.Id group by s.TEN, month(hd.NGAYTHANHTOAN) ";
+        try {
+            Connection conn = DBContext.getConnection();
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery(SELECT_KHUYENMAIHOADON);         
+            while (rs.next()) {
+                list.add(new SPBanChayViewModel(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getDouble(4)));
+            }
+        } catch (Exception ex) {
+            System.out.println("Loi tai getAll()");
+        }
+        return list;
+    }
+    
+    public List<TheLoaiBanChay> TableTheLoaiBanChay() {
+        List<TheLoaiBanChay> list = new ArrayList<>();
+        String SELECT_KHUYENMAIHOADON = "select month(hd.NGAYTHANHTOAN) ,tl.TEN, count(*) as [So luong], sum(hdct.DONGIA * hdct.SOLUONG) as[Tong tien] from HOADONCHITIET hdct join SACH s on s.id = hdct.ID_SACH join HOADON hd on hdct.ID_HOADON = hd.Id join THELOAI tl on s.ID_THELOAI = tl.Id group by tl.TEN, month(hd.NGAYTHANHTOAN) ";
+        try {
+            Connection conn = DBContext.getConnection();
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery(SELECT_KHUYENMAIHOADON);         
+            while (rs.next()) {
+                list.add(new TheLoaiBanChay(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getDouble(4)));
+            }
+        } catch (Exception ex) {
+            System.out.println("Loi tai getAll()");
+        }
+        return list;
+    }
+    
+    public List<BaoCaoMail> GuiMail() {
+        List<BaoCaoMail> list = new ArrayList<>();
+        String SELECT_KHUYENMAIHOADON = "select hd.NGAYTHANHTOAN ,s.TEN, count(*) as [So luong], sum(hdct.DONGIA * hdct.SOLUONG) as[Tong tien] from HOADONCHITIET hdct join SACH s on s.id = hdct.ID_SACH join HOADON hd on hdct.ID_HOADON = hd.Id where DATEDIFF(DAY,NGAYTHANHTOAN ,GETDATE()) = 4 group by s.TEN, hd.NGAYTHANHTOAN";
+        try {
+            Connection conn = DBContext.getConnection();
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery(SELECT_KHUYENMAIHOADON);         
+            while (rs.next()) {
+                list.add(new BaoCaoMail(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getDouble(4)));
             }
         } catch (Exception ex) {
             System.out.println("Loi tai getAll()");
