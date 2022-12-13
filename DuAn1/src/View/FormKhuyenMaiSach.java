@@ -410,9 +410,9 @@ public class FormKhuyenMaiSach extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tblKMHDMouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        FormKM km =new FormKM();
-        km.setVisible(true);
-        km.setLocationRelativeTo(this);
+//        FormKM km =new FormKM();
+//        km.setVisible(true);
+//        km.setLocationRelativeTo(this);
         
     }//GEN-LAST:event_jButton1ActionPerformed
 

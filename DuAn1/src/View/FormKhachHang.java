@@ -5,12 +5,10 @@
 package View;
 
 import DomainModels.KhachHangModel;
-import DomainModels.ViDiem;
-import Repository.ViDiemRepository;
+
 import Service.Implement.KhachHangIplement;
-import Service.Implement.ViDiemImplement;
+
 import Service.KhachHangService;
-import Service.ViDiemService;
 import ViewModels.KhachHangReponse;
 import java.io.BufferedInputStream;
 import java.lang.Object;
@@ -32,10 +30,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  *
@@ -48,7 +42,6 @@ public class FormKhachHang extends javax.swing.JInternalFrame {
      */
     DefaultTableModel defaultTableModel;
     KhachHangService khachHangService;
-    ViDiemService viDiemService = new ViDiemImplement();
     List<KhachHangReponse> list;
     DefaultComboBoxModel defaultComboBoxModel;
 
@@ -170,7 +163,7 @@ public class FormKhachHang extends javax.swing.JInternalFrame {
         txtDiaChi.setText("");
         cbTinhTrang.setSelectedIndex(0);
     }
-    
+
 //    private void loadCBNXB() {
 //        defaultComboBoxModel = (DefaultComboBoxModel) cbViDiem.getModel();
 //        List<ViDiem> listVi = viDiemService.getAll();
@@ -178,9 +171,6 @@ public class FormKhachHang extends javax.swing.JInternalFrame {
 //            defaultComboBoxModel.addElement(viDiem.getMa());
 //        }
 //    }
-
-    
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -495,7 +485,7 @@ public class FormKhachHang extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn khách hàng để sửa");
         } else {
             String maKh = txtMaKh.getText();
-            String mess = khachHangService.update(getData(),maKh);
+            String mess = khachHangService.update(getData(), maKh);
             JOptionPane.showMessageDialog(this, mess);
             clearFormData();
             List<KhachHangReponse> listUp = khachHangService.getAll();
