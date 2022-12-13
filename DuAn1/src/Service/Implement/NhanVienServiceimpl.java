@@ -91,4 +91,14 @@ public class NhanVienServiceimpl implements NhanVienService {
         }
         return null;
     }
+
+    @Override
+    public NhanVien getNhanVienByMa(String maNV) {
+        for (NhanVien item : NVR.all()) {
+            if (item.getMaNV().equals(maNV)) {
+                return item;
+            }
+        }
+        return null;
+    }
 }
