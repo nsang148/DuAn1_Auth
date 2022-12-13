@@ -24,4 +24,5 @@ public interface KhuyenMaiSachService {
     String getMaKMByID(String id);
     ArrayList<KhuyenMaiSach> searchKM(String maKM);
     String getPhanTramByIdKM(String id);
+    KhuyenMaiSach getKMSachByMaKMSach(String ma);
 }

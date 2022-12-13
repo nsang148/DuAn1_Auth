@@ -135,4 +135,14 @@ public class KhuyenMaiSachImpl implements KhuyenMaiSachService {
         return null;
     }
 
+    @Override
+    public KhuyenMaiSach getKMSachByMaKMSach(String ma) {
+        for (KhuyenMaiSach item : KMSR.getAll()) {
+            if (this.getMaKMByID(item.getIdKM()).equals(ma)) {
+                return item;
+            }
+        }
+        return  null;
+    }
+
 }
