@@ -13,11 +13,11 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 
 public class NhanVienForm extends javax.swing.JFrame {
-
+    
     private DefaultTableModel model;
     private NhanVienServiceimpl service;
     private String isClicked;
-
+    
     public NhanVienForm() {
         initComponents();
         service = new NhanVienServiceimpl();
@@ -25,9 +25,9 @@ public class NhanVienForm extends javax.swing.JFrame {
         setLocationRelativeTo(this);
         setTitle("Phần mềm quản lý bán sách");
         this.loadTable();
-
+        
     }
-
+    
     private void loadTable() {
         model = (DefaultTableModel) this.tblNV.getModel();
         model.setRowCount(0);
@@ -51,7 +51,7 @@ public class NhanVienForm extends javax.swing.JFrame {
                 item.getTinhTrang() == 0 ? "Đang làm việc" : "Đã nghỉ việc"});
         }
     }
-
+    
     private boolean checkData() {
         String reg = "^(0|\\+84)(\\s|\\.)?((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))(\\d)(\\s|\\.)?(\\d{3})(\\s|\\.)?(\\d{3})$";
         if (this.txtMa.getText().isEmpty()) {
@@ -119,7 +119,7 @@ public class NhanVienForm extends javax.swing.JFrame {
             }
         }
     }
-
+    
     private NhanVien getData() {
         return new NhanVien(null,
                 this.txtMa.getText().trim().toUpperCase(),
@@ -135,7 +135,7 @@ public class NhanVienForm extends javax.swing.JFrame {
                 this.cbbVaiTro.getSelectedItem().toString(),
                 this.lblAnh.getName());
     }
-
+    
     private void loadTableTK() {
         model = (DefaultTableModel) this.tblNV.getModel();
         model.setRowCount(0);
@@ -234,6 +234,7 @@ public class NhanVienForm extends javax.swing.JFrame {
         btnXoa1 = new javax.swing.JButton();
         btnSapXep1 = new javax.swing.JButton();
         jLabel25 = new javax.swing.JLabel();
+        btnXoa2 = new javax.swing.JButton();
         jPanel16 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblNV = new javax.swing.JTable();
@@ -833,6 +834,14 @@ public class NhanVienForm extends javax.swing.JFrame {
 
         jLabel25.setText("Nhập thông tin bất kỳ để tìm kiếm :");
 
+        btnXoa2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icon_loading.png"))); // NOI18N
+        btnXoa2.setText("Reset");
+        btnXoa2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoa2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
         jPanel15.setLayout(jPanel15Layout);
         jPanel15Layout.setHorizontalGroup(
@@ -851,6 +860,10 @@ public class NhanVienForm extends javax.swing.JFrame {
                             .addComponent(btnXoa1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jLabel25, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel15Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnXoa2, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(52, 52, 52))
         );
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -866,7 +879,9 @@ public class NhanVienForm extends javax.swing.JFrame {
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSua1)
                     .addComponent(btnXoa1))
-                .addContainerGap(106, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnXoa2)
+                .addContainerGap(63, Short.MAX_VALUE))
         );
 
         jPanel16.setBorder(javax.swing.BorderFactory.createTitledBorder("Danh sách nhân viên"));
@@ -1123,9 +1138,9 @@ public class NhanVienForm extends javax.swing.JFrame {
             ngay = ngaySinhSplit[0];
             thang = ngaySinhSplit[1];
             nam = ngaySinhSplit[2];
-            this.txtNgay.setText(ngay);
+            this.txtNgay.setText(nam);
             this.txtThang.setText(thang);
-            this.txtNam.setText(nam);
+            this.txtNam.setText(ngay);
             this.txtSDT.setText(this.tblNV.getModel().getValueAt(row, 5).toString());
             this.txtDiaChi.setText(this.tblNV.getModel().getValueAt(row, 6).toString());
             this.txtMatKhau.setText(this.tblNV.getModel().getValueAt(row, 7).toString());
@@ -1142,6 +1157,23 @@ public class NhanVienForm extends javax.swing.JFrame {
             this.lblAnh.setIcon(anh);
         }
     }//GEN-LAST:event_tblNVMouseClicked
+
+    private void btnXoa2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoa2ActionPerformed
+        this.txtNgay.setText("");
+        this.txtThang.setText("");
+        this.txtNam.setText("");
+        this.txtSDT.setText("");
+        this.txtDiaChi.setText("");
+        this.txtMatKhau.setText("");
+        this.cbbVaiTro.setSelectedItem(0);
+        this.rbDLV.setSelected(true);
+        txtMa.setText("");
+        txtHo.setText("");
+        txtTenDem.setText("");
+        txtTen.setText("");
+        
+
+    }//GEN-LAST:event_btnXoa2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1214,6 +1246,7 @@ public class NhanVienForm extends javax.swing.JFrame {
     private javax.swing.JButton btnSua1;
     private javax.swing.JButton btnThem1;
     private javax.swing.JButton btnXoa1;
+    private javax.swing.JButton btnXoa2;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cbbVaiTro;
     private javax.swing.JLabel jLabel1;

@@ -1100,6 +1100,11 @@
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="btnXoa2" min="-2" pref="106" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
@@ -1118,7 +1123,9 @@
                               <Component id="btnSua1" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="btnXoa1" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="106" max="32767" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="btnXoa2" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="63" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1185,6 +1192,17 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Nh&#x1ead;p th&#xf4;ng tin b&#x1ea5;t k&#x1ef3; &#x111;&#x1ec3; t&#xec;m ki&#x1ebf;m :"/>
                   </Properties>
+                </Component>
+                <Component class="javax.swing.JButton" name="btnXoa2">
+                  <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/icon/icon_loading.png"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Reset"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnXoa2ActionPerformed"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
