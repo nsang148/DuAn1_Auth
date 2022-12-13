@@ -1,14 +1,18 @@
-
 package View;
 
 import ViewModels.GioHangThanhToan;
 import javax.swing.JOptionPane;
 import DomainModels.HoaDon;
 import DomainModels.HoaDonCT;
+import DomainModels.NhanVien;
+import DomainModels.TheLoai;
 import Service.BanHangService;
 import Service.Implement.BanHangServiceImpl;
+import Service.Implement.NhanVienServiceimpl;
 import Service.Implement.SachServiceImpl;
+import Service.Implement.Theloaiimpl;
 import Service.SachService;
+import Service.TheLoaiService;
 import ViewModels.GioHangThanhToan;
 import ViewModels.HoaDonThanhToan;
 import ViewModels.LayIDHD;
@@ -43,36 +47,53 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import javax.print.SimpleDoc;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author This PC
  */
 public class TrangChuForm extends javax.swing.JFrame implements Runnable, ThreadFactory {
-int i = 0;
+
+    int i = 0;
     List<GioHangThanhToan> listGH = new ArrayList<>();
     DefaultTableModel model;
     private BanHangService service = new BanHangServiceImpl();
     private SachService sachService = new SachServiceImpl();
+    private NhanVienServiceimpl serviceNV = new NhanVienServiceimpl();
     String hinhAnh = "";
     private String maQRTimKiem = "";
     private WebcamPanel panel = null;
     private Webcam webcam = null;
     private Executor executor = Executors.newSingleThreadExecutor(this);
+    DefaultComboBoxModel modelCB;
+    TheLoaiService tlService = new Theloaiimpl();
 
     /**
      * Creates new form TrangChu
      */
     public TrangChuForm() {
-        initComponents(); 
+        initComponents();
         initwebcam();
         setLocationRelativeTo(this);
         setTitle("Phần mềm quản lý bán sách");
         loadTableSP();
         loadHD();
-        
+        loadCBTL();
+    }
+
+    public TrangChuForm(String userName) {
+        initComponents();
+        initwebcam();
+        setLocationRelativeTo(this);
+        setTitle("Phần mềm quản lý bán sách");
+        loadTableSP();
+        loadHD();
+        NhanVien temp = serviceNV.getNhanVienByMa(userName);
+        labelCV.setText(temp.getVaiTro());
     }
 
     /**
@@ -137,6 +158,7 @@ int i = 0;
         btnThanhToan = new javax.swing.JButton();
         jPanel17 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
+        labelCV = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -542,7 +564,12 @@ int i = 0;
         jLabel3.setForeground(new java.awt.Color(102, 102, 102));
         jLabel3.setText("Tìm kiếm sản phẩm");
 
-        cbxTheLoai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxTheLoai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "The loai" }));
+        cbxTheLoai.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxTheLoaiActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
         jPanel16.setLayout(jPanel16Layout);
@@ -597,11 +624,6 @@ int i = 0;
         txtTienKhachDua.addCaretListener(new javax.swing.event.CaretListener() {
             public void caretUpdate(javax.swing.event.CaretEvent evt) {
                 txtTienKhachDuaCaretUpdate(evt);
-            }
-        });
-        txtTienKhachDua.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                txtTienKhachDuaMouseExited(evt);
             }
         });
         txtTienKhachDua.addActionListener(new java.awt.event.ActionListener() {
@@ -734,7 +756,11 @@ int i = 0;
 
         jPanel5.add(jPanel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 10, 200, 80));
 
-        jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 0, 1160, 730));
+        jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 40, 1160, 730));
+
+        labelCV.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        labelCV.setText("jLabel12");
+        jPanel1.add(labelCV, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 10, 90, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -751,49 +777,73 @@ int i = 0;
     }// </editor-fold>//GEN-END:initComponents
 
     private void jPanel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel10MouseClicked
-TrangChuForm trangchu =new TrangChuForm();
-trangchu.setVisible(true);
-webcam.close();
+        TrangChuForm trangchu = new TrangChuForm();
+        trangchu.setVisible(true);
+        webcam.close();
     }//GEN-LAST:event_jPanel10MouseClicked
 
     private void jPanel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseClicked
-HoaDonForm hd =new HoaDonForm();
-hd.setVisible(true);
-webcam.close();
+        if (labelCV.getText().equals("Quan ly")) {
+            HoaDonForm hd = new HoaDonForm();
+            hd.setVisible(true);
+            webcam.close();
+        } else {
+            JOptionPane.showMessageDialog(this, "Nhan vien khong vao duoc!");
+        }
+
     }//GEN-LAST:event_jPanel6MouseClicked
 
     private void jPanel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel7MouseClicked
-NhanVienForm nhanvien =new NhanVienForm();
-nhanvien.setVisible(true);
-webcam.close();
+
+        if (labelCV.getText().equals("Quan ly")) {
+            NhanVienForm nhanvien = new NhanVienForm();
+            nhanvien.setVisible(true);
+            webcam.close();
+        } else {
+            JOptionPane.showMessageDialog(this, "Nhan vien khong vao duoc!");
+        }
     }//GEN-LAST:event_jPanel7MouseClicked
 
     private void jPanel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel8MouseClicked
-ThongKeForm thongke =new ThongKeForm();
-thongke.setVisible(true);
-webcam.close();
+        ThongKeForm thongke = new ThongKeForm();
+        thongke.setVisible(true);
+        webcam.close();
     }//GEN-LAST:event_jPanel8MouseClicked
 
     private void jPanel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel9MouseClicked
-QLSachForm sach =new QLSachForm();
-sach.setVisible(true);
-webcam.close();
+        if (labelCV.getText().equals("Quan ly")) {
+            QLSachForm sach = new QLSachForm();
+            sach.setVisible(true);
+            webcam.close();
+        } else {
+            JOptionPane.showMessageDialog(this, "Nhan vien khong vao duoc!");
+        }
+
     }//GEN-LAST:event_jPanel9MouseClicked
 
     private void jPanel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel11MouseClicked
-KhuyenMaiForm km =new KhuyenMaiForm();
-km.setVisible(true);
-webcam.close();
+        if (labelCV.getText().equals("Quan ly")) {
+            KhuyenMaiForm km = new KhuyenMaiForm();
+            km.setVisible(true);
+            webcam.close();
+        } else {
+            JOptionPane.showMessageDialog(this, "Nhan vien khong vao duoc!");
+        }
     }//GEN-LAST:event_jPanel11MouseClicked
 
     private void jPanel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel12MouseClicked
-KhachHangForm kh =new KhachHangForm();
-kh.setVisible(true);
-webcam.close();
+
+        if (labelCV.getText().equals("Quan ly")) {
+            KhachHangForm kh = new KhachHangForm();
+            kh.setVisible(true);
+            webcam.close();
+        } else {
+            JOptionPane.showMessageDialog(this, "Nhan vien khong vao duoc!");
+        }
     }//GEN-LAST:event_jPanel12MouseClicked
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
-javax.swing.ImageIcon icon = new javax.swing.ImageIcon("src\\icon\\icon_sad.png");
+        javax.swing.ImageIcon icon = new javax.swing.ImageIcon("src\\icon\\icon_sad.png");
         int click = JOptionPane.showConfirmDialog(this, "Bạn muốn thoát à?", "Thoát khỏi đây", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, icon);
         if (click == JOptionPane.YES_OPTION) {
             System.exit(0);
@@ -803,11 +853,17 @@ javax.swing.ImageIcon icon = new javax.swing.ImageIcon("src\\icon\\icon_sad.png"
 
     private void tblSanPhamBHMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSanPhamBHMouseClicked
         int row = tblSanPhamBH.getSelectedRow();
+        SanPhamThanhToan sp = service.getSPBYMaSP(tblSanPhamBH.getValueAt(row, 1).toString());
         GioHangThanhToan gh = new GioHangThanhToan();
         gh.setMa((String) tblSanPhamBH.getValueAt(row, 1));
         gh.setTen((String) tblSanPhamBH.getValueAt(row, 2));
         gh.setDonGia((Double) tblSanPhamBH.getValueAt(row, 7));
         int soLuong = Integer.parseInt(JOptionPane.showInputDialog(this, "Moi ban chon so luong"));
+
+        if (soLuong > sp.getSoLuongTon()) {
+            JOptionPane.showConfirmDialog(this, "Khong du so luong ! Moi chon lai.");
+            return;
+        }
         gh.setSoLuong(soLuong);
         listGH.add(gh);
         int i = 0;
@@ -816,7 +872,8 @@ javax.swing.ImageIcon icon = new javax.swing.ImageIcon("src\\icon\\icon_sad.png"
     }//GEN-LAST:event_tblSanPhamBHMouseClicked
 
     private void txtTimKiemCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtTimKiemCaretUpdate
-        loadTableSPSearch();
+//        loadTableSPSearch();
+        loadTableSP(txtTimKiem.getText());
     }//GEN-LAST:event_txtTimKiemCaretUpdate
 
     private void txtTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimKiemActionPerformed
@@ -853,26 +910,14 @@ javax.swing.ImageIcon icon = new javax.swing.ImageIcon("src\\icon\\icon_sad.png"
     }//GEN-LAST:event_tblTaoHoaDonMouseClicked
 
     private void txtTienKhachDuaCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtTienKhachDuaCaretUpdate
-        Float tienKD = Float.parseFloat(txtTienKhachDua.getText());
-        BigDecimal tienK = new BigDecimal(tienKD);
-        Float tongTien = Float.parseFloat(txtTongTien.getText());
-        BigDecimal tong = new BigDecimal(tongTien);
+        Double tienKD = Double.parseDouble(txtTienKhachDua.getText());
+        Double tongTien = Double.parseDouble(txtTongTien.getText());
 
-        Float tienThua = tienKD - tongTien;
-        BigDecimal tienT = new BigDecimal(tienThua);
-        txtTenThua.setText(String.valueOf(tienThua));
+        Double tienThua = tienKD - tongTien;
+        txtTenThua.setText(new BigDecimal(tienThua).toPlainString());
+
+
     }//GEN-LAST:event_txtTienKhachDuaCaretUpdate
-
-    private void txtTienKhachDuaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtTienKhachDuaMouseExited
-                Float tienKD = Float.parseFloat(txtTienKhachDua.getText());
-                BigDecimal tienK = new BigDecimal(tienKD);
-                Float tongTien = Float.parseFloat(txtTongTien.getText());
-                BigDecimal tong = new BigDecimal(tongTien);
-        
-                Float tienThua = tienKD - tongTien;
-                BigDecimal tienT = new BigDecimal(tienThua);
-                txtTenThua.setText(String.valueOf(tienThua));
-    }//GEN-LAST:event_txtTienKhachDuaMouseExited
 
     private void txtTienKhachDuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTienKhachDuaActionPerformed
         // TODO add your handling code here:
@@ -914,6 +959,10 @@ javax.swing.ImageIcon icon = new javax.swing.ImageIcon("src\\icon\\icon_sad.png"
     }//GEN-LAST:event_btnXuatHDActionPerformed
 //
     private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
+        if(txtMaHD.getText().isBlank() || txtTienKhachDua.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "Thieu thong tin. Thanh toan that bai");
+            return;
+        } 
         try {
             Double tienKD = Double.parseDouble(txtTienKhachDua.getText());
             Double tongTien = Double.parseDouble(txtTongTien.getText());
@@ -968,12 +1017,28 @@ javax.swing.ImageIcon icon = new javax.swing.ImageIcon("src\\icon\\icon_sad.png"
         uHD.setMa(txtMaHD.getText());
         if (service.updateHD(uHD) == 1) {
             JOptionPane.showMessageDialog(this, "Thanh toan thanh cong");
-        } else {
-            JOptionPane.showMessageDialog(this, "Thanh toan that bai");
-            return;
         }
         loadTableSP();
+        loadHD();
+        listGH.removeAll(listGH);
+        loadGioHang(listGH);
     }//GEN-LAST:event_btnThanhToanActionPerformed
+
+    private void cbxTheLoaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxTheLoaiActionPerformed
+        if (cbxTheLoai.getSelectedIndex() == 0) {
+            loadTableSP();
+        }
+        model = (DefaultTableModel) tblSanPhamBH.getModel();
+        model.setRowCount(0);
+        int i = 0;
+        List<SanPhamThanhToan> list = service.TheLoai(cbxTheLoai.getSelectedItem().toString());
+        for (SanPhamThanhToan s : list) {
+            model.addRow(new Object[]{i++, s.getMa(), s.getTen(), s.getTheLoai(), s.getTacGia(), s.getNXB(), s.getSoLuongTon(), s.getDonGia()});
+        }
+        if (cbxTheLoai.getSelectedIndex() == 0) {
+            loadTableSP();
+        }
+    }//GEN-LAST:event_cbxTheLoaiActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1060,6 +1125,7 @@ javax.swing.ImageIcon icon = new javax.swing.ImageIcon("src\\icon\\icon_sad.png"
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel labelCV;
     private javax.swing.JPanel panelHD;
     private javax.swing.JTable tblGioHang;
     private javax.swing.JTable tblSanPhamBH;
@@ -1091,6 +1157,17 @@ javax.swing.ImageIcon icon = new javax.swing.ImageIcon("src\\icon\\icon_sad.png"
             model.addRow(new Object[]{i++, s.getMa(), s.getTen(), s.getTheLoai(), s.getTacGia(), s.getNXB(), s.getSoLuongTon(), s.getDonGia()});
         }
     }
+    
+    private void loadTableSP(String input) {
+        model = (DefaultTableModel) tblSanPhamBH.getModel();
+        model.setRowCount(0);
+        int i = 0;
+
+        List<SanPhamThanhToan> list = service.searchTen(input);
+        for (SanPhamThanhToan s : list) {
+            model.addRow(new Object[]{i++, s.getMa(), s.getTen(), s.getTheLoai(), s.getTacGia(), s.getNXB(), s.getSoLuongTon(), s.getDonGia()});
+        }
+    }
 
     private void loadGioHang(List<GioHangThanhToan> list) {
         model = (DefaultTableModel) tblGioHang.getModel();
@@ -1102,6 +1179,7 @@ javax.swing.ImageIcon icon = new javax.swing.ImageIcon("src\\icon\\icon_sad.png"
     }
 
     private void loadHD() {
+
         model = (DefaultTableModel) tblTaoHoaDon.getModel();
         model.setRowCount(0);
         List<HoaDonThanhToan> list = service.getAllHD();
@@ -1110,6 +1188,7 @@ javax.swing.ImageIcon icon = new javax.swing.ImageIcon("src\\icon\\icon_sad.png"
             model.addRow(new Object[]{i++, hd.getMa(), hd.getNgay(), hd.getTenNV(), getTrangThai(hd.getTinhTrang())});
         }
     }
+
     public String getTrangThai(int tt) {
         if (tt == 0) {
             return "Chưa thanh toán";
@@ -1164,5 +1243,12 @@ javax.swing.ImageIcon icon = new javax.swing.ImageIcon("src\\icon\\icon_sad.png"
         Thread t = new Thread(r, "My Thread");
         t.setDaemon(true);
         return t;
+    }
+
+    private void loadCBTL() {
+        modelCB = (DefaultComboBoxModel) cbxTheLoai.getModel();
+        for (TheLoai tl : tlService.getAll()) {
+            modelCB.addElement(tl.getTen());
+        }
     }
 }

@@ -4,8 +4,14 @@
  */
 package Service.Implement;
 
+import DomainModels.NXB;
 import Repository.SachRepository;
 import DomainModels.Sach;
+import DomainModels.TacGia;
+import DomainModels.TheLoai;
+import Repository.NXBRepository;
+import Repository.TacGiaRepository;
+import Repository.TheLoaiRepository;
 import Service.SachService;
 import ViewModels.LayIDSach;
 import ViewModels.QLSach;
@@ -15,10 +21,13 @@ import java.util.List;
  *
  * @author acer
  */
-    
-public class SachServiceImpl implements SachService{
+public class SachServiceImpl implements SachService {
+
     private SachRepository repo = new SachRepository();
-    
+    private TheLoaiRepository repoTL = new TheLoaiRepository();
+    private TacGiaRepository repoTG = new TacGiaRepository();
+    private NXBRepository repoNXB = new NXBRepository();
+
     @Override
     public List<QLSach> getAll() {
         return repo.getAll();
@@ -48,4 +57,35 @@ public class SachServiceImpl implements SachService{
     public List<LayIDSach> getIDSach() {
         return repo.getIDHD();
     }
+
+    @Override
+    public String getIDByTenTL(String ten) {
+        for (TheLoai item : repoTL.getAll()) {
+            if (item.getTen().equals(ten)) {
+                return item.getId();
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public String getIDByTenTG(String ten) {
+        for (TacGia item : repoTG.getAll()) {
+            if (item.getTen().equals(ten)) {
+                return item.getId();
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public String getIDByTenNXB(String ten) {
+        for (NXB item : repoNXB.getAll()) {
+            if (item.getTen().equals(ten)) {
+                return item.getId();
+            }
+        }
+        return null;
+    }
+
 }

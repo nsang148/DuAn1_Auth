@@ -22,13 +22,13 @@ import java.sql.Statement;
 public class SachRepository {
     public List<QLSach> getAll() {
         List<QLSach> list = new ArrayList<>();
-        String SELECT = "select s.ma, s.TEN, tl.TEN, nxb.TEN, tg.TEN, s.MOTA, s.SOLUONGTON, s.Gia, s.TINHTRANG, s.ANH from SACH s join TACGIA tg on s.ID_TACGIA = tg.Id join NXB nxb on s.ID_NXB = nxb.Id join THELOAI tl on s.ID_THELOAI = tl.Id";
+        String SELECT = "select s.ma, s.TEN, tl.TEN, nxb.TEN, tg.TEN, s.MOTA, s.SOLUONGTON, s.Gia, s.TINHTRANG, s.ANH, s.Id from SACH s join TACGIA tg on s.ID_TACGIA = tg.Id join NXB nxb on s.ID_NXB = nxb.Id join THELOAI tl on s.ID_THELOAI = tl.Id";
         try {
             Connection conn = DBContext.getConnection();
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery(SELECT);
             while (rs.next()) {
-                list.add(new QLSach(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getDouble(8), rs.getInt(9), rs.getString(10)));
+                list.add(new QLSach(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getDouble(8), rs.getInt(9), rs.getString(10), rs.getString(11)));
             }
         } catch (Exception ex) {
             System.out.println("Loi tai getAll()");

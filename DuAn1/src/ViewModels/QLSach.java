@@ -19,6 +19,7 @@ public class QLSach {
     private Double gia;
     private int tinhTrang;
     private String anh;
+    private String id;
 
     public QLSach() {
     }
@@ -36,6 +37,29 @@ public class QLSach {
         this.anh = anh;
     }
 
+    public QLSach(String ma, String ten, String theLoai, String NXB, String tacGia, String moTa, int soLuongTon, Double gia, int tinhTrang, String anh, String id) {
+        this.ma = ma;
+        this.ten = ten;
+        this.theLoai = theLoai;
+        this.NXB = NXB;
+        this.tacGia = tacGia;
+        this.moTa = moTa;
+        this.soLuongTon = soLuongTon;
+        this.gia = gia;
+        this.tinhTrang = tinhTrang;
+        this.anh = anh;
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+    
+    
     public String getMa() {
         return ma;
     }

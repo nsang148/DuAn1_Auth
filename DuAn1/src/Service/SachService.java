@@ -5,6 +5,7 @@
 package Service;
 
 import DomainModels.Sach;
+import DomainModels.TheLoai;
 import ViewModels.LayIDSach;
 import ViewModels.QLSach;
 import java.util.List;
@@ -19,5 +20,8 @@ public interface SachService {
     public int createSach(Sach s);
     public int updateSach(Sach s, String ma);
     public int deleteSach(String ma);
+    String getIDByTenTL(String ten);
+    String getIDByTenTG(String ten);
+    String getIDByTenNXB(String ten);
     List<QLSach> search(String ma);
 }

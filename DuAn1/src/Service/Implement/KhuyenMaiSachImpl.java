@@ -4,13 +4,13 @@
  */
 package Service.Implement;
 
-import DomainModels.ChiTietSach;
 import DomainModels.KhuyenMai;
 import DomainModels.KhuyenMaiSach;
 import Repository.KhuyenMaiRepository;
 import Repository.KhuyenMaiSachRepository;
-import Repository.QLSachRepository;
+import Repository.SachRepository;
 import Service.KhuyenMaiSachService;
+import ViewModels.QLSach;
 import java.util.ArrayList;
 
 /**
@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class KhuyenMaiSachImpl implements KhuyenMaiSachService {
 
     KhuyenMaiSachRepository KMSR = new KhuyenMaiSachRepository();
-    QLSachRepository SR = new QLSachRepository();
+    SachRepository SR = new SachRepository();
     KhuyenMaiRepository KMR = new KhuyenMaiRepository();
 
     @Override
@@ -87,7 +87,7 @@ public class KhuyenMaiSachImpl implements KhuyenMaiSachService {
 
     @Override
     public String getIdSachByMa(String ma) {
-        for (ChiTietSach item : SR.getAll()) {
+        for (QLSach item : SR.getAll()) {
             if (item.getMa().equals(ma)) {
                 return item.getId();
             }
@@ -107,7 +107,7 @@ public class KhuyenMaiSachImpl implements KhuyenMaiSachService {
 
     @Override
     public String getMaSachByID(String id) {
-        for (ChiTietSach item : SR.getAll()) {
+        for (QLSach item : SR.getAll()) {
             if (item.getId().equals(id)) {
                 return item.getMa();
             }

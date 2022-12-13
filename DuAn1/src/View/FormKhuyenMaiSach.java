@@ -4,12 +4,12 @@
  */
 package View;
 
-import DomainModels.ChiTietSach;
 import DomainModels.KhuyenMai;
 import DomainModels.KhuyenMaiSach;
 import Repository.KhuyenMaiRepository;
-import Repository.QLSachRepository;
+import Repository.SachRepository;
 import Service.Implement.KhuyenMaiSachImpl;
+import ViewModels.QLSach;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
@@ -22,7 +22,7 @@ public class FormKhuyenMaiSach extends javax.swing.JInternalFrame {
 
     private DefaultTableModel model;
     private KhuyenMaiSachImpl service;
-    private QLSachRepository serviceS;
+    private SachRepository serviceS;
     private KhuyenMaiRepository serviceKM;
     private String isClicked;
     private String idKM;
@@ -37,10 +37,10 @@ public class FormKhuyenMaiSach extends javax.swing.JInternalFrame {
         ui.setNorthPane(null);
         rdoHetHan.setSelected(true);
         service = new KhuyenMaiSachImpl();
-        serviceS = new QLSachRepository();
+        serviceS = new SachRepository();
         serviceKM = new KhuyenMaiRepository();
         loadTable();
-        for (ChiTietSach item : serviceS.getAll()) {
+        for (QLSach item : serviceS.getAll()) {
             cboSach.addItem(item.getMa());
         }
         for (KhuyenMai item : serviceKM.getAll()) {

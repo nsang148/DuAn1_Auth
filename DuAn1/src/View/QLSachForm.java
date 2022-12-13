@@ -14,12 +14,26 @@ import Service.SachService;
 import Service.TacGiaService;
 import Service.TheLoaiService;
 import ViewModels.QLSach;
+import com.github.sarxos.webcam.Webcam;
+import com.github.sarxos.webcam.WebcamPanel;
+import com.github.sarxos.webcam.WebcamResolution;
+import com.google.zxing.BinaryBitmap;
+import com.google.zxing.LuminanceSource;
+import com.google.zxing.MultiFormatReader;
+import com.google.zxing.Result;
+import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
+import com.google.zxing.common.HybridBinarizer;
+import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -32,8 +46,11 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author This PC
  */
-public class QLSachForm extends javax.swing.JFrame {
+public class QLSachForm extends javax.swing.JFrame implements Runnable, ThreadFactory {
 
+    private WebcamPanel panel = null;
+    private Webcam webcam = null;
+    private Executor executor = Executors.newSingleThreadExecutor(this);
     private SachService service = new SachServiceImpl();
     private NXBService nXBService = new NXBimpl();
     private TacGiaService tgService = new TacGiaBimpl();
@@ -49,7 +66,7 @@ public class QLSachForm extends javax.swing.JFrame {
         // setExtendedState(MAXIMIZED_BOTH); 
         setLocationRelativeTo(this);
         setTitle("Phần mềm quản lý bán sách");
-
+//        initwebcam();
         loadTable();
         loadCBNXB();
         loadCBTG();
@@ -154,6 +171,8 @@ public class QLSachForm extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         lblHinhAnh = new javax.swing.JLabel();
+        jPanel16 = new javax.swing.JPanel();
+        camera = new javax.swing.JPanel();
         jPanel15 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblSach = new javax.swing.JTable();
@@ -445,7 +464,7 @@ public class QLSachForm extends javax.swing.JFrame {
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(1084, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel13Layout.setVerticalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -550,12 +569,33 @@ public class QLSachForm extends javax.swing.JFrame {
             }
         });
 
+        jPanel16.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder("Quét mã vạch"), "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 14))); // NOI18N
+
+        camera.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
+        jPanel16.setLayout(jPanel16Layout);
+        jPanel16Layout.setHorizontalGroup(
+            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(camera, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel16Layout.setVerticalGroup(
+            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel16Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(camera, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(13, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
         jPanel14.setLayout(jPanel14Layout);
         jPanel14Layout.setHorizontalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel14Layout.createSequentialGroup()
-                .addGap(162, 162, 162)
+                .addGap(17, 17, 17)
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel16)
                     .addComponent(jLabel3)
@@ -598,9 +638,9 @@ public class QLSachForm extends javax.swing.JFrame {
                                 .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtSoLuongTon, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
-                            .addComponent(txtGia))))
-                .addGap(51, 51, 51)
+                            .addComponent(txtSoLuongTon)
+                            .addComponent(txtGia, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(33, 33, 33)
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel14Layout.createSequentialGroup()
                         .addComponent(btnTim)
@@ -609,9 +649,11 @@ public class QLSachForm extends javax.swing.JFrame {
                     .addGroup(jPanel14Layout.createSequentialGroup()
                         .addComponent(btnSua)
                         .addGap(18, 18, 18)
-                        .addComponent(btnThem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(lblHinhAnh, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(206, 206, 206))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(95, 95, 95))
         );
 
         jPanel14Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnSua, btnTim});
@@ -663,23 +705,25 @@ public class QLSachForm extends javax.swing.JFrame {
                             .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel12)
                                 .addComponent(txtGia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(jPanel14Layout.createSequentialGroup()
-                            .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel16)
-                                .addComponent(txtMa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(18, 18, 18)
-                            .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel3)
-                                .addComponent(txtTen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(24, 24, 24)
-                            .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel15)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(19, 19, 19)
-                            .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel14)
-                                .addComponent(rdConSach)
-                                .addComponent(rdHetSach)))))
+                        .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel14Layout.createSequentialGroup()
+                                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel16)
+                                    .addComponent(txtMa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(txtTen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(24, 24, 24)
+                                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel15)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(19, 19, 19)
+                                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel14)
+                                    .addComponent(rdConSach)
+                                    .addComponent(rdHetSach))))))
                 .addContainerGap(30, Short.MAX_VALUE))
         );
 
@@ -687,10 +731,7 @@ public class QLSachForm extends javax.swing.JFrame {
 
         tblSach.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "Mã", "Tên", "Thể loại", "NXB", "Tác giả", "Mô tả", "Số lượng tồn", "Giá", "Tình trạng", "Ảnh"
@@ -730,7 +771,7 @@ public class QLSachForm extends javax.swing.JFrame {
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel15Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 326, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -828,17 +869,11 @@ public class QLSachForm extends javax.swing.JFrame {
         }
         int soLuongTon = Integer.parseInt(txtSoLuongTon.getText());
         Double gia = Double.parseDouble(txtGia.getText());
-
-        TheLoai tl = (TheLoai) cboTheLoai.getSelectedItem();
-        String idTL = tl.getId();
-
-        TacGia tg = (TacGia) cboTacGia.getSelectedItem();
-        String idTG = tg.getId();
-
-        NXB nxb = (NXB) cboNXB.getSelectedItem();
-        String idNXB = tl.getId();
-
-        Sach s = new Sach(ma, ten, soLuongTon, moTa, tinhTrang, idTL, idNXB, idTG, gia, null);
+        String idTl = service.getIDByTenTL(cboTheLoai.getSelectedItem().toString());
+        String idTG = service.getIDByTenTG(cboTacGia.getSelectedItem().toString());
+        String idNXB = service.getIDByTenNXB(cboNXB.getSelectedItem().toString());
+        
+        Sach s = new Sach(ma, ten, soLuongTon, moTa, tinhTrang, idTl, idNXB, idTG, gia, null);
         if (service.createSach(s) == 1) {
             JOptionPane.showMessageDialog(this, "Them sach thanh cong");
         } else {
@@ -861,16 +896,11 @@ public class QLSachForm extends javax.swing.JFrame {
         int soLuongTon = Integer.parseInt(txtSoLuongTon.getText());
         Double gia = Double.parseDouble(txtGia.getText());
 
-        TheLoai tl = (TheLoai) cboTheLoai.getSelectedItem();
-        String idTL = tl.getId();
-
-        TacGia tg = (TacGia) cboTacGia.getSelectedItem();
-        String idTG = tg.getId();
-
-        NXB nxb = (NXB) cboNXB.getSelectedItem();
-        String idNXB = tl.getId();
-
-        Sach s = new Sach(ma, ten, soLuongTon, moTa, tinhTrang, idTL, idNXB, idTG, gia, null);
+        String idTl = service.getIDByTenTL(cboTheLoai.getSelectedItem().toString());
+        String idTG = service.getIDByTenTG(cboTacGia.getSelectedItem().toString());
+        String idNXB = service.getIDByTenNXB(cboNXB.getSelectedItem().toString());
+        
+        Sach s = new Sach(ma, ten, soLuongTon, moTa, tinhTrang, idTl, idNXB, idTG, gia, null);
         if (service.updateSach(s, ma) == 1) {
             JOptionPane.showMessageDialog(this, "Sua thanh cong");
         } else {
@@ -944,8 +974,75 @@ public class QLSachForm extends javax.swing.JFrame {
     }//GEN-LAST:event_lblHinhAnhMouseClicked
 
     private void tblSachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSachMouseClicked
+        int selectedRow = tblSach.getSelectedRow();
+        List<QLSach> list = service.getAll();
+        QLSach s = list.get(selectedRow);
+        if (selectedRow < 0) {
+            return;
+        }
+        txtMa.setText(s.getMa());
+        txtGia.setText(String.valueOf(s.getGia()));
+        txtSoLuongTon.setText(String.valueOf(s.getSoLuongTon()));
+        txtMoTa.setText(String.valueOf(s.getMoTa()));
+        txtTen.setText(s.getTen());
+        if (s.getTinhTrang() == 1) {
+            rdConSach.setSelected(true);
+        } else {
+            rdHetSach.setSelected(true);
+        }
+        cboTheLoai.setSelectedItem(s.getTheLoai());
+        cboTacGia.setSelectedItem(s.getTacGia());
+        cboNXB.setSelectedItem(s.getNXB());
+
 
     }//GEN-LAST:event_tblSachMouseClicked
+    private void initwebcam() {
+        Dimension size = WebcamResolution.QQVGA.getSize();
+        webcam = Webcam.getWebcams().get(0);
+        webcam.setViewSize(size);
+
+        panel = new WebcamPanel(webcam);
+        panel.setPreferredSize(size);
+        panel.setFPSDisplayed(true);
+
+        camera.add(panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, 130));
+        executor.execute(this);
+
+    }
+
+    @Override
+    public void run() {
+        do {
+            try {
+                Thread.sleep(100);
+            } catch (Exception e) {
+            }
+            Result result = null;
+            BufferedImage image = null;
+            if (webcam.isOpen()) {
+                if ((image = webcam.getImage()) == null) {
+                    continue;
+                }
+            }
+            LuminanceSource soure = new BufferedImageLuminanceSource(image);
+            BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(soure));
+            try {
+                result = new MultiFormatReader().decode(bitmap);
+            } catch (Exception e) {
+            }
+            if (result != null) {
+                txtMa.setText(result.getText());
+            }
+
+        } while (true);
+    }
+
+    @Override
+    public Thread newThread(Runnable r) {
+        Thread t = new Thread(r, "My Thread");
+        t.setDaemon(true);
+        return t;
+    }
 
     /**
      * @param args the command line arguments
@@ -1003,6 +1100,7 @@ public class QLSachForm extends javax.swing.JFrame {
     private javax.swing.JButton btnTim;
     private javax.swing.JButton btnXoa;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JPanel camera;
     private javax.swing.JComboBox<String> cboNXB;
     private javax.swing.JComboBox<String> cboTacGia;
     private javax.swing.JComboBox<String> cboTheLoai;
@@ -1035,6 +1133,7 @@ public class QLSachForm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
+    private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
