@@ -19,4 +19,5 @@ public interface NhanVienService {
     List<NhanVien> search(String ten);
     NhanVien getNVByID(String ID); 
     List<NhanVien> sortListNhanVien();
+    NhanVien getNhanVienByMa(String maNV);
 }

@@ -25,7 +25,7 @@ import java.util.List;
 public class BanHangRepository {
      public List<SanPhamThanhToan> getALLSP() {
         List<SanPhamThanhToan> listHD = new ArrayList<>();
-        String sql = "select S.TEN, S.Ma ,tl.TEN, tg.TEN, nxb.TEN, s.SOLUONGTON, s.Gia from SACH s join THELOAI tl on s.ID_THELOAI = tl.Id join TACGIA tg on s.ID_TACGIA = tg.Id join NXB nxb on s.ID_NXB = nxb.Id";
+        String sql = "select S.TEN, S.Ma ,tl.TEN, tg.TEN, nxb.TEN, s.SOLUONGTON, s.Gia from SACH s join THELOAI tl on s.ID_THELOAI = tl.Id join TACGIA tg on s.ID_TACGIA = tg.Id join NXB nxb on s.ID_NXB = nxb.Id where s.SOLUONGTON > 0";
 
         try {
             Connection con = DBContext.getConnection();
@@ -42,7 +42,7 @@ public class BanHangRepository {
      
      public List<SanPhamThanhToan> getALLSPCB(String ten) {
         List<SanPhamThanhToan> listHD = new ArrayList<>();
-        String sql = "select S.TEN, S.Ma ,tl.TEN, tg.TEN, nxb.TEN, s.SOLUONGTON, s.Gia from SACH s join THELOAI tl on s.ID_THELOAI = tl.Id join TACGIA tg on s.ID_TACGIA = tg.Id join NXB nxb on s.ID_NXB = nxb.Id where tl.TEN = ?";
+        String sql = "select S.TEN, S.Ma ,tl.TEN, tg.TEN, nxb.TEN, s.SOLUONGTON, s.Gia from SACH s join THELOAI tl on s.ID_THELOAI = tl.Id join TACGIA tg on s.ID_TACGIA = tg.Id join NXB nxb on s.ID_NXB = nxb.Id where tl.TEN = ? and s.SOLUONGTON > 0";
 
         try ( Connection con = DBContext.getConnection();  PreparedStatement sttm = con.prepareStatement(sql)) {
             sttm.setString(1, ten);
@@ -77,7 +77,7 @@ public class BanHangRepository {
      
      public List<HoaDonThanhToan> getAllHD() {
         List<HoaDonThanhToan> listHD = new ArrayList<>();
-        String sql = "select hd.MA, hd.NGAYTAO, nv.TEN, hd.TINHTRANG from HOADON hd join NHANVIEN nv on hd.ID_NHANVIEN = nv.Id order by NGAYTAO desc";
+        String sql = "select hd.MA, hd.NGAYTAO, nv.TEN, hd.TINHTRANG from HOADON hd join NHANVIEN nv on hd.ID_NHANVIEN = nv.Id where hd.TINHTRANG = 0 order by NGAYTAO desc";
 
         try {
             Connection con = DBContext.getConnection();

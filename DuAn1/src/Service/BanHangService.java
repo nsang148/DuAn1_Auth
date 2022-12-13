@@ -26,5 +26,7 @@ public interface BanHangService {
     public int createHDCho(HoaDon hd);
     public int updateHD(HoaDon hd);
     public int createHDCT(HoaDonCT hd);
-
+    SanPhamThanhToan getSPBYMaSP(String maSP);
+    List<SanPhamThanhToan> getALLSPCB(String ten);
+    List<SanPhamThanhToan> searchTen(String input);
 }
