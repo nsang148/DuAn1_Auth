@@ -9,16 +9,19 @@ import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 
-public class FormKM extends javax.swing.JFrame {
+public class FormKM extends javax.swing.JDialog {
   private DefaultTableModel model;
     private KhuyenMaiHDImpl service;
     private String isClicked;
-    public FormKM() {
+    public FormKM(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
+        setLocationRelativeTo(this);
         service = new KhuyenMaiHDImpl();
         loadTable();
     }
 public void loadTable() {
+    
         model = (DefaultTableModel) tblKMHD.getModel();
         model.setRowCount(0);
         for (KhuyenMai item : service.getList()) {
@@ -105,19 +108,19 @@ public void loadTable() {
         jScrollPane3 = new javax.swing.JScrollPane();
         tblKMHD = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(51, 102, 255));
-        jLabel1.setText("Khuyen Mai Hoa Don");
+        jLabel1.setText("Mã khuyến mãi");
 
-        jLabel2.setText("Ma:");
+        jLabel2.setText("Mã:");
 
-        jLabel3.setText("Ten:");
+        jLabel3.setText("Tên:");
 
-        jLabel4.setText("Ngay Ap Dung:");
+        jLabel4.setText("Ngày áp dụng:");
 
-        jLabel5.setText("Ngay Ket Thuc");
+        jLabel5.setText("Ngày kết thúc:");
 
         txtNgayKetThuc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -126,41 +129,44 @@ public void loadTable() {
         });
 
         buttonGroup1.add(rdoHetHan);
-        rdoHetHan.setText("Het Han");
+        rdoHetHan.setText("Hết hạn");
 
         buttonGroup1.add(rdoConHan);
         rdoConHan.setSelected(true);
-        rdoConHan.setText("Con Han");
+        rdoConHan.setText("Còn hạn");
 
-        jLabel7.setText("Trang Thai:");
+        jLabel7.setText("Trạng thái:");
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel8.setText("%");
 
-        jLabel6.setText("Muc Giam:");
+        jLabel6.setText("Mức giảm:");
 
-        btnThem.setText("Them");
+        btnThem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icon_add.png"))); // NOI18N
+        btnThem.setText("Thêm");
         btnThem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnThemActionPerformed(evt);
             }
         });
 
-        btnSua.setText("Sua");
+        btnSua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icon_update.png"))); // NOI18N
+        btnSua.setText("Sửa");
         btnSua.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSuaActionPerformed(evt);
             }
         });
 
-        btnXoa.setText("Xoa");
+        btnXoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icon_delete.png"))); // NOI18N
+        btnXoa.setText("Xóa");
         btnXoa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnXoaActionPerformed(evt);
             }
         });
 
-        txtTK.setText("Tim Kiemmm...");
+        txtTK.setText("Tìm kiếm......................");
         txtTK.addCaretListener(new javax.swing.event.CaretListener() {
             public void caretUpdate(javax.swing.event.CaretEvent evt) {
                 txtTKCaretUpdate(evt);
@@ -180,7 +186,7 @@ public void loadTable() {
                 {null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Ma", "Ten", "Muc Giam", "Ngay Ap Dung", "Ngay Ket Thuc", "Trang Thai"
+                "ID", "Mã", "Tên", "Mức giảm", "Ngày áp dụng", "Ngày kết thúc", "Trạng thái"
             }
         ));
         tblKMHD.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -238,7 +244,7 @@ public void loadTable() {
                             .addComponent(txtTK)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(321, 321, 321)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel1)))
                 .addContainerGap(89, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -274,7 +280,7 @@ public void loadTable() {
                 .addComponent(txtTK, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
 
         pack();
@@ -387,7 +393,14 @@ public void loadTable() {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FormKM().setVisible(true);
+                FormKM dialog = new FormKM(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }
