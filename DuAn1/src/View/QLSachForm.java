@@ -78,7 +78,7 @@ public class QLSachForm extends javax.swing.JFrame implements Runnable, ThreadFa
         model.setRowCount(0);
         List<QLSach> list = service.getAll();
         for (QLSach s : list) {
-            model.addRow(new Object[]{s.getMa(), s.getTen(), s.getTheLoai(), s.getNXB(), s.getTacGia(), s.getMoTa(), s.getSoLuongTon(), s.getGia(), s.getTinhTrang(), s.getAnh()});
+            model.addRow(new Object[]{s.getMa(), s.getTen(), s.getTheLoai(), s.getNXB(), s.getTacGia(), s.getMoTa(), s.getSoLuongTon(), s.getGia(), getTinhTrang(s.getTinhTrang()), s.getAnh()});
         }
     }
 
@@ -512,7 +512,7 @@ public class QLSachForm extends javax.swing.JFrame implements Runnable, ThreadFa
         jLabel13.setText("Số lượng tồn:");
 
         buttonGroup1.add(rdConSach);
-        rdConSach.setText("Còn sách");
+        rdConSach.setText("Ðang bán");
         rdConSach.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rdConSachActionPerformed(evt);
@@ -522,7 +522,12 @@ public class QLSachForm extends javax.swing.JFrame implements Runnable, ThreadFa
         jLabel14.setText("Tình trạng:");
 
         buttonGroup1.add(rdHetSach);
-        rdHetSach.setText("Hết sách");
+        rdHetSach.setText("Không ");
+        rdHetSach.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdHetSachActionPerformed(evt);
+            }
+        });
 
         txtMoTa.setColumns(20);
         txtMoTa.setRows(5);
@@ -763,10 +768,7 @@ public class QLSachForm extends javax.swing.JFrame implements Runnable, ThreadFa
         jPanel15.setLayout(jPanel15Layout);
         jPanel15Layout.setHorizontalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel15Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -873,7 +875,7 @@ public class QLSachForm extends javax.swing.JFrame implements Runnable, ThreadFa
         String idTG = service.getIDByTenTG(cboTacGia.getSelectedItem().toString());
         String idNXB = service.getIDByTenNXB(cboNXB.getSelectedItem().toString());
         
-        Sach s = new Sach(ma, ten, soLuongTon, moTa, tinhTrang, idTl, idNXB, idTG, gia, null);
+        Sach s = new Sach(ma, ten, soLuongTon, moTa, tinhTrang, idTl, idNXB, idTG, gia, hinhAnh);
         if (service.createSach(s) == 1) {
             JOptionPane.showMessageDialog(this, "Them sach thanh cong");
         } else {
@@ -900,7 +902,7 @@ public class QLSachForm extends javax.swing.JFrame implements Runnable, ThreadFa
         String idTG = service.getIDByTenTG(cboTacGia.getSelectedItem().toString());
         String idNXB = service.getIDByTenNXB(cboNXB.getSelectedItem().toString());
         
-        Sach s = new Sach(ma, ten, soLuongTon, moTa, tinhTrang, idTl, idNXB, idTG, gia, null);
+        Sach s = new Sach(ma, ten, soLuongTon, moTa, tinhTrang, idTl, idNXB, idTG, gia, hinhAnh);
         if (service.updateSach(s, ma) == 1) {
             JOptionPane.showMessageDialog(this, "Sua thanh cong");
         } else {
@@ -931,7 +933,7 @@ public class QLSachForm extends javax.swing.JFrame implements Runnable, ThreadFa
         model.setRowCount(0);
         List<QLSach> list = service.search(ma);
         for (QLSach s : list) {
-            model.addRow(new Object[]{s.getMa(), s.getTen(), s.getTheLoai(), s.getNXB(), s.getTacGia(), s.getMoTa(), s.getSoLuongTon(), s.getGia(), s.getTinhTrang(), s.getAnh()});
+            model.addRow(new Object[]{s.getMa(), s.getTen(), s.getTheLoai(), s.getNXB(), s.getTacGia(), s.getMoTa(), s.getSoLuongTon(), s.getGia(), getTinhTrang(s.getTinhTrang()), s.getAnh()});
         }
     }//GEN-LAST:event_btnTimActionPerformed
 
@@ -993,9 +995,16 @@ public class QLSachForm extends javax.swing.JFrame implements Runnable, ThreadFa
         cboTheLoai.setSelectedItem(s.getTheLoai());
         cboTacGia.setSelectedItem(s.getTacGia());
         cboNXB.setSelectedItem(s.getNXB());
-
+        String hinh = s.getAnh();
+        lblHinhAnh.setText("");
+        ImageIcon imgIcon = new ImageIcon("D://Nhom1/avatar//" + hinh);
+        lblHinhAnh.setIcon(imgIcon);
 
     }//GEN-LAST:event_tblSachMouseClicked
+
+    private void rdHetSachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdHetSachActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rdHetSachActionPerformed
     private void initwebcam() {
         Dimension size = WebcamResolution.QQVGA.getSize();
         webcam = Webcam.getWebcams().get(0);
@@ -1042,6 +1051,12 @@ public class QLSachForm extends javax.swing.JFrame implements Runnable, ThreadFa
         Thread t = new Thread(r, "My Thread");
         t.setDaemon(true);
         return t;
+    }
+    public String getTinhTrang(int i) {
+        if(i == 1) {
+            return "Ðang bán";
+        }
+        return "Không còn bán";
     }
 
     /**
