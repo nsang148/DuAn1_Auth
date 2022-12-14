@@ -13,5 +13,5 @@ public class Constant {
             + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
     public static final String PHONENUMBER_PATTERN = "\\d{10}";
-    public static final String NAME_PATTERN = ".*[a-zA-Z].*";
+    public static final String NAME_PATTERN = "[a-zA-Z]";
 }

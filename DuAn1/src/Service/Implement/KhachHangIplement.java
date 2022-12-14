@@ -26,33 +26,36 @@ public class KhachHangIplement implements KhachHangService {
     }
 
     @Override
-    public String add(KhachHangModel khachHang) {
+    public void add(KhachHangModel khachHang) {
         boolean isExists = khachHangRepository.isExists(khachHang.getMaKH());
         if (!khachHang.getMaKH().startsWith("KH")) {
-            JOptionPane.showMessageDialog(null,"Mã khách hàng phải bắt đầu bằng KH");
-        }else{
+            JOptionPane.showMessageDialog(null, "Mã khách hàng phải bắt đầu bằng KH");
+        } else {
             if (isExists) {
-                JOptionPane.showMessageDialog(null,"Mã khách hàng đã tồn tại");
-            } else{
+                JOptionPane.showMessageDialog(null, "Mã khách hàng đã tồn tại");
+            } else {
                 boolean isValidEmail = Untilities.validateEmail(khachHang.getEmail());
                 boolean isValidPhoneNumber = Untilities.validatePhoneNumber(khachHang.getSdt());
                 boolean isValidName = Untilities.validateName(khachHang.getTen());
-                
-                if(!isValidName){
-                    JOptionPane.showMessageDialog(null,"Tên không được chứa số");
-                }
-                if (!isValidEmail) {
-                    JOptionPane.showMessageDialog(null,"Địa chỉ email không đúng định dạng");
-                }
-                if (!isValidPhoneNumber) {
-                    JOptionPane.showMessageDialog(null,"Số điện thoại không đúng định dạng");
+
+                if (!isValidName) {
+                    JOptionPane.showMessageDialog(null, "Tên không được chứa số");
+                } else {
+                    if (!isValidEmail) {
+                        JOptionPane.showMessageDialog(null, "Địa chỉ email không đúng định dạng");
+                    } else {
+                        if (!isValidPhoneNumber) {
+                            JOptionPane.showMessageDialog(null, "Số điện thoại không đúng định dạng");
+                        } else {
+                            khachHangRepository.insert(khachHang);
+                            JOptionPane.showMessageDialog(null, "Thêm thành công.");
+                        }
+                    }
                 }
             }
-        }
-        return khachHangRepository.insert(khachHang);
-    }
 
-   
+        }
+    }
 
     @Override
     public String delete(String id) {
@@ -68,5 +71,9 @@ public class KhachHangIplement implements KhachHangService {
     public String update(KhachHangModel khachHang, String MaKh) {
         return khachHangRepository.update(khachHang, MaKh);
     }
+
+    @Override
+    public List<KhachHangReponse> getKHsapxep() {
+return khachHangRepository.getKHsapxep();    }
 
 }

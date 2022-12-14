@@ -74,7 +74,37 @@ public class KhachHangForm extends javax.swing.JFrame {
 //                data[7] = list.get(i).getTongDiem();
 //                data[8] = list.get(i).getSoDiemDaDung();
 //                data[9] = list.get(i).getSoDiemDaCong();
-                if (list.get(i).getTinhTrang().equals(1)) {
+                if (list.get(i).getTinhTrang().equals(Boolean.TRUE)) {
+                    data[7] = "Khách hàng thân thiết";
+                } else {
+                    data[7] = "Khách hàng không thân thiết";
+                }
+
+                defaultTableModel.addRow(data);
+                System.out.println(list);
+            }
+            tbKh.setModel(defaultTableModel);
+//            defaultTableModel.fireTableDataChanged();
+        }
+    }
+    private void sapXep(List<KhachHangReponse> list) {
+        defaultTableModel.setRowCount(0);
+//        list = khachHangService.getAll();
+        System.out.println(list);
+        if (!list.isEmpty()) {
+            for (int i = 0; i < list.size(); i++) {
+                Object[] data = new Object[8];
+                data[0] = list.get(i).getMa();
+                data[1] = list.get(i).getHoTen();
+                data[2] = list.get(i).getGioiTinh();
+                data[3] = list.get(i).getNgaySinh();
+                data[4] = list.get(i).getDiaChi();
+                data[5] = list.get(i).getSdt();
+                data[6] = list.get(i).getEmail();
+//                data[7] = list.get(i).getTongDiem();
+//                data[8] = list.get(i).getSoDiemDaDung();
+//                data[9] = list.get(i).getSoDiemDaCong();
+                if (list.get(i).getTinhTrang().equals(Boolean.TRUE)) {
                     data[7] = "Khách hàng thân thiết";
                 } else {
                     data[7] = "Khách hàng không thân thiết";
@@ -548,7 +578,7 @@ public class KhachHangForm extends javax.swing.JFrame {
         });
 
         btnXoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icon_delete.png"))); // NOI18N
-        btnXoa.setText("Xóa");
+        btnXoa.setText("Sắp xếp");
         btnXoa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnXoaActionPerformed(evt);
@@ -627,18 +657,19 @@ public class KhachHangForm extends javax.swing.JFrame {
                             .addComponent(cbTinhTrang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addGroup(jPanel14Layout.createSequentialGroup()
-                                    .addComponent(btnThem)
+                                    .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(btnSua))
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel14Layout.createSequentialGroup()
-                                .addGap(84, 84, 84)
-                                .addComponent(jButton1))
                             .addGroup(jPanel14Layout.createSequentialGroup()
                                 .addComponent(btnXoa)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
                                 .addComponent(btnGuiMail)))))
                 .addGap(31, 31, 31))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(112, 112, 112))
         );
         jPanel14Layout.setVerticalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -683,13 +714,13 @@ public class KhachHangForm extends javax.swing.JFrame {
                     .addGroup(jPanel14Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(btnSua)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
                 .addGap(12, 12, 12)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuiMail)
                     .addComponent(btnXoa))
-                .addContainerGap(103, Short.MAX_VALUE))
+                .addContainerGap(107, Short.MAX_VALUE))
         );
 
         jPanel15.setBorder(javax.swing.BorderFactory.createTitledBorder("Danh sách khách hàng"));
@@ -828,10 +859,37 @@ public class KhachHangForm extends javax.swing.JFrame {
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         // TODO add your handling code here:
-        String mess = khachHangService.add(getData());
-        JOptionPane.showMessageDialog(this, mess);
-        List<KhachHangReponse> listAdd = khachHangService.getAll();
-        fillToTable(listAdd);
+        if (txtMaKh.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Mã khách hàng không để trống.");
+        } else {
+            if (txtTen.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "Tên khách hàng không để trống.");
+            } else {
+                if (jNgaySinh.isValid()) {
+                    JOptionPane.showMessageDialog(this, "Vui lòng chọn ngày sinh.");
+                } else {
+                    if (!rdNam.isSelected() && !rdNu.isSelected()) {
+                        JOptionPane.showMessageDialog(this, "Vui lòng chọn giới tính.");
+                    } else {
+                        if (txtSoDienThoai.getText().equals("")) {
+                            JOptionPane.showMessageDialog(this, "Số điện thoại không để trống.");
+                        } else {
+                            if (txtEmail.getText().equals("")) {
+                                JOptionPane.showMessageDialog(this, "Email không để trống.");
+                            } else {
+                                if (txtDiaChi.getText().equals("")) {
+                                    JOptionPane.showMessageDialog(this, "Địa chỉ không để trống.");
+                                } else {
+                                    khachHangService.add(getData());
+                                    List<KhachHangReponse> listAdd = khachHangService.getAll();
+                                    fillToTable(listAdd);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
@@ -849,16 +907,14 @@ public class KhachHangForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSuaActionPerformed
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
-        // TODO add your handling code here:
-        if (tbKh.getSelectedRowCount() == 0) {
-            JOptionPane.showMessageDialog(this, "Chưa chọn bản ghi.");
-            return;
+        DefaultTableModel tableModel =(DefaultTableModel) tbKh.getModel();
+        tableModel.setRowCount(0);
+        List<KhachHangReponse> list = khachHangService.getKHsapxep();
+        for (KhachHangReponse kh : list) {
+            tableModel.addRow(new Object[]{
+                kh.getMa(),kh.getHoTen(),kh.getGioiTinh(),kh.getNgaySinh(),kh.getDiaChi(),kh.getSdt(),kh.getEmail(),kh.getTinhTrang()
+            });
         }
-        int row = tbKh.getSelectedRow();
-        String maKh = tbKh.getValueAt(row, 0).toString();
-        String mess = khachHangService.delete(maKh);
-        JOptionPane.showMessageDialog(this, mess);
-        fillToTable(list);
     }//GEN-LAST:event_btnXoaActionPerformed
 
     private void btnGuiMailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuiMailActionPerformed
@@ -874,9 +930,13 @@ public class KhachHangForm extends javax.swing.JFrame {
 
     private void txtTimKiemCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtTimKiemCaretUpdate
         // TODO add your handling code here:
-        list = khachHangService.search(txtTimKiem.getText());
-        fillToTable(list);
-        System.out.println(list);
+        if (txtTimKiem.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Mời nhập mã khách hàng");
+        } else {
+            list = khachHangService.search(txtTimKiem.getText());
+            fillToTable(list);
+            System.out.println(list);
+        }
     }//GEN-LAST:event_txtTimKiemCaretUpdate
 
     private void tbKhMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbKhMouseClicked

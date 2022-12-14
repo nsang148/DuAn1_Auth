@@ -60,6 +60,34 @@ public class KhachHangRepository {
         }
         return kvr;
     }
+    public List<KhachHangReponse> getKHsapxep() {
+        String query = "SELECT MAKH, Ten,GioiTinh,NgaySinh,DiaChi,Sdt,Email,TinhTrang FROM KhachHang order by Ten";
+        kvr = new ArrayList<>();
+        try {
+            Connection con = DBContext.getConnection();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                KhachHangReponse kh = new KhachHangReponse();
+                kh.setMa(rs.getString(1));
+                kh.setHoTen(rs.getString(2));
+                kh.setGioiTinh(rs.getString(3));
+                kh.setNgaySinh(rs.getString(4));
+                kh.setDiaChi(rs.getString(5));
+                kh.setSdt(rs.getString(6));
+                kh.setEmail(rs.getString(7));
+//                kh.setTongDiem(rs.getInt(8));
+//                kh.setSoDiemDaDung(rs.getInt(9));
+//                kh.setSoDiemDaCong(rs.getInt(10));
+                kh.setTinhTrang(rs.getBoolean(8));
+                kvr.add(kh);
+            }
+        } catch (SQLException ex) {
+        } catch (Exception ex) {
+            Logger.getLogger(KhachHangRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return kvr;
+    }
 
     public String insert(KhachHangModel kh) {
         String insert = "Insert into KHACHHANG(MAKH,TEN,GIOITINH,NGAYSINH,DiaCHi,SDT,EMAIL,TINHTRANG) VALUES (?,?,?,?,?,?,?,?)";

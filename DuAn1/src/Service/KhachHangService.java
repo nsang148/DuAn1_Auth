@@ -15,11 +15,12 @@ import java.util.List;
 public interface KhachHangService {
      List<KhachHangReponse> getAll();
 
-    String add(KhachHangModel khachHang);
+    void add(KhachHangModel khachHang);
 
     String update(KhachHangModel khachHang, String MaKh);
 
     String delete(String id);
     
     List<KhachHangReponse> search(String MaKH);
+    List<KhachHangReponse> getKHsapxep();
 }
