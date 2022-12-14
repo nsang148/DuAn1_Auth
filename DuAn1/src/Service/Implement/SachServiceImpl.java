@@ -15,6 +15,7 @@ import Repository.TheLoaiRepository;
 import Service.SachService;
 import ViewModels.LayIDSach;
 import ViewModels.QLSach;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -86,6 +87,20 @@ public class SachServiceImpl implements SachService {
             }
         }
         return null;
+    }
+    
+    @Override
+    public List<QLSach> searchTen(String input) {
+        if (input == null) {
+            return repo.getAll();
+        }
+        List<QLSach> s = new ArrayList<>();
+        for (QLSach item : repo.getAll()) {
+            if (item.getMa().toLowerCase().contains(input.toLowerCase()) || item.getTen().toLowerCase().contains(input.toLowerCase())) {
+                s.add(item);
+            }
+        }
+        return s;
     }
 
 }

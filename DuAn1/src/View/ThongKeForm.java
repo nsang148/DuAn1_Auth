@@ -83,12 +83,12 @@ public class ThongKeForm extends javax.swing.JFrame {
         jPanel14 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblSPBanChay = new javax.swing.JTable();
-        btnXuatFile = new javax.swing.JButton();
-        btnBaoCao = new javax.swing.JButton();
         jPanel15 = new javax.swing.JPanel();
         jPanel16 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblTheLoaiBanChay = new javax.swing.JTable();
+        btnXuatFile = new javax.swing.JButton();
+        btnBaoCao = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -396,7 +396,7 @@ public class ThongKeForm extends javax.swing.JFrame {
         );
         panelTK1Layout.setVerticalGroup(
             panelTK1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 307, Short.MAX_VALUE)
+            .addGap(0, 249, Short.MAX_VALUE)
         );
 
         tblSPBanChay.setModel(new javax.swing.table.DefaultTableModel(
@@ -420,44 +420,20 @@ public class ThongKeForm extends javax.swing.JFrame {
             tblSPBanChay.getColumnModel().getColumn(3).setResizable(false);
         }
 
-        btnXuatFile.setText("Xuat file");
-        btnXuatFile.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnXuatFileActionPerformed(evt);
-            }
-        });
-
-        btnBaoCao.setText("Bao cao");
-        btnBaoCao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBaoCaoActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
         jPanel14.setLayout(jPanel14Layout);
         jPanel14Layout.setHorizontalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel14Layout.createSequentialGroup()
-                .addComponent(jScrollPane2)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1135, Short.MAX_VALUE)
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
-                .addContainerGap(622, Short.MAX_VALUE)
-                .addComponent(btnXuatFile)
-                .addGap(69, 69, 69)
-                .addComponent(btnBaoCao)
-                .addGap(303, 303, 303))
         );
         jPanel14Layout.setVerticalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel14Layout.createSequentialGroup()
                 .addGap(37, 37, 37)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
-                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnBaoCao)
-                    .addComponent(btnXuatFile))
-                .addGap(18, 18, 18))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Sản phẩm bán chạy", jPanel14);
@@ -519,6 +495,20 @@ public class ThongKeForm extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Thể loại bán chạy", jPanel15);
 
+        btnXuatFile.setText("Xuat file");
+        btnXuatFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXuatFileActionPerformed(evt);
+            }
+        });
+
+        btnBaoCao.setText("Bao cao");
+        btnBaoCao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBaoCaoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -530,6 +520,12 @@ public class ThongKeForm extends javax.swing.JFrame {
                     .addComponent(panelTK1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnXuatFile)
+                .addGap(31, 31, 31)
+                .addComponent(btnBaoCao)
+                .addGap(27, 27, 27))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -539,10 +535,14 @@ public class ThongKeForm extends javax.swing.JFrame {
                 .addComponent(panelTK1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnXuatFile)
+                    .addComponent(btnBaoCao))
+                .addContainerGap())
         );
 
-        jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 0, 1160, 730));
+        jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 0, 1160, 690));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -552,7 +552,9 @@ public class ThongKeForm extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 724, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -603,7 +605,7 @@ public class ThongKeForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void btnXuatFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXuatFileActionPerformed
-        List<BaoCaoMail> list = service.BaoCao();
+        List<ChartThongKe> list = service.chartThongKe();
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet sheet = workbook.createSheet("danhSach");
         XSSFRow row = null;
@@ -621,30 +623,19 @@ public class ThongKeForm extends javax.swing.JFrame {
         cell.setCellValue("Thoi gian");
 
         cell = row.createCell(1, CellType.STRING);
-        cell.setCellValue("Tên Sách");
-
-        cell = row.createCell(2, CellType.STRING);
-        cell.setCellValue("So luong");
-
-        cell = row.createCell(3, CellType.STRING);
-        cell.setCellValue("Tong tien");
+        cell.setCellValue("Doanh thu");
 
         for (int i = 0; i < list.size(); i++) {
             row = sheet.createRow(4 + i);
 
             cell = row.createCell(0, CellType.STRING);
-            cell.setCellValue(list.get(i).getNgay());
+            cell.setCellValue(list.get(i).getThang());
 
             cell = row.createCell(1, CellType.STRING);
-            cell.setCellValue(list.get(i).getTen());
+            cell.setCellValue(list.get(i).getDoanhThu());
 
-            cell = row.createCell(2, CellType.STRING);
-            cell.setCellValue(list.get(i).getSoLuong());
-
-            cell = row.createCell(3, CellType.STRING);
-            cell.setCellValue(list.get(i).getTongTien());
         }
-        File file = new File("D://Nhom1//ThongKe3.xlsx");
+        File file = new File("D://Nhom1//ThongKeDT.xlsx");
         try {
             FileOutputStream fis = new FileOutputStream(file);
             workbook.write(fis);

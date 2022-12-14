@@ -24,4 +24,5 @@ public interface SachService {
     String getIDByTenTG(String ten);
     String getIDByTenNXB(String ten);
     List<QLSach> search(String ma);
+    List<QLSach> searchTen(String input);
 }
