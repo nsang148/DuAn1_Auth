@@ -245,10 +245,11 @@ public class login extends javax.swing.JFrame {
     
     }
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+
         List<NhanVien> list = service.getList();
 
         if (checkLogin(txtusername.getText(), txtpassword.getText())) {
-            new TrangChu().setVisible(true);
+            new TrangChuForm(txtusername.getText()).setVisible(true);
             this.dispose();
             JOptionPane.showMessageDialog(this, "Dang nhap thanh cong");
             return;
@@ -259,6 +260,7 @@ public class login extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnLoginActionPerformed
 
+    
     /**
      * @param args the command line arguments
      */

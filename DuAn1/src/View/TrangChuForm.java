@@ -861,7 +861,7 @@ public class TrangChuForm extends javax.swing.JFrame implements Runnable, Thread
         int soLuong = Integer.parseInt(JOptionPane.showInputDialog(this, "Moi ban chon so luong"));
 
         if (soLuong > sp.getSoLuongTon()) {
-            JOptionPane.showConfirmDialog(this, "Khong du so luong ! Moi chon lai.");
+            JOptionPane.showConfirmDialog(this, "Không du so luong ! Moi chon lai.");
             return;
         }
         gh.setSoLuong(soLuong);
