@@ -21,7 +21,7 @@ public class TrangChu extends javax.swing.JFrame {
         // setExtendedState(MAXIMIZED_BOTH); 
         setLocationRelativeTo(this);
         setTitle("Phần mềm quản lý bán sách");
-        FormBanHang formBH = new FormBanHang();
+        FormThanhToan formBH = new FormThanhToan();
         jDesktopPane1.removeAll();
         jDesktopPane1.add(formBH).setVisible(true);
     }
@@ -354,15 +354,15 @@ public class TrangChu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jPanel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel10MouseClicked
-        FormBanHang formBH = new FormBanHang();
+        FormThanhToan formBH = new FormThanhToan();
         jDesktopPane1.removeAll();
         jDesktopPane1.add(formBH).setVisible(true);
     }//GEN-LAST:event_jPanel10MouseClicked
 
     private void jPanel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseClicked
-        FormQuanLyHoaDon formHD = new FormQuanLyHoaDon();
-        jDesktopPane1.removeAll();
-        jDesktopPane1.add(formHD).setVisible(true);
+//        FormQuanLyHoaDon formHD = new FormQuanLyHoaDon();
+//        jDesktopPane1.removeAll();
+//        jDesktopPane1.add(formHD).setVisible(true);
     }//GEN-LAST:event_jPanel6MouseClicked
 
     private void jPanel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel7MouseClicked
@@ -372,13 +372,13 @@ public class TrangChu extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel7MouseClicked
 
     private void jPanel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel8MouseClicked
-        FormThongKe formTK = new FormThongKe();
+        FormThongKe_DoanhThu formTK = new FormThongKe_DoanhThu();
         jDesktopPane1.removeAll();
         jDesktopPane1.add(formTK).setVisible(true);
     }//GEN-LAST:event_jPanel8MouseClicked
 
     private void jPanel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel9MouseClicked
-        FormQuanLySach formQLS = new FormQuanLySach();
+        FormQLSach formQLS = new FormQLSach();
         jDesktopPane1.removeAll();
         jDesktopPane1.add(formQLS).setVisible(true);
     }//GEN-LAST:event_jPanel9MouseClicked

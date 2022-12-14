@@ -907,6 +907,7 @@ public class TrangChuForm extends javax.swing.JFrame implements Runnable, Thread
         String ngay = dfm.format(date);
         txtNgayThanhToan.setText(ngay);
         txtTongTien.setText(String.valueOf(tong));
+        System.out.println("");
     }//GEN-LAST:event_tblTaoHoaDonMouseClicked
 
     private void txtTienKhachDuaCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtTienKhachDuaCaretUpdate
