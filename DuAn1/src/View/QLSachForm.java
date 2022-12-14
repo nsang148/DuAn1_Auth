@@ -877,9 +877,9 @@ public class QLSachForm extends javax.swing.JFrame implements Runnable, ThreadFa
         
         Sach s = new Sach(ma, ten, soLuongTon, moTa, tinhTrang, idTl, idNXB, idTG, gia, hinhAnh);
         if (service.createSach(s) == 1) {
-            JOptionPane.showMessageDialog(this, "Them sach thanh cong");
+            JOptionPane.showMessageDialog(this, "Them sach thanh cong!");
         } else {
-            JOptionPane.showMessageDialog(this, "Them sach that bai");
+            JOptionPane.showMessageDialog(this, "Them sach that bai!");
             return;
         }
         loadTable();
