@@ -5,6 +5,7 @@ import DomainModels.NhanVien;
 import Service.Implement.NhanVienServiceimpl;
 import java.awt.Image;
 import java.io.File;
+import java.util.regex.Pattern;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -13,11 +14,11 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 
 public class NhanVienForm extends javax.swing.JFrame {
-    
+
     private DefaultTableModel model;
     private NhanVienServiceimpl service;
     private String isClicked;
-    
+
     public NhanVienForm() {
         initComponents();
         service = new NhanVienServiceimpl();
@@ -25,9 +26,9 @@ public class NhanVienForm extends javax.swing.JFrame {
         setLocationRelativeTo(this);
         setTitle("Phần mềm quản lý bán sách");
         this.loadTable();
-        
+
     }
-    
+
     private void loadTable() {
         model = (DefaultTableModel) this.tblNV.getModel();
         model.setRowCount(0);
@@ -51,7 +52,7 @@ public class NhanVienForm extends javax.swing.JFrame {
                 item.getTinhTrang() == 0 ? "Đang làm việc" : "Đã nghỉ việc"});
         }
     }
-    
+
     private boolean checkData() {
         String reg = "^(0|\\+84)(\\s|\\.)?((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))(\\d)(\\s|\\.)?(\\d{3})(\\s|\\.)?(\\d{3})$";
         if (this.txtMa.getText().isEmpty()) {
@@ -75,8 +76,29 @@ public class NhanVienForm extends javax.swing.JFrame {
         } else if (this.txtSDT.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Số điện thoại không được để trống !");
             return false;
+        } else if (Pattern.matches("[0-9]", this.txtHo.getText()) == true) {
+            JOptionPane.showMessageDialog(this, "Họ không được có số !");
+            return false;
+        } else if (Pattern.matches("[0-9]", this.txtTen.getText())  == true) {
+            JOptionPane.showMessageDialog(this, "Tên không được có số !");
+            return false;
+        } else if (Pattern.matches("[0-9]", this.txtTenDem.getText()) == true) {
+            JOptionPane.showMessageDialog(this, "Tên đệm không được có số !");
+            return false;
         } else if (this.txtTenDem.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Tên đệm không được để trống !");
+            return false;
+        } else if (Pattern.matches("[a-zA-Z]", this.txtThang.getText()) == true) {
+            JOptionPane.showMessageDialog(this, "Tháng không được có chữ !");
+            return false;
+        } else if (Pattern.matches("[a-zA-Z]", this.txtNgay.getText()) == true) {
+            JOptionPane.showMessageDialog(this, "Ngày không được có chữ !");
+            return false;
+        } else if (Pattern.matches("[a-zA-Z]", this.txtNam.getText()) == true) {
+            JOptionPane.showMessageDialog(this, "Năm không được có chữ !");
+            return false;
+        } else if (Pattern.matches("[a-zA-Z]", this.txtSDT.getText()) == true) {
+            JOptionPane.showMessageDialog(this, "Số điện thoại không được có chữ !");
             return false;
         } else if (this.txtThang.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Tháng không được để trống !");
@@ -119,7 +141,7 @@ public class NhanVienForm extends javax.swing.JFrame {
             }
         }
     }
-    
+
     private NhanVien getData() {
         return new NhanVien(null,
                 this.txtMa.getText().trim().toUpperCase(),
@@ -135,7 +157,7 @@ public class NhanVienForm extends javax.swing.JFrame {
                 this.cbbVaiTro.getSelectedItem().toString(),
                 this.lblAnh.getName());
     }
-    
+
     private void loadTableTK() {
         model = (DefaultTableModel) this.tblNV.getModel();
         model.setRowCount(0);
@@ -1171,7 +1193,7 @@ public class NhanVienForm extends javax.swing.JFrame {
         txtHo.setText("");
         txtTenDem.setText("");
         txtTen.setText("");
-        
+
 
     }//GEN-LAST:event_btnXoa2ActionPerformed
 
