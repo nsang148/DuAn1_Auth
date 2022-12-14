@@ -1,6 +1,5 @@
 package View;
 
-import javax.swing.JOptionPane;
 import DomainModels.NhanVien;
 import Service.Implement.NhanVienServiceimpl;
 import java.awt.Image;
@@ -10,7 +9,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 
 public class NhanVienForm extends javax.swing.JFrame {
@@ -1174,9 +1172,9 @@ public class NhanVienForm extends javax.swing.JFrame {
                 this.rbDNV.setSelected(true);
             }
             ImageIcon anh = new ImageIcon(this.service.getNVByID(isClicked).getAnh());
-            int wid = this.lblAnh.getWidth();
-            int hei = this.lblAnh.getHeight();
             this.lblAnh.setIcon(anh);
+            this.lblAnh.setHorizontalAlignment(JLabel.CENTER);
+            this.lblAnh.setVerticalAlignment(JLabel.CENTER);
         }
     }//GEN-LAST:event_tblNVMouseClicked
 
