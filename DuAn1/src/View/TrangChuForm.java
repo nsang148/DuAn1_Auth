@@ -71,20 +71,20 @@ public class TrangChuForm extends javax.swing.JFrame implements Runnable, Thread
     private Executor executor = Executors.newSingleThreadExecutor(this);
     DefaultComboBoxModel modelCB;
     TheLoaiService tlService = new Theloaiimpl();
-    
-    String CV;
+
+    /**
+     * Creates new form TrangChu
+     */
     public TrangChuForm() {
         initComponents();
         initwebcam();
         setLocationRelativeTo(this);
-        labelCV.setText("Quan ly");
         setTitle("Phần mềm quản lý bán sách");
         loadTableSP();
         loadHD();
         loadCBTL();
-        System.out.println(CV);
     }
- 
+
     public TrangChuForm(String userName) {
         initComponents();
         initwebcam();
@@ -94,7 +94,6 @@ public class TrangChuForm extends javax.swing.JFrame implements Runnable, Thread
         loadHD();
         NhanVien temp = serviceNV.getNhanVienByMa(userName);
         labelCV.setText(temp.getVaiTro());
-        CV = labelCV.getText();
     }
 
     /**
@@ -319,11 +318,6 @@ public class TrangChuForm extends javax.swing.JFrame implements Runnable, Thread
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icon-home.png"))); // NOI18N
         jLabel8.setText("Bán Hàng");
-        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel8MouseClicked(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
@@ -570,7 +564,7 @@ public class TrangChuForm extends javax.swing.JFrame implements Runnable, Thread
         jLabel3.setForeground(new java.awt.Color(102, 102, 102));
         jLabel3.setText("Tìm kiếm sản phẩm");
 
-        cbxTheLoai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxTheLoai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "The loai" }));
         cbxTheLoai.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbxTheLoaiActionPerformed(evt);
@@ -765,7 +759,7 @@ public class TrangChuForm extends javax.swing.JFrame implements Runnable, Thread
         jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 40, 1160, 730));
 
         labelCV.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        labelCV.setText("Quan ly");
+        labelCV.setText("jLabel12");
         jPanel1.add(labelCV, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 10, 90, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -776,7 +770,7 @@ public class TrangChuForm extends javax.swing.JFrame implements Runnable, Thread
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 770, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -793,7 +787,6 @@ public class TrangChuForm extends javax.swing.JFrame implements Runnable, Thread
             HoaDonForm hd = new HoaDonForm();
             hd.setVisible(true);
             webcam.close();
-            this.setVisible(false);
         } else {
             JOptionPane.showMessageDialog(this, "Nhan vien khong vao duoc!");
         }
@@ -806,7 +799,6 @@ public class TrangChuForm extends javax.swing.JFrame implements Runnable, Thread
             NhanVienForm nhanvien = new NhanVienForm();
             nhanvien.setVisible(true);
             webcam.close();
-            this.setVisible(false);
         } else {
             JOptionPane.showMessageDialog(this, "Nhan vien khong vao duoc!");
         }
@@ -816,7 +808,6 @@ public class TrangChuForm extends javax.swing.JFrame implements Runnable, Thread
         ThongKeForm thongke = new ThongKeForm();
         thongke.setVisible(true);
         webcam.close();
-        this.setVisible(false);
     }//GEN-LAST:event_jPanel8MouseClicked
 
     private void jPanel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel9MouseClicked
@@ -824,7 +815,6 @@ public class TrangChuForm extends javax.swing.JFrame implements Runnable, Thread
             QLSachForm sach = new QLSachForm();
             sach.setVisible(true);
             webcam.close();
-            this.setVisible(false);
         } else {
             JOptionPane.showMessageDialog(this, "Nhan vien khong vao duoc!");
         }
@@ -836,7 +826,6 @@ public class TrangChuForm extends javax.swing.JFrame implements Runnable, Thread
             KhuyenMaiForm km = new KhuyenMaiForm();
             km.setVisible(true);
             webcam.close();
-            this.setVisible(false);
         } else {
             JOptionPane.showMessageDialog(this, "Nhan vien khong vao duoc!");
         }
@@ -848,7 +837,6 @@ public class TrangChuForm extends javax.swing.JFrame implements Runnable, Thread
             KhachHangForm kh = new KhachHangForm();
             kh.setVisible(true);
             webcam.close();
-            this.setVisible(false);
         } else {
             JOptionPane.showMessageDialog(this, "Nhan vien khong vao duoc!");
         }
@@ -1052,10 +1040,6 @@ public class TrangChuForm extends javax.swing.JFrame implements Runnable, Thread
             loadTableSP();
         }
     }//GEN-LAST:event_cbxTheLoaiActionPerformed
-
-    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
-        
-    }//GEN-LAST:event_jLabel8MouseClicked
 
     /**
      * @param args the command line arguments
